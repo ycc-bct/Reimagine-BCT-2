@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>retina360 — Real-time integrated analytics platform | Bahwan CyberTek</title>
+<meta name="description" content="retina360 helps energy and industrial operators maximize ROI and KPIs with AI/ML-driven, real-time 360° asset monitoring, digital twin and predictive maintenance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS (inherited from the BCT home page DLS) ============ */
+:root{
+  --bg-base:    #060810;
+  --bg-surface: #0C0F1A;
+  --bg-card:    #111522;
+  --bg-hover:   #161B2C;
+
+  --blue-500:   #0092D7;
+  --blue-300:   #5FBEEA;
+  --blue-700:   #0A6395;
+  --blue-900:   #06344F;
+  --blue-950:   #072338;
+
+  --text-hi:      #F5F8FC;
+  --text-display: #D7DFE9;
+  --text-mid:     rgba(242,246,250,.68);
+  --text-low:     rgba(242,246,250,.44);
+
+  --border:       rgba(255,255,255,.13);
+  --border-blue:  rgba(0,146,215,.4);
+  --glow:         rgba(0,146,215,.18);
+
+  --light-bg:     #EDF3F7;
+  --light-card:   #FFFFFF;
+  --light-text:   #0A1620;
+  --light-mid:    rgba(10,22,32,.62);
+  --light-low:    rgba(10,22,32,.42);
+  --light-border: rgba(10,22,32,.12);
+
+  --font-display: 'Poppins', sans-serif;
+  --font-body:    'Poppins', sans-serif;
+
+  --fs-h2: clamp(2rem,4vw,3.25rem);
+  --fs-h3: clamp(1.1875rem,1.5vw,1.375rem);
+  --fs-subtitle:1rem;
+  --fs-content:.9375rem;
+  --section-pad-y:90px;
+
+  --pad-x: clamp(24px, 5vw, 72px);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{
+  background:var(--bg-base);
+  color:var(--text-hi);
+  font-family:var(--font-body);
+  font-size:var(--fs-content);
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--blue-500);color:#04121C}
+
+/* film grain overlay */
+body::after{
+  content:"";position:fixed;inset:0;z-index:2000;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.05;
+}
+
+/* ============ SHARED ============ */
+.eyebrow{
+  font-family:var(--font-display);
+  font-size:var(--fs-subtitle);
+  font-weight:600;
+  line-height:1.7;
+  letter-spacing:.06em;
+  color:var(--blue-500);
+}
+.section{padding:var(--section-pad-y) var(--pad-x)}
+p{text-wrap:pretty}
+#results,#capabilities,#cases,#insights{border-top:1px solid var(--border)}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:56px}
+.section-title{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:var(--fs-h2);
+  line-height:1.05;
+  letter-spacing:-.03em;
+  margin-top:14px;
+  color:var(--text-display);
+}
+/* the one shared Title / Subtitle block every section on this page uses */
+.sec-head{max-width:860px;margin:0 auto 56px;text-align:center}
+.sec-head .section-title{margin-top:14px}
+.sec-sub{
+  color:var(--text-mid);font-size:15.5px;line-height:1.7;
+  max-width:62ch;margin:18px auto 0;text-wrap:balance;
+}
+.link-arrow{
+  color:var(--text-hi);text-decoration:none;font-weight:600;font-size:14px;
+  display:inline-flex;align-items:center;gap:10px;white-space:nowrap;
+  transition:color .15s;
+}
+.link-arrow .ar{
+  display:inline-grid;place-items:center;width:28px;height:28px;
+  background:var(--blue-500);color:#04121C;font-weight:800;
+  transition:transform .2s;
+}
+.link-arrow:hover{color:var(--blue-300)}
+.link-arrow:hover .ar{transform:translateX(4px)}
+/* hero-scale version of the same component */
+.hero-cta{font-size:16px;gap:14px}
+.hero-cta .ar{width:38px;height:38px;font-size:17px}
+
+/* scroll reveal */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.6,.2,1),transform .7s cubic-bezier(.2,.6,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+/* ============ NAV ============ */
+.nav{
+  position:fixed;inset:0 0 auto 0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 var(--pad-x);height:72px;
+  background:rgba(6,8,16,.55);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s, background .3s;
+}
+.nav.scrolled{border-bottom-color:var(--border);background:rgba(6,8,16,.82)}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo-img{display:block;width:128px;height:34px;background:url(data:image/png;base64,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) left center/contain no-repeat}
+.foot-logo{display:block;width:128px;height:34px;background:url('data:image/png;base64,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') left center/contain no-repeat;margin-bottom:18px}
+.nav-links{display:flex;gap:6px;list-style:none}
+.nav-links a{
+  display:inline-flex;align-items:center;gap:5px;
+  color:var(--text-mid);text-decoration:none;font-size:13.5px;font-weight:500;
+  padding:9px 14px;border-radius:2px;transition:color .15s,background .15s;
+}
+.nav-links a:hover,.nav-links a.on{color:var(--text-hi);background:rgba(255,255,255,.05)}
+.nav-links .chev{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.65}
+.nav-locale{
+  display:inline-flex;align-items:center;gap:7px;
+  color:var(--text-mid);text-decoration:none;font-size:13.5px;font-weight:500;
+  padding:9px 10px;border-radius:2px;transition:color .15s,background .15s;
+}
+.nav-locale:hover{color:var(--text-hi);background:rgba(255,255,255,.05)}
+.nav-locale .globe{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5}
+.nav-locale .chev{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.65}
+
+/* ============ HERO ============ */
+.hero{position:relative;padding:132px var(--pad-x) clamp(56px,7vw,90px);overflow:hidden}
+.hero::before{
+  content:"";position:absolute;z-index:0;pointer-events:none;
+  left:-10%;right:-10%;top:-320px;height:820px;
+  background:radial-gradient(50% 50% at 50% 50%,rgba(0,146,215,.16) 0%,rgba(0,146,215,.05) 45%,transparent 72%);
+}
+.hero-inner{position:relative;z-index:1;max-width:1360px;margin:0 auto}
+@keyframes rise{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes zoomInLeft{from{opacity:0;transform:translateX(-64px) scale(.72)}to{opacity:1;transform:none}}
+@keyframes zoomInRight{from{opacity:0;transform:translateX(64px) scale(.72)}to{opacity:1;transform:none}}
+
+.hero-mark{
+  display:block;width:clamp(168px,15vw,214px);height:auto;
+  opacity:0;animation:rise .8s .05s cubic-bezier(.2,.65,.2,1) forwards;
+}
+.hero-top{
+  display:grid;grid-template-columns:2.05fr 1fr;gap:clamp(32px,5vw,72px);
+  align-items:start;margin-top:clamp(28px,3.4vw,44px);
+}
+.hero-h1{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:clamp(28px,3.05vw,46px);
+  line-height:1.25;
+  letter-spacing:-.02em;
+  color:var(--text-display);
+}
+.hero-h1 .hm{display:block;padding-bottom:.06em;margin-bottom:-.06em}
+.hero-h1 .l1,.hero-h1 .l2{display:block}
+.hero-h1 .l1{opacity:0;transform-origin:left center;animation:zoomInLeft .9s cubic-bezier(.16,1,.3,1) forwards}
+.hero-h1 .l2{opacity:0;transform-origin:right center;animation:zoomInRight .9s .16s cubic-bezier(.16,1,.3,1) forwards}
+.shiny{
+  color:transparent;
+  background:linear-gradient(180deg,#7FCCF1 0%,#1AA0DE 55%,#0092D7 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  filter:drop-shadow(0 2px 26px rgba(0,146,215,.32));
+}
+.hero-side{padding-top:14px;opacity:0;animation:rise .9s .3s cubic-bezier(.2,.65,.2,1) forwards}
+.hero-side .bar{width:40px;height:4px;background:var(--blue-500);margin-bottom:18px}
+.hero-side p{color:#E1E1E1;font-size:16px;line-height:1.55;margin-bottom:26px;max-width:38ch}
+@media(max-width:900px){
+  .hero-top{grid-template-columns:1fr;gap:34px;align-items:start}
+}
+@media(max-width:380px){.hero-h1{font-size:clamp(22px,6.8vw,28px)}}
+
+/* hero visual — full-width plate with floating annotation pills */
+.hero-visual{
+  position:relative;margin-top:clamp(36px,4.4vw,58px);
+  opacity:0;animation:rise 1s .42s cubic-bezier(.2,.65,.2,1) forwards;
+}
+.hero-plate{
+  position:relative;overflow:hidden;
+  aspect-ratio:2.45/1;border:1px solid var(--border);background:var(--bg-card);
+}
+.hero-plate img{width:100%;height:100%;object-fit:cover;object-position:center 46%;display:block}
+.hero-plate::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(6,8,16,.34) 0%,rgba(6,8,16,0) 30%,rgba(6,8,16,.16) 72%,rgba(6,8,16,.62) 100%);
+}
+.hero-pill{
+  position:absolute;z-index:3;
+  display:inline-flex;align-items:center;gap:9px;
+  padding:9px 15px;font-size:12.5px;font-weight:600;color:var(--text-hi);
+  background:rgba(6,8,16,.72);border:1px solid var(--border);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  white-space:nowrap;
+}
+.hero-pill i{width:5px;height:5px;background:var(--blue-500);transform:rotate(45deg);flex:none}
+.hero-pill.p1{left:5%;top:22%}
+.hero-pill.p2{right:6%;top:14%}
+.hero-stat{
+  position:absolute;z-index:3;right:5%;bottom:12%;
+  padding:16px 20px;background:rgba(6,8,16,.78);border:1px solid var(--border-blue);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  box-shadow:0 0 44px var(--glow);
+}
+.hero-stat b{
+  display:block;font-family:var(--font-display);font-weight:700;
+  font-size:clamp(20px,2.2vw,30px);line-height:1.1;letter-spacing:-.02em;color:var(--blue-300);
+}
+.hero-stat span{display:block;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-mid);margin-top:6px}
+@media(max-width:720px){
+  .hero-plate{aspect-ratio:4/3}
+  .hero-pill{font-size:11px;padding:7px 12px}
+  .hero-pill.p1{left:4%;top:5%}
+  .hero-pill.p2{left:4%;right:auto;top:calc(5% + 36px)}
+  .hero-stat{right:4%;bottom:6%;padding:12px 15px}
+}
+
+/* ============ RESULTS (copy left, statistics right) ============ */
+.results{background:var(--bg-base)}
+.rs-layout{
+  display:grid;grid-template-columns:1.15fr 1.5fr;gap:clamp(40px,5vw,76px);
+  max-width:1360px;margin:0 auto;align-items:start;
+}
+/* the title has to hold on one line next to the stats, so it sits a step below --fs-h2 */
+.rs-copy .section-title{margin-top:14px;font-size:clamp(1.75rem,2.85vw,2.6rem);line-height:1.12}
+.rs-copy p{color:var(--text-mid);font-size:15.5px;line-height:1.7;margin-top:18px;max-width:52ch}
+.rs-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,2.4vw,34px);padding-top:8px}
+.rs-stat .rs-rule{display:block;width:34px;height:3px;background:var(--blue-500);margin-bottom:24px}
+.rs-stat p{color:var(--text-mid);font-size:14.5px;line-height:1.6;margin-top:18px}
+
+/* slot-reel figures — same landing easing as the home page reel */
+.rs-num{
+  display:block;overflow:hidden;height:1.06em;
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(28px,2.9vw,44px);line-height:1.06;letter-spacing:-.03em;
+  color:var(--text-hi);
+}
+.rs-strip{display:flex;flex-direction:column;transform:translateY(-75%)}
+.rs-strip>span{display:block;flex:none;height:1.06em;white-space:nowrap}
+.rs-strip.roll-start{transform:translateY(0);transition:none}
+.rs-strip.roll-go{transform:translateY(-75%);transition:transform 1.15s cubic-bezier(.16,1,.3,1)}
+.rs-stat:nth-child(2) .rs-strip.roll-go{transition-delay:.13s}
+.rs-stat:nth-child(3) .rs-strip.roll-go{transition-delay:.26s}
+
+@media(max-width:1080px){
+  .rs-layout{grid-template-columns:1fr;gap:44px}
+  .rs-stats{padding-top:0}
+}
+@media(max-width:640px){
+  .rs-stats{grid-template-columns:1fr;gap:32px}
+  .rs-stat .rs-rule{margin-bottom:16px}
+  .rs-stat p{margin-top:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  .rs-strip,.rs-strip.roll-start,.rs-strip.roll-go{transform:translateY(-75%);transition:none}
+}
+
+/* ============ CAPABILITIES — two switchable styles ============ */
+.caps{background:var(--bg-surface);position:relative}
+.cap-style{display:none}
+.cap-style.is-on{display:block}
+
+/* shared show-more control */
+.cap-more{
+  display:flex;align-items:center;gap:10px;
+  margin:clamp(28px,3.2vw,42px) auto 0;
+  background:transparent;border:1px solid var(--border-blue);color:var(--text-hi);
+  font-family:var(--font-body);font-weight:600;font-size:14px;
+  padding:13px 26px;cursor:pointer;
+  transition:background .2s,border-color .2s,color .2s,box-shadow .2s;
+}
+.cap-more:hover{background:rgba(0,146,215,.1);color:var(--blue-300);box-shadow:0 0 34px var(--glow)}
+.cap-more .chev{
+  width:14px;height:14px;stroke:currentColor;fill:none;
+  stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  transition:transform .3s cubic-bezier(.16,1,.3,1);
+}
+.cap-more[aria-expanded="true"] .chev{transform:rotate(180deg)}
+@keyframes capCardIn{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+
+/* the blue connector strokes stream on hover — same language as the home page GCC icons */
+@keyframes capFlow{to{stroke-dashoffset:-20}}
+
+/* ---------------- STYLE A — icon cards, 4 up (borderless, accent icon) ---------------- */
+.acards{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:clamp(28px,3.4vw,52px) clamp(28px,3.6vw,56px);
+  max-width:1360px;margin:0 auto;
+}
+.acard{
+  position:relative;display:flex;flex-direction:column;
+  opacity:0;transform:translateY(40px);
+  transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1);
+}
+.acards.in .acard{opacity:1;transform:none}
+.acard-icon{
+  width:clamp(54px,4.6vw,72px);height:clamp(54px,4.6vw,72px);
+  margin-bottom:clamp(24px,2.4vw,34px);flex:none;
+  transition:transform .45s cubic-bezier(.22,1,.36,1);
+}
+.acard-icon svg{width:100%;height:100%;display:block;overflow:visible}
+.acard:hover .acard-icon{transform:translateY(-3px) scale(1.06)}
+.acard h3{
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(19px,1.7vw,25px);line-height:1.28;letter-spacing:-.015em;
+  color:var(--text-hi);
+}
+.acard p{
+  color:var(--text-mid);font-size:clamp(14px,1.05vw,15.5px);line-height:1.62;
+  margin-top:clamp(18px,1.8vw,26px);max-width:32ch;
+}
+/* only the first 4 until "Learn more" */
+.acards .acard:nth-child(n+5){display:none}
+.acards.is-open .acard:nth-child(n+5){display:flex;animation:capCardIn .55s cubic-bezier(.16,1,.3,1) both}
+.acards.is-open .acard:nth-child(5){animation-delay:.02s}
+.acards.is-open .acard:nth-child(6){animation-delay:.07s}
+.acards.is-open .acard:nth-child(7){animation-delay:.12s}
+.acards.is-open .acard:nth-child(8){animation-delay:.17s}
+.acards.is-open .acard:nth-child(9){animation-delay:.22s}
+.acards.is-open .acard:nth-child(10){animation-delay:.27s}
+.acards.is-open .acard:nth-child(11){animation-delay:.32s}
+.acards.is-open .acard:nth-child(12){animation-delay:.37s}
+@media(max-width:1080px){.acards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.acards{grid-template-columns:1fr}}
+
+/* ---------------- STYLE B — bento cards, big + small ---------------- */
+.bcards{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+  grid-auto-rows:minmax(272px,auto);
+  max-width:1360px;margin:0 auto;
+}
+.bcard{
+  position:relative;overflow:hidden;display:flex;align-items:center;
+  padding:clamp(26px,2.7vw,40px);
+  background:var(--bg-card);border:1px solid var(--border);
+  opacity:0;transform:translateY(40px);
+  transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1),
+             border-color .3s ease,box-shadow .3s ease;
+}
+.bcards.in .bcard{opacity:1;transform:none}
+.bcard[data-span="2"]{grid-column:span 2}
+.bcard:hover{border-color:var(--border-blue);box-shadow:0 0 40px var(--glow)}
+/* four rotating tints, all inside the DLS blue family */
+.bcard:nth-child(4n+1){background:linear-gradient(145deg,rgba(0,146,215,.12) 0%,rgba(17,21,34,0) 62%),var(--bg-card)}
+.bcard:nth-child(4n+2){background:linear-gradient(145deg,rgba(95,190,234,.11) 0%,rgba(17,21,34,0) 62%),var(--bg-card)}
+.bcard:nth-child(4n+3){background:linear-gradient(145deg,rgba(10,99,149,.20) 0%,rgba(17,21,34,0) 62%),var(--bg-card)}
+.bcard:nth-child(4n+4){background:linear-gradient(145deg,rgba(6,52,79,.34) 0%,rgba(17,21,34,0) 62%),var(--bg-card)}
+/* the motif is oversized and bleeds off the bottom-right corner */
+.bcard-art{
+  position:absolute;z-index:1;pointer-events:none;
+  right:-14%;bottom:-26%;width:min(62%,286px);aspect-ratio:1;
+  transition:transform .6s cubic-bezier(.16,1,.3,1);
+}
+.bcard[data-span="2"] .bcard-art{right:-3%;bottom:-16%;width:min(36%,340px)}
+.bcard-art svg{width:100%;height:100%;display:block}
+.bcard:hover .bcard-art{transform:scale(1.07) translate(-4px,-6px)}
+.bcard-body{position:relative;z-index:2;max-width:36ch}
+.bcard[data-span="1"] .bcard-body{max-width:28ch}
+.bcard-idx{
+  display:block;font-size:11px;font-weight:600;letter-spacing:.12em;
+  color:var(--text-low);margin-bottom:14px;
+}
+.bcard h3{
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(17px,1.6vw,22px);line-height:1.24;letter-spacing:-.01em;
+  color:var(--text-hi);
+}
+.bcard p{color:var(--text-mid);font-size:13.5px;line-height:1.62;margin-top:10px}
+/* only the first 4 until "Learn more" */
+.bcards .bcard:nth-child(n+5){display:none}
+.bcards.is-open .bcard:nth-child(n+5){display:flex;animation:capCardIn .55s cubic-bezier(.16,1,.3,1) both}
+.bcards.is-open .bcard:nth-child(5){animation-delay:.02s}
+.bcards.is-open .bcard:nth-child(6){animation-delay:.07s}
+.bcards.is-open .bcard:nth-child(7){animation-delay:.12s}
+.bcards.is-open .bcard:nth-child(8){animation-delay:.17s}
+.bcards.is-open .bcard:nth-child(9){animation-delay:.22s}
+.bcards.is-open .bcard:nth-child(10){animation-delay:.27s}
+.bcards.is-open .bcard:nth-child(11){animation-delay:.32s}
+.bcards.is-open .bcard:nth-child(12){animation-delay:.37s}
+@media(max-width:1080px){
+  .bcards{grid-template-columns:repeat(2,1fr);grid-auto-rows:minmax(250px,auto)}
+  .bcard[data-span="2"]{grid-column:span 2}
+  .bcard[data-span="1"] .bcard-body{max-width:34ch}
+}
+@media(max-width:600px){
+  .bcards{grid-template-columns:1fr;grid-auto-rows:minmax(230px,auto)}
+  .bcard[data-span="2"]{grid-column:span 1}
+  .bcard-art,.bcard[data-span="2"] .bcard-art{width:min(64%,240px);right:-10%;bottom:-22%}
+}
+
+/* ---------------- A / B switcher (review tool) ---------------- */
+.style-switch{
+  position:absolute;top:clamp(28px,4vw,52px);right:var(--pad-x);z-index:20;
+  display:flex;align-items:center;gap:6px;padding:7px 8px;
+  background:rgba(12,15,24,.86);border:1px solid var(--border);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  box-shadow:0 8px 26px rgba(0,0,0,.35);
+}
+@media(max-width:900px){
+  .style-switch{position:static;margin:0 auto clamp(28px,4vw,40px);width:max-content}
+}
+.style-switch .ss-label{
+  font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text-low);padding:0 8px 0 4px;
+}
+.style-switch button{
+  background:transparent;border:1px solid transparent;cursor:pointer;
+  font-family:var(--font-body);font-size:12px;font-weight:600;
+  color:var(--text-mid);padding:7px 13px;
+  transition:color .2s,background .2s,border-color .2s;
+}
+.style-switch button:hover{color:var(--text-hi);background:rgba(255,255,255,.06)}
+.style-switch button.on{color:#04121C;background:var(--blue-500);border-color:var(--blue-500)}
+
+@media(prefers-reduced-motion:reduce){
+  .acard,.bcard{opacity:1!important;transform:none!important;transition:none}
+  .acard-icon,.acard:hover .acard-icon,.bcard-art,.bcard:hover .bcard-art{transition:none;transform:none}
+  .acards.is-open .acard:nth-child(n+5),.bcards.is-open .bcard:nth-child(n+5){animation:none}
+  .cap-more .chev{transition:none}
+}
+
+/* ============ CASES (home page component) ============ */
+.cases{padding:var(--section-pad-y) var(--pad-x);background:var(--bg-base)}
+.cases-grid{max-width:1360px;margin:0 auto}
+.case-stack{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.case-item{display:block;text-decoration:none;color:var(--text-hi);transition:transform .3s cubic-bezier(.22,1,.36,1)}
+.case-item:hover{transform:translateY(-6px)}
+.ci-visual{
+  display:block;aspect-ratio:3/2;
+  background:var(--bg-card);border:1px solid var(--border);
+  margin-bottom:18px;overflow:hidden;
+  background-size:cover;background-position:center;
+  transition:border-color .25s,box-shadow .25s;
+}
+.case-item:hover .ci-visual{border-color:var(--border-blue);box-shadow:0 0 34px var(--glow)}
+.ci-meta{
+  font-family:var(--font-body);font-size:10.5px;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--text-low);
+  margin-bottom:12px;
+}
+.case-item h3{
+  font-family:var(--font-display);font-weight:700;
+  font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.01em;
+  color:var(--text-display);transition:color .2s;
+}
+.case-item:hover h3{color:var(--text-hi)}
+.case-item p{font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-top:10px;max-width:60ch}
+.ci-more{
+  display:flex;align-items:center;gap:8px;margin-top:16px;
+  font-size:13px;font-weight:600;color:var(--blue-500);transition:gap .2s;
+}
+.case-item:hover .ci-more{gap:13px}
+@media(max-width:1080px){.case-stack{grid-template-columns:1fr;gap:40px}}
+
+/* ============ INSIGHTS (blog cards) ============ */
+.insights{background:var(--bg-base)}
+.insights .section-title{color:var(--text-hi)}
+.ins-inner{display:grid;grid-template-columns:320px 1fr;gap:clamp(36px,4vw,60px);align-items:start;max-width:1360px;margin:0 auto}
+.ins-head .section-title{margin-bottom:0;font-size:clamp(1.75rem,2.6vw,2.35rem);line-height:1.14}
+.ins-sub{color:var(--text-mid);font-size:15.5px;line-height:1.5;margin-top:12px}
+.ins-head .link-arrow{display:inline-flex;margin-top:26px}
+@media(max-width:900px){.ins-inner{grid-template-columns:1fr;gap:32px}}
+.ins-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ins-card{
+  display:flex;flex-direction:column;min-height:250px;
+  background:var(--bg-surface);border:1px solid var(--border);
+  padding:26px 24px;text-decoration:none;color:var(--text-hi);
+  transition:transform .25s cubic-bezier(.2,.6,.2,1),border-color .25s,box-shadow .25s;
+  overflow:hidden;
+}
+.ins-thumb{
+  aspect-ratio:16/9;margin:-26px -24px 22px;flex-shrink:0;
+  background:center/cover no-repeat;
+  transition:transform .4s cubic-bezier(.2,.6,.2,1);
+}
+.ins-card:hover .ins-thumb{transform:scale(1.045)}
+.ins-card:hover{border-color:var(--border-blue);transform:translateY(-6px);box-shadow:0 0 30px var(--glow)}
+.ins-card h3{
+  font-family:var(--font-display);font-weight:700;font-size:19px;line-height:1.25;
+  letter-spacing:-.01em;margin:16px 0 0;
+}
+.ins-desc{font-family:var(--font-body);color:var(--text-mid);font-size:13.5px;line-height:1.6;margin-top:10px;margin-bottom:auto}
+.ins-meta{font-family:var(--font-body);font-size:13px;margin-top:20px}
+.ins-meta b{color:var(--blue-500);font-weight:600}
+@media(max-width:1080px){.ins-grid{grid-template-columns:1fr 1fr}}
+
+/* ============ FOOTER ============ */
+footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-base)}
+.foot-inner{max-width:1360px;margin:0 auto;padding:0 var(--pad-x)}
+.foot-grid{display:grid;grid-template-columns:1.7fr 1.5fr 1.35fr;gap:48px;margin-bottom:56px}
+.foot-brand p{color:var(--text-mid);font-size:14.5px;max-width:300px;line-height:1.6}
+.foot-social{display:flex;gap:12px;margin-top:26px}
+.foot-social a{width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text-mid);transition:color .2s,border-color .2s}
+.foot-social a:hover{color:var(--text-hi);border-color:var(--border-blue)}
+.foot-social svg{width:15px;height:15px;fill:currentColor}
+.foot-col h4{font-family:var(--font-body);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-low);margin-bottom:18px;font-weight:600}
+.foot-col a{display:block;color:var(--text-mid);font-size:14.5px;padding:6px 0;transition:color .2s;text-decoration:none}
+.foot-col a:hover{color:var(--text-hi)}
+.foot-quick .foot-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 28px}
+.foot-contact{display:flex;flex-direction:column;gap:20px}
+.foot-contact .crow{display:flex;gap:12px;align-items:center;color:var(--text-mid);font-size:14.5px;line-height:1.5}
+.foot-contact .crow.addr{align-items:flex-start}
+.foot-contact .crow a{color:var(--text-mid);text-decoration:none}
+.foot-contact .crow a:hover{color:var(--text-hi)}
+.foot-contact .crow svg{width:17px;height:17px;flex:none;stroke:currentColor;fill:none;color:var(--text-low)}
+.foot-contact .crow.addr svg{margin-top:2px}
+.foot-bottom-bar{border-top:1px solid var(--border)}
+.foot-bottom{max-width:1360px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:22px var(--pad-x);color:var(--text-low);font-size:13px;gap:20px;flex-wrap:wrap}
+.foot-legal{display:inline-flex;gap:16px;align-items:center}
+.foot-legal a{color:var(--text-low);font-size:13px;text-decoration:none}
+.foot-legal a:hover{color:var(--text-mid)}
+@media(max-width:860px){.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.foot-grid{grid-template-columns:1fr}}
+.to-top{position:fixed;right:clamp(18px,3vw,34px);bottom:clamp(18px,3vw,34px);width:44px;height:44px;display:grid;place-items:center;cursor:pointer;z-index:60;color:var(--text-mid);background:rgba(12,15,24,.65);border:1px solid var(--border);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 6px 18px rgba(0,0,0,.35);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .3s,transform .3s,background .25s,border-color .25s,color .25s}
+.to-top.show{opacity:1;transform:translateY(0);pointer-events:auto}
+.to-top:hover{background:rgba(0,146,215,.14);border-color:var(--border-blue);color:var(--blue-300)}
+
+/* ============ RESPONSIVE / A11Y ============ */
+@media (max-width:720px){
+  .nav-links{display:none}
+  .ins-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  .section,.cases{padding:80px var(--pad-x)}
+}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .rv{opacity:1;transform:none}
+  .hero-mark,.hero-side,.hero-visual,.hero-h1 .l1,.hero-h1 .l2{opacity:1;animation:none}
+  .rs-item,.rs-tag{transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<nav class="nav" id="nav">
+  <a class="logo" href="Style-Combine-0727.html" aria-label="Bahwan CyberTek home">
+    <span class="logo-img"></span>
+  </a>
+  <ul class="nav-links">
+    <li><a class="on" href="Style-Combine-0727.html#products">Products<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a></li>
+    <li><a href="#">Practices<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a></li>
+    <li><a href="#">Industries<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a></li>
+    <li><a href="Style-Combine-0727.html#careers">Careers</a></li>
+    <li><a href="#">About<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a></li>
+  </ul>
+  <a class="nav-locale" href="#" aria-label="Region: USA">
+    <svg class="globe" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.8 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.8-3.8-9S9.5 5.6 12 3Z"/></svg>
+    USA
+    <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+  </a>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <div class="hero-inner">
+    <img class="hero-mark" src="retina360-logo-light.svg" width="248" height="64" alt="retina360">
+
+    <div class="hero-top">
+      <h1 class="hero-h1">
+        <span class="hm"><span class="l1">Optimize your asset management,</span></span>
+        <span class="hm"><span class="l2 shiny">maximize ROI and KPIs</span></span>
+      </h1>
+      <div class="hero-side">
+        <div class="bar"></div>
+        <p>A real-time, integrated analytics platform that turns multi-OEM operational data into 360&deg; visibility, predictive intelligence, and measurable output.</p>
+        <a class="link-arrow hero-cta" href="#capabilities">Learn more <span class="ar">&rarr;</span></a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-plate">
+        <img src="retina360-banner.webp" width="1500" height="1360" alt="Wind turbine monitored in real time by retina360">
+      </div>
+      <span class="hero-pill p1"><i></i>Real-time SCADA integration</span>
+      <span class="hero-pill p2"><i></i>AI/ML anomaly detection</span>
+      <div class="hero-stat">
+        <b>7.2%</b>
+        <span>Less non-productive time</span>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<!-- ================= RESULTS ================= -->
+<section class="results section" id="results">
+  <div class="rs-layout">
+    <div class="rs-copy rv">
+      <div class="eyebrow">Results</div>
+      <h2 class="section-title">The data tells the story</h2>
+      <p>Across wind, solar and oil &amp; gas portfolios, retina360 moves teams off reactive firefighting and onto planned, data-led operations.</p>
+    </div>
+    <div class="rs-stats rv">
+      <div class="rs-stat">
+        <span class="rs-rule" aria-hidden="true"></span>
+        <b class="rs-num" role="img" aria-label="1.5 to 2 percent">
+          <span class="rs-strip">
+          <span aria-hidden="true">0.4%</span>
+          <span aria-hidden="true">2.8%</span>
+          <span aria-hidden="true">1.1%</span>
+          <span>1.5&ndash;2%</span>
+          </span>
+        </b>
+        <p>Increase in yield</p>
+      </div>
+      <div class="rs-stat">
+        <span class="rs-rule" aria-hidden="true"></span>
+        <b class="rs-num" role="img" aria-label="1 percent">
+          <span class="rs-strip">
+          <span aria-hidden="true">4%</span>
+          <span aria-hidden="true">0.3%</span>
+          <span aria-hidden="true">2%</span>
+          <span>1%</span>
+          </span>
+        </b>
+        <p>Increase in availability</p>
+      </div>
+      <div class="rs-stat">
+        <span class="rs-rule" aria-hidden="true"></span>
+        <b class="rs-num" role="img" aria-label="1 to 1.5 percent">
+          <span class="rs-strip">
+          <span aria-hidden="true">3&ndash;4%</span>
+          <span aria-hidden="true">0.5%</span>
+          <span aria-hidden="true">2&ndash;2.5%</span>
+          <span>1&ndash;1.5%</span>
+          </span>
+        </b>
+        <p>Increase in revenue</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CAPABILITIES ================= -->
+<section class="caps section" id="capabilities">
+  <div class="style-switch" role="group" aria-label="Capabilities layout style">
+    <span class="ss-label">Capabilities</span>
+    <button type="button" data-go="a" class="on">Style A</button>
+    <button type="button" data-go="b">Style B</button>
+  </div>
+  <div class="sec-head rv">
+    <div class="eyebrow">Capabilities</div>
+    <h2 class="section-title">Improve operational efficiency through data science</h2>
+    <p class="sec-sub">Twelve capabilities on one platform &mdash; from raw multi-OEM telemetry through to work orders, billing and the field app your technicians actually carry.</p>
+  </div>
+
+  <!-- ---- Style A: icon cards, 4 up ---- -->
+  <div class="cap-style is-on" data-style="a">
+  <div class="acards" id="cap-grid-a">
+    <article class="acard">
+      <div class="acard-icon"><svg viewBox="0 0 64 64" fill="none" stroke-width="1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <rect x="4.5" y="10.5" width="55" height="36" stroke="#FFFFFF"/>
+  <path d="M4.5 17.5h55" stroke="#A5A5A5"/>
+  <circle cx="9" cy="14" r="1.2" stroke="#A5A5A5"/><circle cx="13.5" cy="14" r="1.2" stroke="#A5A5A5"/>
+  <path d="M10 39l10-9 7 6 9-15 8 10 9-7" stroke="#FFFFFF"/>
+  <path d="M10 46.5h44" stroke="#A5A5A5"/>
+  <path d="M24 55.5h16M32 46.5v9" stroke="#A5A5A5"/>
+  <circle cx="36" cy="21" r="3.4" fill="#1294D7"/>
+</svg></div>
+      <h3>Real-Time<br>Monitoring</h3>
+      <p>Integrate multi-OEM SCADA data for centralized, real-time asset monitoring, enhancing visibility and control.</p>
+    </article>
+    <article class="acard">
+      <div class="acard-icon"><svg viewBox="0 0 64 64" fill="none" stroke-width="1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <rect x="4.5" y="17.5" width="23" height="28" stroke="#FFFFFF"/>
+  <circle cx="16" cy="27" r="4.5" stroke="#A5A5A5"/>
+  <path d="M9 37h14M9 41h9" stroke="#A5A5A5"/>
+  <path d="M32 6v52" stroke="#A5A5A5" stroke-dasharray="2 4"/>
+  <rect x="36.5" y="17.5" width="23" height="28" stroke="#A5A5A5"/>
+  <path d="M41 37h14M41 41h9" stroke="#A5A5A5"/>
+  <circle cx="48" cy="27" r="4.5" fill="#1294D7"/>
+</svg></div>
+      <h3>Digital<br>Twin</h3>
+      <p>Mirror renewable assets in real time, driving innovation through advanced digital twin technology.</p>
+    </article>
+    <article class="acard">
+      <div class="acard-icon"><svg viewBox="0 0 64 64" fill="none" stroke-width="1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M4.5 52.5h55M4.5 52.5V8" stroke="#A5A5A5"/>
+  <path d="M8 40l6-4 6 5 5-4 5 3" stroke="#FFFFFF"/>
+  <path d="M30 40l4-26 5 38 4-25 5 9 7-5" stroke="#FFFFFF"/>
+  <path d="M4.5 36h55" stroke="#A5A5A5" stroke-dasharray="2 4"/>
+  <circle cx="34" cy="14" r="4.5" fill="#1294D7"/>
+</svg></div>
+      <h3>Anomaly<br>Detection</h3>
+      <p>Continuously monitor asset health and anticipate failures with real-time diagnostics and predictive alerts, minimizing downtime.</p>
+    </article>
+    <article class="acard">
+      <div class="acard-icon"><svg viewBox="0 0 64 64" fill="none" stroke-width="1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M4.5 15.5l17-6 21 7 20-7v41l-20 7-21-7-17 6v-41Z" stroke="#FFFFFF"/>
+  <path d="M21.5 9.5v41M42.5 16.5v41" stroke="#A5A5A5"/>
+  <path d="M32 46c0-8 4-14 4-14s4 6 4 14" stroke="none"/>
+  <path d="M32.5 30.5a7.5 7.5 0 1 1 15 0c0 6.6-7.5 14-7.5 14s-7.5-7.4-7.5-14Z" stroke="#A5A5A5"/>
+  <circle cx="40" cy="30" r="4.2" fill="#1294D7"/>
+</svg></div>
+      <h3>Geospatial<br>Analytics</h3>
+      <p>Visualize location-based data to empower informed decisions and resource optimization.</p>
+    </article>
+    <article class="acard">
+      <div class="acard-icon"><svg viewBox="0 0 64 64" fill="none" stroke-width="1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M6.5 52.5h53M6.5 52.5V7" stroke="#A5A5A5"/>
+  <path d="M6.5 52.5c14 0 16-2 22-13s11-17 31-17" stroke="#FFFFFF"/>
+  <path d="M6.5 52.5c15 0 18 1 24-8s12-13 29-13" stroke="#A5A5A5" stroke-dasharray="3 3"/>
+  <path d="M36 27v25M48 22.5v30" stroke="#A5A5A5" stroke-dasharray="2 4"/>
+  <circle cx="36" cy="27" r="3.6" fill="#1294D7"/>
+</svg></div>
+      <h3>Power Curve<br>Analysis</h3>
+      <p>Maximize energy efficiency and output with precision power curve and lost generation analysis, optimizing production and cutting costs.</p>
+    </article>
+    <article class="acard">
+      <div class="acard-icon"><svg viewBox="0 0 64 64" fill="none" stroke-width="1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M32 5.5l20 7v18c0 13-8.6 21.6-20 26-11.4-4.4-20-13-20-26v-18l20-7Z" stroke="#FFFFFF"/>
+  <path d="M18.5 33.5h27M32 20v27" stroke="#A5A5A5" stroke-dasharray="2 4"/>
+  <circle cx="32" cy="30" r="7.5" fill="#1294D7"/>
+  <path d="M28.6 30l2.5 2.5 4.6-5.2" stroke="#04121C"/>
+</svg></div>
+      <h3>Warranty &amp; Spares<br>Management</h3>
+      <p>Keep assets reliable with timely parts availability and enforced warranty terms.</p>
+    </article>
+    <article class="acard">
+      <div class="acard-icon"><svg viewBox="0 0 64 64" fill="none" stroke-width="1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <rect x="12.5" y="8.5" width="39" height="47" stroke="#FFFFFF"/>
+  <rect x="24.5" y="4.5" width="15" height="8" stroke="#A5A5A5"/>
+  <path d="M28 24h16M28 34h16M28 44h16" stroke="#A5A5A5"/>
+  <path d="M19 32.5h5M19 42.5h5" stroke="#A5A5A5"/>
+  <rect x="19" y="20" width="5" height="5" fill="#1294D7"/>
+</svg></div>
+      <h3>CMMS &amp; Work Order<br>Management</h3>
+      <p>Coordinate maintenance from one system, improving task execution and efficiency.</p>
+    </article>
+    <article class="acard">
+      <div class="acard-icon"><svg viewBox="0 0 64 64" fill="none" stroke-width="1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <rect x="19.5" y="4.5" width="25" height="55" stroke="#FFFFFF"/>
+  <path d="M28 9h8M28 54.5h8" stroke="#A5A5A5"/>
+  <path d="M24 40h16M24 46h11" stroke="#A5A5A5"/>
+  <path d="M8 22c-3 4-3 12 0 16M12.5 27c-1.4 2-1.4 6 0 8" stroke="#A5A5A5"/>
+  <path d="M56 22c3 4 3 12 0 16M51.5 27c1.4 2 1.4 6 0 8" stroke="#A5A5A5"/>
+  <rect x="24" y="15" width="16" height="18" fill="#1294D7"/>
+</svg></div>
+      <h3>Mobile<br>Application</h3>
+      <p>Boost field efficiency with real-time data access and seamless communication.</p>
+    </article>
+    <article class="acard">
+      <div class="acard-icon"><svg viewBox="0 0 64 64" fill="none" stroke-width="1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M18 32.5a9 9 0 0 1-1-17.9 12 12 0 0 1 23-2.6 8 8 0 0 1 1 20.5H18Z" stroke="#FFFFFF"/>
+  <path d="M4.5 55.5h55" stroke="#A5A5A5"/>
+  <path d="M6 50l11-7 10 5 11-12 11 6" stroke="#A5A5A5" stroke-dasharray="3 3"/>
+  <path d="M33 17.5L25 30h6.5l-2 10 9.5-14h-6.5l0.5-8.5Z" fill="#1294D7" stroke="none"/>
+</svg></div>
+      <h3>Energy<br>Forecasting</h3>
+      <p>Optimize energy resources with precise forecasting that reduces waste and lifts profitability.</p>
+    </article>
+    <article class="acard">
+      <div class="acard-icon"><svg viewBox="0 0 64 64" fill="none" stroke-width="1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <circle cx="12" cy="14" r="5" stroke="#A5A5A5"/><circle cx="52" cy="14" r="5" stroke="#A5A5A5"/>
+  <circle cx="12" cy="50" r="5" stroke="#A5A5A5"/><circle cx="52" cy="50" r="5" stroke="#A5A5A5"/>
+  <path d="M16 18l10 10M48 18L38 28M16 46l10-10M48 46L38 36" stroke="#A5A5A5"/>
+  <circle cx="32" cy="32" r="9" fill="#1294D7"/>
+</svg></div>
+      <h3>Customer Relationship<br>Management</h3>
+      <p>Deliver data-driven CRM that strengthens customer relationships and elevates every service interaction.</p>
+    </article>
+    <article class="acard">
+      <div class="acard-icon"><svg viewBox="0 0 64 64" fill="none" stroke-width="1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M14.5 6.5h35v51l-5.8-3.5-5.9 3.5-5.8-3.5-5.9 3.5-5.8-3.5-5.8 3.5v-51Z" stroke="#FFFFFF"/>
+  <path d="M21 18h22M21 26h22" stroke="#A5A5A5"/>
+  <path d="M21 34h13" stroke="#A5A5A5"/>
+  <circle cx="32" cy="45" r="6.5" fill="#1294D7"/>
+</svg></div>
+      <h3>Energy Accounting<br>and Billing</h3>
+      <p>Automate energy billing for accurate financial management &mdash; fewer errors, faster cash flow.</p>
+    </article>
+    <article class="acard">
+      <div class="acard-icon"><svg viewBox="0 0 64 64" fill="none" stroke-width="1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M4.5 20.5h55v8a4 4 0 0 0 0 8v8h-55v-8a4 4 0 0 0 0-8v-8Z" stroke="#FFFFFF"/>
+  <path d="M24 20.5v4M24 28.5v4M24 36.5v4M24 44.5v4" stroke="#A5A5A5"/>
+  <path d="M31 30h20M31 37h13" stroke="#A5A5A5"/>
+  <rect x="9" y="29" width="10" height="7" fill="#1294D7"/>
+</svg></div>
+      <h3>Ticket<br>Management</h3>
+      <p>Simplify issue resolution with an efficient ticketing system that shortens response times.</p>
+    </article>
+  </div>
+<button class="cap-more" type="button" aria-expanded="false" aria-controls="cap-grid-a">
+    <span class="cap-more-label">Learn more</span>
+    <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+  </div>
+
+  <!-- ---- Style B: bento cards, big + small ---- -->
+  <div class="cap-style" data-style="b">
+  <div class="bcards" id="cap-grid-b">
+    <article class="bcard" data-span="1">
+      <div class="bcard-art" aria-hidden="true"><svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="118" cy="120" r="46" stroke="#0092D7" stroke-width="10" opacity=".30"/><circle cx="118" cy="120" r="76" stroke="#0092D7" stroke-width="10" opacity=".20"/><circle cx="118" cy="120" r="106" stroke="#5FBEEA" stroke-width="10" opacity=".12"/></svg></div>
+      <div class="bcard-body">
+        <span class="bcard-idx">01</span>
+        <h3>Real-Time Monitoring</h3>
+        <p>Integrate multi-OEM SCADA data for centralized, real-time asset monitoring, enhancing visibility and control.</p>
+      </div>
+    </article>
+    <article class="bcard" data-span="2">
+      <div class="bcard-art" aria-hidden="true"><svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke="#5FBEEA" stroke-width="9" opacity=".26"><path d="M64 40 100 60v40L64 120 28 100V60Z"/><path d="M160 40l36 20v40l-36 20-36-20V60Z"/><path d="M64 140l36 20v40l-36 20-36-20v-40Z"/><path d="M160 140l36 20v40l-36 20-36-20v-40Z"/><path d="M100 80h24M160 120v20M64 120v20M100 180h24"/></g></svg></div>
+      <div class="bcard-body">
+        <span class="bcard-idx">02</span>
+        <h3>Digital Twin</h3>
+        <p>Mirror renewable assets in real time, driving innovation through advanced digital twin technology.</p>
+      </div>
+    </article>
+    <article class="bcard" data-span="2">
+      <div class="bcard-art" aria-hidden="true"><svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 200c56 0 62-40 100-84S166 40 200 40v160Z" fill="#0092D7" opacity=".22"/><path d="M0 200c66 0 74-28 112-64s54-40 88-40v104Z" fill="#5FBEEA" opacity=".14"/></svg></div>
+      <div class="bcard-body">
+        <span class="bcard-idx">03</span>
+        <h3>Anomaly Detection &amp; Predictive Maintenance</h3>
+        <p>Continuously monitor asset health and anticipate failures with real-time diagnostics and predictive alerts, minimizing downtime.</p>
+      </div>
+    </article>
+    <article class="bcard" data-span="1">
+      <div class="bcard-art" aria-hidden="true"><svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="86" cy="92" r="60" fill="#0092D7" opacity=".22"/><circle cx="150" cy="150" r="86" fill="#5FBEEA" opacity=".14"/><circle cx="86" cy="92" r="26" fill="#5FBEEA" opacity=".22"/></svg></div>
+      <div class="bcard-body">
+        <span class="bcard-idx">04</span>
+        <h3>Geospatial Analytics</h3>
+        <p>Visualize location-based data to empower informed decisions and resource optimization.</p>
+      </div>
+    </article>
+    <article class="bcard" data-span="1">
+      <div class="bcard-art" aria-hidden="true"><svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#0092D7" stroke-width="12" stroke-linecap="round"><path d="M60 26a94 94 0 0 1 0 188" opacity=".30"/><path d="M110 6a114 114 0 0 1 0 228" opacity=".20"/><path d="M162 -14a134 134 0 0 1 0 268" opacity=".12" stroke="#5FBEEA"/></g></svg></div>
+      <div class="bcard-body">
+        <span class="bcard-idx">05</span>
+        <h3>Power Curve &amp; Lost Generation Analysis</h3>
+        <p>Maximize energy efficiency and output with precision power curve and lost generation analysis, optimizing production and cutting costs.</p>
+      </div>
+    </article>
+    <article class="bcard" data-span="2">
+      <div class="bcard-art" aria-hidden="true"><svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="6" fill="#0092D7" opacity="0.06"/><circle cx="52" cy="20" r="6" fill="#0092D7" opacity="0.088"/><circle cx="84" cy="20" r="6" fill="#0092D7" opacity="0.116"/><circle cx="116" cy="20" r="6" fill="#0092D7" opacity="0.144"/><circle cx="148" cy="20" r="6" fill="#0092D7" opacity="0.172"/><circle cx="180" cy="20" r="6" fill="#0092D7" opacity="0.2"/><circle cx="20" cy="52" r="6" fill="#0092D7" opacity="0.088"/><circle cx="52" cy="52" r="6" fill="#0092D7" opacity="0.116"/><circle cx="84" cy="52" r="6" fill="#0092D7" opacity="0.144"/><circle cx="116" cy="52" r="6" fill="#0092D7" opacity="0.172"/><circle cx="148" cy="52" r="6" fill="#0092D7" opacity="0.2"/><circle cx="180" cy="52" r="6" fill="#0092D7" opacity="0.228"/><circle cx="20" cy="84" r="6" fill="#0092D7" opacity="0.116"/><circle cx="52" cy="84" r="6" fill="#0092D7" opacity="0.144"/><circle cx="84" cy="84" r="6" fill="#0092D7" opacity="0.172"/><circle cx="116" cy="84" r="6" fill="#0092D7" opacity="0.2"/><circle cx="148" cy="84" r="6" fill="#0092D7" opacity="0.228"/><circle cx="180" cy="84" r="6" fill="#0092D7" opacity="0.256"/><circle cx="20" cy="116" r="6" fill="#0092D7" opacity="0.144"/><circle cx="52" cy="116" r="6" fill="#0092D7" opacity="0.172"/><circle cx="84" cy="116" r="6" fill="#0092D7" opacity="0.2"/><circle cx="116" cy="116" r="6" fill="#0092D7" opacity="0.228"/><circle cx="148" cy="116" r="6" fill="#0092D7" opacity="0.256"/><circle cx="180" cy="116" r="6" fill="#0092D7" opacity="0.284"/><circle cx="20" cy="148" r="6" fill="#0092D7" opacity="0.172"/><circle cx="52" cy="148" r="6" fill="#0092D7" opacity="0.2"/><circle cx="84" cy="148" r="6" fill="#0092D7" opacity="0.228"/><circle cx="116" cy="148" r="6" fill="#0092D7" opacity="0.256"/><circle cx="148" cy="148" r="6" fill="#0092D7" opacity="0.284"/><circle cx="180" cy="148" r="6" fill="#0092D7" opacity="0.312"/><circle cx="20" cy="180" r="6" fill="#0092D7" opacity="0.2"/><circle cx="52" cy="180" r="6" fill="#0092D7" opacity="0.228"/><circle cx="84" cy="180" r="6" fill="#0092D7" opacity="0.256"/><circle cx="116" cy="180" r="6" fill="#0092D7" opacity="0.284"/><circle cx="148" cy="180" r="6" fill="#0092D7" opacity="0.312"/><circle cx="180" cy="180" r="6" fill="#0092D7" opacity="0.34"/></svg></div>
+      <div class="bcard-body">
+        <span class="bcard-idx">06</span>
+        <h3>Warranty &amp; Spares Management</h3>
+        <p>Keep assets reliable with timely parts availability and enforced warranty terms.</p>
+      </div>
+    </article>
+    <article class="bcard" data-span="2">
+      <div class="bcard-art" aria-hidden="true"><svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#5FBEEA" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"><path d="M20 96l70-62 70 62" opacity=".28"/><path d="M20 148l70-62 70 62" opacity=".19"/><path d="M20 200l70-62 70 62" opacity=".11"/></g></svg></div>
+      <div class="bcard-body">
+        <span class="bcard-idx">07</span>
+        <h3>CMMS &amp; Work Order Management</h3>
+        <p>Coordinate maintenance from one system, improving task execution and efficiency.</p>
+      </div>
+    </article>
+    <article class="bcard" data-span="1">
+      <div class="bcard-art" aria-hidden="true"><svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#0092D7" stroke-width="10"><rect x="60" y="60" width="120" height="120" opacity=".28"/><rect x="60" y="60" width="120" height="120" opacity=".18" transform="rotate(22 120 120)"/><rect x="60" y="60" width="120" height="120" opacity=".10" stroke="#5FBEEA" transform="rotate(44 120 120)"/></g></svg></div>
+      <div class="bcard-body">
+        <span class="bcard-idx">08</span>
+        <h3>Mobile Application</h3>
+        <p>Boost field efficiency with real-time data access and seamless communication.</p>
+      </div>
+    </article>
+    <article class="bcard" data-span="1">
+      <div class="bcard-art" aria-hidden="true"><svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke="#0092D7" stroke-width="9" stroke-linecap="round" opacity=".26"><path d="M120 120L120.0 2.0"/><path d="M120 120L168.0 12.2"/><path d="M120 120L207.7 41.0"/><path d="M120 120L232.2 83.5"/><path d="M120 120L237.4 132.3"/><path d="M120 120L222.2 179.0"/><path d="M120 120L189.4 215.5"/><path d="M120 120L144.5 235.4"/></g><circle cx="120" cy="120" r="30" fill="#5FBEEA" opacity=".18"/></svg></div>
+      <div class="bcard-body">
+        <span class="bcard-idx">09</span>
+        <h3>Energy Forecasting</h3>
+        <p>Optimize energy resources with precise forecasting that reduces waste and lifts profitability.</p>
+      </div>
+    </article>
+    <article class="bcard" data-span="2">
+      <div class="bcard-art" aria-hidden="true"><svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#5FBEEA" stroke-width="10" stroke-linecap="round"><path d="M-10 80q40-42 80 0t80 0 80 0" opacity=".28"/><path d="M-10 130q40-42 80 0t80 0 80 0" opacity=".19"/><path d="M-10 180q40-42 80 0t80 0 80 0" opacity=".11"/></g></svg></div>
+      <div class="bcard-body">
+        <span class="bcard-idx">10</span>
+        <h3>Customer Relationship Management</h3>
+        <p>Deliver data-driven CRM that strengthens customer relationships and elevates every service interaction.</p>
+      </div>
+    </article>
+    <article class="bcard" data-span="2">
+      <div class="bcard-art" aria-hidden="true"><svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><g fill="#0092D7"><rect x="24" y="140" width="34" height="80" opacity=".16"/><rect x="70" y="106" width="34" height="114" opacity=".22"/><rect x="116" y="66" width="34" height="154" opacity=".28"/><rect x="162" y="20" width="34" height="200" opacity=".16" fill="#5FBEEA"/></g></svg></div>
+      <div class="bcard-body">
+        <span class="bcard-idx">11</span>
+        <h3>Energy Accounting and Billing</h3>
+        <p>Automate energy billing for accurate financial management &mdash; fewer errors, faster cash flow.</p>
+      </div>
+    </article>
+    <article class="bcard" data-span="1">
+      <div class="bcard-art" aria-hidden="true"><svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="120" cy="120" rx="112" ry="52" stroke="#0092D7" stroke-width="10" opacity=".22" transform="rotate(-28 120 120)"/><circle cx="120" cy="120" r="52" stroke="#5FBEEA" stroke-width="10" opacity=".28"/><path d="M120 40v160M40 120h160" stroke="#0092D7" stroke-width="8" opacity=".14"/></svg></div>
+      <div class="bcard-body">
+        <span class="bcard-idx">12</span>
+        <h3>Ticket Management</h3>
+        <p>Simplify issue resolution with an efficient ticketing system that shortens response times.</p>
+      </div>
+    </article>
+  </div>
+  <button class="cap-more" type="button" aria-expanded="false" aria-controls="cap-grid-b">
+    <span class="cap-more-label">Learn more</span>
+    <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+  </div>
+</section>
+
+<!-- ================= CASE STUDIES ================= -->
+<section class="cases" id="cases">
+  <div class="cases-grid">
+    <div class="sec-head rv">
+      <div class="eyebrow">Our work</div>
+      <h2 class="section-title">Case Study</h2>
+      <p class="sec-sub">How operators in oil &amp; gas, wind and solar put retina360 to work &mdash; and what changed once they did.</p>
+      <a class="link-arrow" href="#" style="margin-top:26px">View all <span class="ar">&rarr;</span></a>
+    </div>
+    <div class="case-stack">
+      <a class="case-item rv" href="#">
+        <span class="ci-visual" aria-hidden="true" style="background-image:url('r360-case-1.webp')"></span>
+        <div class="ci-meta">Oil &amp; Gas &middot; Predictive &middot; Uptime</div>
+        <h3>Fueling productivity</h3>
+        <p>How a major oil and gas operator reduced non-productive time by 7.2%.</p>
+        <span class="ci-more">Read more &rarr;</span>
+      </a>
+      <a class="case-item rv" href="#" style="transition-delay:.06s">
+        <span class="ci-visual" aria-hidden="true" style="background-image:url('r360-case-2.webp')"></span>
+        <div class="ci-meta">Wind &middot; Asset Management &middot; Real-time</div>
+        <h3>Optimizing asset management</h3>
+        <p>How a prominent wind energy producer optimized their asset management in real-time.</p>
+        <span class="ci-more">Read more &rarr;</span>
+      </a>
+      <a class="case-item rv" href="#" style="transition-delay:.12s">
+        <span class="ci-visual" aria-hidden="true" style="background-image:url('r360-case-3.webp')"></span>
+        <div class="ci-meta">Solar &middot; Monitoring &middot; Analytics</div>
+        <h3>Streamlining performance &amp; monitoring</h3>
+        <p>How a global solar OEM centralized monitoring and performance analytics for eight energy parks.</p>
+        <span class="ci-more">Read more &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INSIGHTS ================= -->
+<section class="insights section" id="insights">
+  <div class="ins-inner rv">
+    <div class="ins-head">
+      <div class="eyebrow">Insights</div>
+      <h2 class="section-title">Deep dive into our insights</h2>
+      <p class="ins-sub">Perspectives from the engineers and data scientists behind retina360.</p>
+      <a class="link-arrow" href="#">View more <span class="ar">&rarr;</span></a>
+    </div>
+    <div class="ins-grid">
+      <a class="ins-card rv" href="#">
+        <div class="ins-thumb" style="background-image:url('r360-blog-1.webp')"></div>
+        <h3>Why IoT devices are the future of oil rigs</h3>
+        <p class="ins-desc">Hello everyone! Let me introduce myself and the blog &mdash; I am Vancheeswar Balakrishnan (Vanchy).</p>
+        <div class="ins-meta"><b>Read more &rarr;</b></div>
+      </a>
+      <a class="ins-card rv" href="#" style="transition-delay:.06s">
+        <div class="ins-thumb" style="background-image:url('r360-blog-2.webp')"></div>
+        <h3>How to get data right</h3>
+        <p class="ins-desc">Getting data right means transforming data into ROI.</p>
+        <div class="ins-meta"><b>Read more &rarr;</b></div>
+      </a>
+      <a class="ins-card rv" href="#" style="transition-delay:.12s">
+        <div class="ins-thumb" style="background-image:url('r360-blog-3.webp')"></div>
+        <h3>Applying predictive analytics to wind farms</h3>
+        <p class="ins-desc">As climate targets loom large, the wind industry added 93+ GW of new wind power capacity.</p>
+        <div class="ins-meta"><b>Read more &rarr;</b></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <span class="foot-logo" role="img" aria-label="Bahwan CyberTek"></span>
+        <p>Bahwan CyberTek is a global technology transformation partner, driving innovation and equipping companies for the future.</p>
+        <div class="foot-social">
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H17V3.6c-.29-.04-1.3-.12-2.47-.12-2.44 0-4.11 1.49-4.11 4.23v2.36H7.7V13h2.72v8h3.08z"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24"><path d="M17.5 3h3.1l-6.77 7.73L21.8 21h-6.23l-4.88-6.38L5.11 21H2l7.24-8.27L2.5 3h6.39l4.41 5.83L17.5 3zm-1.09 16.15h1.72L7.66 4.76H5.82l10.59 14.39z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M6.94 5a1.94 1.94 0 1 1-3.88 0 1.94 1.94 0 0 1 3.88 0zM3.3 8.4h3.28V21H3.3V8.4zm5.28 0h3.14v1.72h.05c.44-.83 1.5-1.7 3.1-1.7 3.31 0 3.92 2.18 3.92 5.02V21h-3.27v-4.9c0-1.17-.02-2.67-1.63-2.67-1.63 0-1.88 1.27-1.88 2.58V21H8.58V8.4z"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M21.58 7.19a2.5 2.5 0 0 0-1.76-1.77C18.25 5 12 5 12 5s-6.25 0-7.82.42A2.5 2.5 0 0 0 2.42 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .42 4.81 2.5 2.5 0 0 0 1.76 1.77C5.75 19 12 19 12 19s6.25 0 7.82-.42a2.5 2.5 0 0 0 1.76-1.77A26 26 0 0 0 22 12a26 26 0 0 0-.42-4.81zM10 15V9l5.2 3-5.2 3z"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col foot-quick">
+        <h4>Quick links</h4>
+        <div class="foot-cols">
+          <div>
+            <a href="Style-Combine-0727.html#careers">Careers</a><a href="Style-Combine-0727.html#who">About us</a><a href="#insights">Insights</a><a href="#cases">Case Studies</a>
+          </div>
+          <div>
+            <a href="mailto:talktous@bahwancybertek.com">Contact Us</a><a href="#">Partnership</a><a href="#">News and Events</a><a href="#">ESG</a>
+          </div>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Get in touch</h4>
+        <div class="foot-contact">
+          <div class="crow addr"><svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>5th Floor, No. 780, Beian Road Zhongshan District, Taipei 10464, Taiwan.</span></div>
+          <div class="crow"><svg viewBox="0 0 24 24" stroke-width="1.6"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L19 13l2 5v3a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg><a href="tel:+886285015201">+886 2 85015201</a></div>
+          <div class="crow"><svg viewBox="0 0 24 24" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><a href="mailto:talktous@bahwancybertek.com">talktous@bahwancybertek.com</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom-bar">
+    <div class="foot-bottom">
+      <span>&copy; 2026 Bahwan CyberTek. All rights reserved.</span>
+      <span class="foot-legal"><a href="#">Cookie Policy</a><span class="sep">|</span><a href="#">Privacy Policy</a></span>
+    </div>
+  </div>
+</footer>
+<button class="to-top" aria-label="Back to top" title="Back to top">
+  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+/* ---------- nav scroll state ---------- */
+var nav = document.getElementById('nav');
+addEventListener('scroll', function(){ nav.classList.toggle('scrolled', scrollY > 24); }, {passive:true});
+
+/* ---------- scroll reveal ---------- */
+var io = new IntersectionObserver(function(es){
+  es.forEach(function(e){ e.target.classList.toggle('in', e.isIntersecting); });
+}, {threshold:.15, rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+
+/* ---------- results: slot-reel figures ---------- */
+(function(){
+  var wrap = document.querySelector('.rs-stats');
+  if (!wrap) return;
+  var strips = [].slice.call(wrap.querySelectorAll('.rs-strip'));
+  if (!strips.length) return;
+  /* the strip rests on the real value, so without this script the right number still shows */
+  var rio = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if (!e.isIntersecting) return;
+      rio.disconnect();
+      strips.forEach(function(st){ st.classList.add('roll-start'); });
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          strips.forEach(function(st){ st.classList.remove('roll-start'); st.classList.add('roll-go'); });
+        });
+      });
+    });
+  }, {threshold:.4});
+  rio.observe(wrap);
+})();
+
+/* ---------- capabilities: entrance, show more, A/B switch ---------- */
+(function(){
+  var grids = [].slice.call(document.querySelectorAll('.acards, .bcards'));
+  if (!grids.length) return;
+
+  /* only the 4 cards visible on load carry the staggered entrance */
+  grids.forEach(function(grid){
+    grid.querySelectorAll('.acard, .bcard').forEach(function(c, i){
+      c.style.transitionDelay = i < 4 ? (i * 0.07).toFixed(2) + 's' : '0s';
+    });
+    var gio = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting){ grid.classList.add('in'); gio.disconnect(); } });
+    }, {threshold:.08});
+    gio.observe(grid);
+  });
+
+  document.querySelectorAll('.cap-more').forEach(function(btn){
+    var grid = document.getElementById(btn.getAttribute('aria-controls'));
+    if (!grid) return;
+    var label = btn.querySelector('.cap-more-label');
+    btn.addEventListener('click', function(){
+      var open = grid.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      label.textContent = open ? 'Show less' : 'Learn more';
+      if (!open) btn.scrollIntoView({block:'nearest', behavior:'smooth'});
+    });
+  });
+
+  /* A / B switch — review tool, drop it once a style is chosen */
+  var sw = document.querySelector('.style-switch');
+  if (sw){
+    sw.addEventListener('click', function(e){
+      var btn = e.target.closest('button[data-go]');
+      if (!btn) return;
+      var pick = btn.dataset.go;
+      sw.querySelectorAll('button[data-go]').forEach(function(b){ b.classList.toggle('on', b === btn); });
+      document.querySelectorAll('.cap-style').forEach(function(pane){
+        var on = pane.dataset.style === pick;
+        pane.classList.toggle('is-on', on);
+        if (on){
+          var g = pane.querySelector('.acards, .bcards');
+          if (g) g.classList.add('in');
+        }
+      });
+    });
+  }
+})();
+
+/* ---------- back to top ---------- */
+(function(){
+  var btn = document.querySelector('.to-top');
+  if (!btn) return;
+  function onScroll(){ btn.classList.toggle('show', (window.scrollY || document.documentElement.scrollTop || 0) > 600); }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  btn.addEventListener('click', function(){
+    try { window.scrollTo({top:0, behavior:'smooth'}); } catch(e){ window.scrollTo(0,0); }
+  });
+})();
+</script>
+</body>
+</html>
