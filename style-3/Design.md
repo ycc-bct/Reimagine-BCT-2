@@ -289,3 +289,58 @@ Staggered groups add `transition-delay` in `.06s`–`.16s` steps, never more tha
 3. Every section title is `--fs-h2` via `.section-title`; every card title is `--fs-h3`.
 4. Page gutters are `var(--pad-x)`. Never a bare pixel value.
 5. Measure every title's line count at six widths before calling it done.
+
+---
+
+## 8. Mobile & responsive
+
+Verified against `BCT-V4-Mobile.html`, which rebuilds the V4 page on Tailwind. Every number below
+was measured, not estimated.
+
+### Body copy gets a floor on narrow screens
+
+The desktop scale is too small for light-on-dark copy held at arm's length. The three roles do not
+change — only their values do.
+
+| Role | ≥768px | <768px |
+|---|---|---|
+| `--fs-lede` | 15.5 / 1.70 | **16 / 1.72** |
+| `--fs-body` | 14.5 / 1.70 | **15 / 1.70** |
+| `--fs-small` | 13.5 / 1.60 | **14 / 1.60** |
+
+### Breakpoint map
+
+| | <640 | 640 | 768 | 1024 | 1280+ |
+|---|---|---|---|---|---|
+| Navigation | drawer | drawer | drawer | inline | inline |
+| Capability cards | 1 | 2 | 2 | 3 | 3 |
+| Product cards | 1 | 2 | 2 | 3 | 4 |
+| Stats | 1 | 3 | 3 | 3 | 3 |
+| Footer | 1 | 2 | 2 | 3 | 3 |
+| Why BCT | swipe rail | swipe rail | swipe rail | grid | grid |
+
+The navigation stays a drawer through 768 on purpose: five items plus the locale do not fit
+comfortably inline at tablet portrait.
+
+### Touch targets
+
+**Every interactive element is at least 44px tall on touch widths.** This is the rule the original
+V4 page broke most often — it had 28 targets under 44px, mostly 28px-tall arrow links. Use
+`min-h-11` on links whose text alone is shorter than that.
+
+### Adapt the layout, do not shrink it
+
+A row of cards that would become unreadably narrow becomes a **horizontal snap rail** instead: the
+row bleeds to the screen edge so a cut-off card signals the swipe, with a visible affordance
+underneath. It reverts to a grid once the columns can hold their width.
+
+### Pitfalls that cost real time
+
+1. **`ch` resolves against the element's own font-size.** A `max-w-[46ch]` on a 16px wrapper is
+   ~368px, not the ~1200px you meant for the 52px heading inside it. Put character caps on the
+   text element itself.
+2. **A viewport-sized headline overflows its own column.** `10.5vw` is fine against the page and
+   far too big against a 40%-wide column. Size headlines in `cqw` against a
+   `container-type: inline-size` parent.
+3. **The densest grid tier belongs at `xl`, not `lg`.** Four product columns at 1024 leaves ~230px
+   each, which pushes every card title to three lines.

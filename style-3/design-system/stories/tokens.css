@@ -52,3 +52,17 @@
   /* ---- rhythm ---- */
   --pad-x: clamp(24px, 5vw, 72px);
 }
+
+/* ============================================================================
+   Mobile overrides — see Design.md §8.
+   The desktop body scale (15.5/14.5/13.5) is too small for light-on-dark copy
+   held at arm's length, so the three roles get a floor on narrow screens. The
+   roles themselves do not change; only their values do.
+   ========================================================================= */
+@media (max-width: 767px){
+  :root{
+    --fs-lede:  16px;  --lh-lede:  1.72;
+    --fs-body:  15px;  --lh-body:  1.70;
+    --fs-small: 14px;  --lh-small: 1.60;
+  }
+}

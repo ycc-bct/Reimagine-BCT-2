@@ -1,0 +1,102 @@
+/* ============================================================================
+   Tailwind source for BCT-V4-Mobile.
+   The @theme block maps the design tokens from Design.md onto Tailwind's
+   namespaces, so utilities like bg-card / text-mid / text-lede resolve to the
+   exact same values the hand-written pages use. Build:
+     npx @tailwindcss/cli -i tw-src.css -o bct-tailwind.css --minify
+   ========================================================================= */
+@import "tailwindcss";
+@source "./BCT-V4-Mobile.html";
+
+@theme {
+  /* ---- surfaces ---- */
+  --color-base:    #060810;
+  --color-surface: #0C0F1A;
+  --color-card:    #111522;
+  --color-raise:   #161B2C;
+
+  /* ---- brand blue ---- */
+  --color-brand:     #0092D7;
+  --color-brand-300: #5FBEEA;
+  --color-brand-700: #0A6395;
+  --color-brand-900: #06344F;
+
+  /* ---- text ---- */
+  --color-hi:      #F5F8FC;
+  --color-display: #D7DFE9;
+  --color-mid:     rgba(242,246,250,.68);
+  --color-low:     rgba(242,246,250,.44);
+
+  /* ---- lines ---- */
+  --color-line:      rgba(255,255,255,.13);
+  --color-line-blue: rgba(0,146,215,.4);
+
+  /* ---- type ---- */
+  --font-display: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  --font-body:    'Poppins', ui-sans-serif, system-ui, sans-serif;
+
+  /* section + card headings, fluid across the whole range */
+  --text-h2: clamp(28px, 4.8vw, 52px);
+  --text-h2--line-height: 1.08;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h3: clamp(19px, 4.4vw, 22px);
+  --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: -0.01em;
+
+  /* the three body roles. Mobile gets a floor of 15px rather than the desktop
+     14.5/13.5 — below that, light-on-dark copy at arm's length stops being
+     comfortable, which is the whole point of this pass. */
+  --text-lede: 16px;
+  --text-lede--line-height: 1.72;
+  --text-body: 15px;
+  --text-body--line-height: 1.7;
+  --text-small: 14px;
+  --text-small--line-height: 1.6;
+
+  /* ---- rhythm ---- */
+  --spacing-gutter: clamp(20px, 5vw, 72px);
+}
+
+@layer base {
+  html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+  body {
+    background: var(--color-base);
+    color: var(--color-hi);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--color-brand); color: #04121C; }
+  p { text-wrap: pretty; }
+  /* every interactive surface gets a visible focus ring */
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* the film grain that ties this page to the rest of the site */
+  .grain::after {
+    content: ""; position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: .05;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  /* scroll reveal, shared with the hand-written pages */
+  .rv { opacity: 0; transform: translateY(24px);
+        transition: opacity .7s cubic-bezier(.2,.6,.2,1), transform .7s cubic-bezier(.2,.6,.2,1); }
+  .rv.in { opacity: 1; transform: none; }
+  /* edge-to-edge horizontal rails: the card row bleeds to the screen edge on
+     phones so the cut-off card signals "swipe me", then becomes a grid at md */
+  .rail {
+    display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
+    padding-inline: var(--spacing-gutter); margin-inline: calc(var(--spacing-gutter) * -1);
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .rail::-webkit-scrollbar { display: none; }
+  .rail > * { scroll-snap-align: start; flex: 0 0 78%; max-width: 320px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .rv { opacity: 1; transform: none; }
+}

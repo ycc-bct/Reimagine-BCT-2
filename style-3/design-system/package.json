@@ -5,12 +5,16 @@
   "description": "Design tokens and component reference for the Bahwan CyberTek site, extracted from BCT-V4.",
   "scripts": {
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build -o storybook-static"
+    "build-storybook": "storybook build -o storybook-static",
+    "css": "tailwindcss -i tw-src.css -o bct-tailwind.css --minify",
+    "css:watch": "tailwindcss -i tw-src.css -o bct-tailwind.css --watch"
   },
   "devDependencies": {
     "@storybook/addon-docs": "^9",
     "@storybook/html-vite": "^9",
+    "@tailwindcss/cli": "^4.3.3",
     "storybook": "^9",
+    "tailwindcss": "^4.3.3",
     "vite": "^6"
   }
 }

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#060810">
+<title>Bahwan CyberTek: Engineering for the intelligent enterprise</title>
+<meta name="description" content="BCT builds, operates, and powers mission-critical digital infrastructure using proprietary platforms, deep domain expertise, and AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="bct-tailwind.css">
+<style>.logo-img{display:block;width:128px;height:34px;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAABACAYAAAAkn/rnAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAFdZJREFUeAHtXV1vHNd5fld2JTu1pI0UB3EcgKMgTdKbiALiXhQFuMwPqKhfwOVlr0T+Ai5/gUSgH5dcAb032asCBaIhUN80DUT5onEbIxwadb5lryyljlwnzDwz77v77pkzM+fMzC5X8jzAcHZmzzkzOzzPeT/PGaIWLVq0aNGiRYsWLVq0aNHii4FO5szf/3iTOp3b+tSVV16iq6+8TN+6fIGawvuPnyX7n47S/V90L9CVCy/F13q5tJ7UqY1znVX6uxsRtWjxnCLDlvu3vt2Nd4Ecd2NSBa+dT/aLhKNHn9Lo2R+oDlbfvBj5lD89PcWzuaNOnfD+crx1jfNhp9MJqUWLGSIjgfv/djyIJdO2Ptc9/xKtvHmxMRKDeA9/+38UPflsfC64eJ6WLl6g4NJ5ij75jB5/9jkd/fZTmiWG7378Zdq6MSJPxEQO4t3b8basTofxNuJzAZ+L4m01JnJELVrMABkJHD0FqbKa9eizP9D1r3yJlr/yKtUFCAxyagkK0hI9TQicXudLtP6dq06DBtrB/SVb/PnwwycUfviUZgUQMibxPZom8IYQNf5uGO/WKSXyg/j4RkviFrNAhqnHjz8dUOfcdlElSMu6SEj8qFjCQvLXHTCE3DZcu3ShQxURk7If7/Z0c4rAUKcf0EQS78bfbZInWNKTK/nj8ms0UeV1nYD3o7itfUs9DEQyGI14I25L2pN6a0b7gaoHs2FUcH/L8fdHVPwb+pb2rfft2/aLiIwEvvbP/0U2CawBqdh787WEYFUA6euqHuNaIDGu5avCl17nnx4Es3BioRPHHWqXJvbyzXjzJjBNBohVx/IRpYSDE3LNOL9F06TWGPF3a1xXA79jKMSMfxfKYYDvqTIgzkYJeQNKtZHVEt8A2urT5Lcn1y8or9vGPRSWfdGQIfDeD4LCCkKoulI4/PlTVpuLsfz6q7R8tboULrrOxr9+4G3/+lyaaoA7ZY8/91wcYiKBmGSawA+LJBhLeGxhXBeDTcBfjUzNAfcRl8Fze2C7dgFEq8N9hZR/L0d8/0DkqLlI2zBbhuQJ0Vx8yM9a1rJxGs9lrAHNw2zKEPjwfz9BeCW3gkjdugRGfdiq2pFlK1PXC477hcMsT42eIfTgEJE/tBlT2Okd8DFVg3WAY5KFNJHCy+jQRRJYlV2Pyw5Kyq7wfpfc0JO962BnYI3vaymuu0N+AInxvxLi4p5Dynl2TSND4OH/fERlKvTdd3+TqtFff62SjQq1FpLRJwzU/+4V8sXRbz4ttrNf6eChz+pBB+rzPfJHT3126fRFOKHmcUjT94jPVinPEi7gQzzzfrzdpXz0eF9o93LbfZp+1pDCIVXDIG6PXEjM/4uQUq0loInpUef/5I0MgQff/xrurrASiHfzm92EwFWA+vvHj+nkybPSchgoEMKqci1Id1zn8bPPrd8P3vnVLB90ILfha5dZOiU6PVTJAc0ers9kSNNaQo/yCbduObYSGBKU0t8bOqqgZttrcRtbNUjkTGKFSD7Mk7xAhsBLl6AanyustHSRKjuwALGjy3Dz2qu1vNC4R6jho/PzTULhERmdOyJ3B5SGEAOSWzoobNMBzR5OHZBDaSFNpKXVUcfPYo2m7cPlAlVXfm+p1sLe8x6lg4l44JsY7HxJPFfSamQIvPHDD6hMhRbAuQQnky9KVVsFEDDxQnvawJDepWp6syr0HXbuANKZNnwdGSyBAko7JTzH0qGXK9p3s4RWo4OcUI58DzJoWxEqZ2hpU8rbvjMhaivIfkKTgQ/nB+SOy5ZzVSTx3JEhMBIp6LScwOvfvUqb33u9knMJ5N19+OtMMocGwlS4RlU1HeTFvRUldES/+39qEAGlgwH20kn34k4Ah8yOB5HHEojDUSFNOjU6aEiLgyFlnW0mgUEmmBF32XMr5Xum44ulNbZS9ZnL9rlt2KFHqu2u52CnY93ae+9L4ojmjGwu9N9+KxbAxSp0XQ80JPfeD5asSRZNJInINYK33qDtt/LLXLt0IaLmcEslcqATIAYcUNrJehz/jIoaMDsln4Z06fHnnoO314YVOMEcywaO5Wxq9Ir+XiWIDPkU7N4xySir6gp5XJx+Pd7v8L00MdjBg/yQpgclkDiI29+gBUSlRA4A0m3t2uXYTu1apXBRjBfOq+F7H+WGkEQ1h+qM/OjEZr5arkZD6h78bJQ4rorCU2PMLpFjnyUCYqUyOeQ+p1QWkU86sB7xIRXu0ERKVLHvejTtMW4SWo02BxhRcZNwkIVkpqp7k/chlWPbUvaA6g12IGoidWmaxH2WxAtH4pepIsSTnDfRIVHFLbARG2oy2kgSROJ6aFPymiW3GSr3uO2Lk7gwiAqbGjncdWcnNQmWTiCiZGMFVE4+6fChamfEedfy3e34+K5nxwSB7jqWNSdplGFIWTV6yJ97lGoTWq3eoQnJxqouq9c476I+S1jqwCg7pGk7u5IzqwKJIzojVAojAQnhrvo7l+jr6W47Vm9FSpapzZD0GrChMRAgQQN1q6rdMw4jEdt9puNmYCurQkcHlg68TxMCS0cvjZEqjDzyqb2eiUWNTgisSLZhlJdMLnkmoupKfRf1WZ7F0Gi7icFO2sojcUCpuXRmnmeNSmEkoEpusq0NkDh88tRr4kKiYl9NVexZzjpqCFDrxDHVZXsqspQbh4tOuecUAB3Uh8CzhlZdV1iayu8JLeWhEUw5s8hRfdYppjHeLnlULkkjucghcY9Sc2h1EUhcK4wEyQfp6ENkmUpom5Cv7WpRk7WjC1IX9rM5jxhlcE5mODmr0rPNxBJAfVwvKqA6ZUT5Eug6TWzkqimDs8KQJqYCnukab8OcwQqEuk3Tqm6SLuqgKWjb9zCnDAaDZfXZlcBd8wSTOKLpmWdo20biiOaMyjYwUMdjbCMZzsG5hQ2QVM1kfnDs1EJoKbhYnlKZSPVYMu/86BduzqzZYlRyDIw7JTqM5XtSNqJ0sqTDkxu6NEPkeICBewXltapbWN5Aj/cbeWRnFV0I7DLYdY29eb9DbnNPlRmTmBYpkaP/7SuFkxkAEKpqHrQAkhIkgx2rAVV66dKFhKxVZyFhYEHuNDbxTNsmMwzf/XgeD153iiNT7VKZSkBuvFGRRMque+RHXyZ3VCW7VqMDmg6F2QATwJy6WFRe+wnKJPWQpp1ZZYNd6W/myEIUf7xPBonJsPPniQyB1zFp4Fy5DVwXSZz2tfMUxQOBjVziga5rZ2OgwTZWs9W1YgLTHHBdfbbNrumRe+4v6guBbXHUJlCVwEOaXi+sMPmBnVkhqcwrD/X5XknbIw7j9fiUz2BX1C5mYd2glLQBnxYSnwkyBF79l/fJxwYevPW13FiwCbFRIREhfV3SKcXOxuQJm8qep8aLio5r7PzHL+y2cT0bOLAcR/oEJzL0+TDMmdTgrD5aPLiwrQeWok2pzM7tWNTo0KGaltqFv1+lmI46bpNDpsJV5DbYuUjiiNVmTeKZmihFqGUDQ5oNfvTLZHphmeNI4rq+gNRE+zKFMW8ShY3Ics0Z2cHXjeO903QVDoz8Xf5+k78L4+2W2cDp9KyjI3KD9uAGcRt34k61ZZQJjONlckegPnc9kyGEkEPHsNWQJqpuWFJWfrPTc7IMdggpld2Xk6mRQ+IzQSUCg0i3v/dV71xoid8eHI/GjioXQAXe/qs3KudFA7CF7733yOu6NjDptEdYENC0ConOg862Y9qCqo1NdRod7KBTsvYTqhvHm+zgQgpgSCmBTNsSEyH2uMyR5X7Ec7xCWSBUc8j1yu5tSOkzcMod7kyWHlqxEUv5B+BJ7tHkt+C5hZ2CVUC4riYw9vfZeWYu+StlAnKEIrFv4kujyOjKez95NKDpuNcUUk9w/XzlJIOqYDIDpCekrW+YqgwySwnOs8E7v6q0rKwNTIKxKlU00nPnGt+Saz3bdQyMjO9GlrIjm0S13BOZdV2k6mmFXO28Opbfqn/PqOw6xm/SGPHgge97NB0igqZ01HFPfOlyfQw0w3mnW2Yk8Mknvy/MxDo4/nzshW4CWP85j8Qnnzyjw58/SQaMqpP6NXCd3Xd/PROVmjuTU8e1dA7nDu9wHZewlcs9Odc12mmsTs5v9XlWUd537J8QLUpIBzLiPKT8fsdhlUu+x1vI+KJFiAMP/vOX5OLEAqlkyp9rVhYkLvKanScbaMS2NjzX/b+8kgwgSaJHwXUlAQTXRPLH/s8eZx1Z80nkaLGAYHKWEtSjvU06A1R2YoGAOukiD6JuV3ViaYCAm//+YaZ907kl4aJFmtzQosUsUInAUGUheZEdJcRxkcISRqriTELb/e9cScJJPpMoYO8ijIR9ixYvGpzejQSAoFBdm3IqyYJzZiaWeU1kZSHjq9LMJ4Vk4PjJo3HONBBGv2vMidWixVnAmonVfeXPxhlLTbzexAaovghDCcbvN1KTF5CplTev2BfJ7KW/+UbyGSRO8qWj96lFi+cZzplYTcRiBRLKQTy4bDL+2jcv052//kZtIktO9PC/P5pcq3VitXjO4WwDgwDh/k/HEwVsE/qnpv5ZvMzyWtGi5XRMwHuMDdeUaYauGoHY3K0N/GLidLKsLLzJzmG8HKAt5/jvosDbiQXiIX0SYR1APMA4r73B+rzUqwPkTmMTNVvaFy83JLTMDU7CRwu4zE6LxoE47jY1B2SQDeg5QiUvNCQgVGk4mEQiumRnyTpaLvN0XbzOSZ4zk1RizL6vbGkCnGgvLwVbpmxKHiRDRJP0yhOypDS28Iakftpiuif8fU+d26c0nRSmk+Q9B5T+z55Lc6qUwEJQWXSujjc4IWWsCiMBBCTOCyWhzPb33yi1e5PVKi+k6jQGFHGKgcTykm+vFTo8wCl0yDlGAF/S+yJK85FP9G1SmvcsnaSn2rjlkF/cIh8Bqfcym+CldHvq1EHeTKbT9KXszz+BMaH/+lf/PM20iknRZB6yAG1jXWgsbKdDSUmYKrhc22Elc4D1mtBCZNmAqq8XZdsLSewBnwrJMmnBUq9Pqcon9VoHWj2EDdqsQzrjmUVVYA0jRU8/T23MGZBXwwwl1YFMUJAJEjapm7yqlDO3MFhUQUxCeTGXSN2dvGVwTPDoP+TRfl21OaBU3dOOmIA/bxVImD63I/XknjDjBnVuk3rJGu/NCQI4j9lGYc6MoB7lryltcxwF+GN7JrxSpZgauq5t0kJEqbq7X5Ar3eTEgSk1/LR4IfzIOMa9L1H6Ng3dBrSzFZqo5+b/9p6pgfGssYCm/1/AIVY5Na5riRf9w48H8enEMYDJ+pCSTUPs3yZWthy+94juxap4JS/zuc41n4XdWfI+0Jev0olY/T6OtxudydscAsrOL93olExej+uhTo8Pt8x/MrcrC8wDEU0mz5s2Ilat2Mm53z5NT5csQuFz4Xs6VqfQmUP+PGVm8P3u2jpvGZiE2slV+jyN+vh/g1DLjlWu5QyCILJ+dlDl18h+TV0Wg8FWkWZXaAPD2ww7FURG6qQvZMogJhMk7wSObVLTeaUnRbjGmGVWkctCAk2BO/Hb6lREjvNeTfBUtgPjnMwv1WRzeeN8wPsd6widtqulc6Slo9HJB5j7a3YYloDmGtdJJzSm/AWUdr4TKgDfU0STe9/XhDcGs6RNlJ+3v4CX0MFgpwl8g88HfCwDzp0CdR73rQl8ZCt0Ov2e4V2XCRKlTiwQrv/DD2jznQ+nFrLDK08APR1QyKnDPS7ty6SIRKW+/nqi3op0lrCQLOQuLwc/A2h1FKhrf0nscoxO9m0OPajJBY6XPk0WkBtQPnJtbV42VUtidJqwoB0h68dcX6uGuH+sDuIqsfLuyTaYQRLOlcCMke3Y+N8f8TOsDB4IZdByNsucw0gSAsI2K4DM5myjBULfOL5HNZCnEnbStzlA8goJtnluqo2EIjlXqRijku/12lQ+K1jagIEpoppgEuulZ7G8j+31pYuCStoYUJW8wOyXn3wBoBZUG2PGMVy9xlVA9hdnizfbdf2pIkQ5n72BgabTnGfYJGuXFhQ1Bxaxs73IC7QEdkPPOI5ohuDBQS9Be5tH6QSn6jWkVGPkVwjU5ybaawqRcbyo0rcy2Ou8RhXIC7QEdkNgHEc0ewxoOsyipbDY4zsNSTsJae00KD2bgJa4w86CvFCsKTB5+1SRvEBLYDcsGcczV+W4s2ppCCkcsPQFmSOfkIhCV9qBTYllaSlV37aqdiINmBsFi8n5Ql54FtFiaQZTgHbEMW6fOnjufapBXqDWutBfIJhhkbnYYuzQkiVVcU0d09yiagBZjy3nr5/mvznRhjX2DZgIKHWqRVQDykzAQHZrgTSD+6fZNyLifwP13tVLDo0n4M9LVAOtBHZDJttI26QzhpY8fd7CGjHRMN6uxRteEYLYa6TaPmbnmAsk+UK2SH0XkR9EG+jy1qPUKxvF2+qCeZ5xLyFv4nHvUvUBq+/xzDNoJbAbbB0IkiykGaOTfYcQsEs1oKQZftfQSO1EXJhsGVkGQlu2FTLDKkjLHk1nuAmGCxg2yqS2lqSb2oDwGEgvITLXZ55BK4HdYJN2XjZPTRwax4126rjj9I02BznqsQsOyR+oA7UbA4I2DWpJp3mhSkiRs6zMZ75OnmgJ7AB2KIXG6fU5qtERzR6mTV1pgKrokDkGCeCU4wQXfS91BpO5oeLvxlsgInU89HWGtQR2h6nemE4lbzTorW0CZmrndTojMIlDdertBXtWjYBVcfMF4Xs8icIJLYEdYUmuADarqng80s5TDS9Ex+PVMHMC1GkdB78/R41nbmAS6zdXym91InFLYA+w3RIapwcVSYw683LQBI7lNEEeUkWwJ9lZitjAHdtMKfV9kbZJ+IBmiKqqPgsH/VuTmW8uWkdLYH9gtDQlMUi856rmMeHRwSNyQ5OSx9oWE05/d7ek7pcpH8tUPiMpKGuLE1X0s5bXpLrCNAOqxFy7Jcca3k4oAZsN2kwLyEEStwT2BCfrQxLrGCrQpzSOCiKvGbnLkv3U5wn4A0pfcRk5XrYugXX9wBxoTievyBTkpVTqdlZsAxa3hSyjiNyRSyyLt7bPWUy54OeMMj3jqz7/f3wcY+azX8+5pk7OMJF3fgrsCLORuJdXp40DV4RaHqdPaTxPRso+b2TJ2NHwmY5oSpI+OS5/yiTTnVBsLJACajLIs0aTZV82bEkiFkmA8sc8MT/icwE5rPdlaSsoyQKTF2n3+HiT29jIqRPyBukt7wLuUnbZHheYz36T/+cRTeZHB7w/yGkjMI5z5w7z/Gx8FLNM/l8DSpfgiabKZ1r4xwdr1PnjTfoi4Pfnthp8wXdAE9URpAiMIlG8Pea905KyPPL2uT1xMgX8tSxNe7eg/hA7y1e6M4+4rZDS5IyRRztEdukC0tyytIOykKhLNMleCoz7yE3eYOLcpKyt3njCh3Iylj0/jV09+PEgI7/X/P/J772bswxPwHXNAeRhXp0WLVo8Z/gTMMtxcPufUn0AAAAASUVORK5CYII=) left center/contain no-repeat}
+.foot-logo{display:block;width:128px;height:34px;background:url('data:image/png;base64,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') left center/contain no-repeat;margin-bottom:18px}</style>
+</head>
+<body class="grain">
+
+<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-[120] focus:top-3 focus:left-3 focus:bg-brand focus:text-[#04121C] focus:px-4 focus:py-3 focus:font-semibold">Skip to content</a>
+
+<!-- ================= NAV ================= -->
+<header class="fixed inset-x-0 top-0 z-[100] h-16 lg:h-[72px] border-b border-transparent bg-base/60 backdrop-blur-xl transition-colors duration-300" id="nav">
+  <div class="mx-auto flex h-full max-w-[1400px] items-center justify-between px-gutter">
+    <a href="#main" aria-label="Bahwan CyberTek home" class="flex min-h-11 items-center"><span class="logo-img"></span></a>
+
+    <!-- desktop links -->
+    <nav class="hidden lg:block" aria-label="Primary">
+      <ul class="flex list-none gap-1">
+        <li><a class="inline-flex min-h-11 items-center gap-1.5 rounded-sm px-3.5 py-2.5 text-small font-medium text-mid transition-colors hover:bg-white/5 hover:text-hi" href="#products">Products</a></li>
+        <li><a class="inline-flex min-h-11 items-center gap-1.5 rounded-sm px-3.5 py-2.5 text-small font-medium text-mid transition-colors hover:bg-white/5 hover:text-hi" href="#pillars">Practices</a></li>
+        <li><a class="inline-flex min-h-11 items-center gap-1.5 rounded-sm px-3.5 py-2.5 text-small font-medium text-mid transition-colors hover:bg-white/5 hover:text-hi" href="#why">Industries</a></li>
+        <li><a class="inline-flex min-h-11 items-center gap-1.5 rounded-sm px-3.5 py-2.5 text-small font-medium text-mid transition-colors hover:bg-white/5 hover:text-hi" href="#careers">Careers</a></li>
+        <li><a class="inline-flex min-h-11 items-center gap-1.5 rounded-sm px-3.5 py-2.5 text-small font-medium text-mid transition-colors hover:bg-white/5 hover:text-hi" href="#who">About</a></li>
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-1">
+      <a href="#" class="hidden lg:inline-flex min-h-11 items-center gap-2 rounded-sm px-2.5 py-2.5 text-small font-medium text-mid transition-colors hover:bg-white/5 hover:text-hi" aria-label="Region: USA">
+        <svg class="h-4 w-4 fill-none stroke-current stroke-[1.5]" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.8 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.8-3.8-9S9.5 5.6 12 3Z"/></svg>USA
+      </a>
+      <!-- 44x44 hamburger: the mobile nav the original page never had -->
+      <button id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav"
+              class="grid h-11 w-11 place-items-center text-hi lg:hidden">
+        <span class="relative block h-4 w-6" aria-hidden="true">
+          <span class="bar absolute left-0 top-0 h-px w-full bg-current transition-transform duration-300"></span>
+          <span class="bar absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-current transition-opacity duration-200"></span>
+          <span class="bar absolute bottom-0 left-0 h-px w-full bg-current transition-transform duration-300"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- mobile drawer -->
+<div id="navScrim" class="fixed inset-0 z-[98] bg-base/70 opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden" hidden></div>
+<nav id="mobileNav" aria-label="Primary" aria-hidden="true"
+     class="fixed inset-y-0 right-0 z-[99] flex w-[86%] max-w-sm translate-x-full flex-col border-l border-line bg-surface transition-transform duration-[400ms] ease-[cubic-bezier(.16,1,.3,1)] lg:hidden">
+  <div class="h-16 shrink-0"></div>
+  <ul class="flex list-none flex-col px-gutter">
+    <li><a class="flex min-h-14 items-center justify-between border-b border-line py-4 text-[19px] font-semibold text-hi" href="#products">Products <span class="text-brand" aria-hidden="true">&rarr;</span></a></li>
+    <li><a class="flex min-h-14 items-center justify-between border-b border-line py-4 text-[19px] font-semibold text-hi" href="#pillars">Practices <span class="text-brand" aria-hidden="true">&rarr;</span></a></li>
+    <li><a class="flex min-h-14 items-center justify-between border-b border-line py-4 text-[19px] font-semibold text-hi" href="#why">Industries <span class="text-brand" aria-hidden="true">&rarr;</span></a></li>
+    <li><a class="flex min-h-14 items-center justify-between border-b border-line py-4 text-[19px] font-semibold text-hi" href="#careers">Careers <span class="text-brand" aria-hidden="true">&rarr;</span></a></li>
+    <li><a class="flex min-h-14 items-center justify-between py-4 text-[19px] font-semibold text-hi" href="#who">About <span class="text-brand" aria-hidden="true">&rarr;</span></a></li>
+  </ul>
+  <div class="mt-auto border-t border-line px-gutter py-6">
+    <a href="#" class="flex min-h-11 items-center gap-2.5 text-body text-mid" aria-label="Region: USA">
+      <svg class="h-4 w-4 fill-none stroke-current stroke-[1.5]" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.8 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.8-3.8-9S9.5 5.6 12 3Z"/></svg>USA
+    </a>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ================= HERO ================= -->
+<section class="relative flex min-h-[88svh] flex-col justify-end overflow-hidden px-gutter pb-14 pt-28 sm:justify-center lg:min-h-screen lg:pb-24">
+  <video class="absolute inset-0 -z-20 h-full w-full object-cover" autoplay loop muted playsinline src="hero-blue.mp4" aria-hidden="true"></video>
+  <div class="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(6,8,16,.72)_0%,rgba(6,8,16,.32)_38%,rgba(6,8,16,.58)_74%,#060810_100%)]" aria-hidden="true"></div>
+
+  <div class="mx-auto w-full max-w-[1400px] lg:grid lg:grid-cols-[1.6fr_1fr] lg:items-end lg:gap-16">
+    <div class="[container-type:inline-size]">
+      <h1 class="font-display text-[min(94px,8.6cqw)] font-bold leading-[1.06] tracking-[-.03em] text-display max-sm:text-[clamp(34px,9.6vw,52px)]">
+        Engineering for the<br class="hidden sm:block"> intelligent enterprise
+      </h1>
+    </div>
+    <div class="mt-8 lg:mt-0">
+      <div class="mb-6 h-1 w-11 bg-brand" aria-hidden="true"></div>
+      <p class="max-w-[52ch] text-lede text-mid">BCT builds, operates, and powers mission-critical digital infrastructure using proprietary platforms, deep domain expertise, and AI to engineer, modernize, and continuously improve enterprise operations.</p>
+      <a href="#products" class="mt-8 inline-flex min-h-11 items-center gap-2.5 text-body font-semibold text-hi transition-colors hover:text-brand-300">
+        Explore our products
+        <span class="grid h-8 w-8 place-items-center bg-brand font-extrabold text-[#04121C]" aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= POINT OF VIEW ================= -->
+<section class="border-t border-line bg-surface px-gutter py-16 lg:py-24">
+  <div class="mx-auto max-w-[1400px]">
+    <p class="text-lede font-semibold tracking-[.06em] text-brand">Our point of view</p>
+    <p class="mt-4 max-w-[24ch] font-display text-h2 font-semibold text-display">The future belongs to enterprises that operationalize AI</p>
+  </div>
+</section>
+
+<!-- ================= WHAT WE DO ================= -->
+<section id="pillars" class="border-t border-line px-gutter py-16 lg:py-24">
+  <div class="mx-auto max-w-[1400px]">
+    <div class="rv">
+      <p class="text-lede font-semibold tracking-[.06em] text-brand">What we do</p>
+      <h2 class="mt-3.5 max-w-[20ch] font-display text-h2 font-semibold text-display">End-to-end enterprise digital capability</h2>
+    </div>
+    <div class="mt-10 grid gap-3.5 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3">
+      <article class="rv group relative aspect-[16/10] overflow-hidden border border-line sm:aspect-[4/5] lg:aspect-[4/5]">
+        <div class="absolute inset-0 bg-[url('End-01.jpg')] bg-cover bg-center transition-transform duration-700 group-hover:scale-105"></div>
+        <div class="absolute inset-0 flex flex-col justify-end bg-[linear-gradient(to_top,rgba(6,8,16,.94)_0%,rgba(6,8,16,.5)_44%,transparent_100%)] p-6">
+          <h3 class="font-display text-h3 font-bold text-display">End-to-end capability</h3>
+          <p class="mt-2 max-w-[34ch] text-small text-mid">Strategy, engineering, and operations across cloud, data, AI, and managed services.</p>
+        </div>
+      </article>
+      <article class="rv group relative aspect-[16/10] overflow-hidden border border-line sm:aspect-[4/5] lg:aspect-[4/5]" style="transition-delay:.09s">
+        <div class="absolute inset-0 bg-[url('End-02.jpg')] bg-cover bg-center transition-transform duration-700 group-hover:scale-105"></div>
+        <div class="absolute inset-0 flex flex-col justify-end bg-[linear-gradient(to_top,rgba(6,8,16,.94)_0%,rgba(6,8,16,.5)_44%,transparent_100%)] p-6">
+          <h3 class="font-display text-h3 font-bold text-display">Industries we serve</h3>
+          <p class="mt-2 max-w-[34ch] text-small text-mid">AI-powered, scalable transformation across regulated, mission-critical industries.</p>
+        </div>
+      </article>
+      <article class="rv group relative aspect-[16/10] overflow-hidden border border-line sm:col-span-2 sm:aspect-[16/7] lg:col-span-1 lg:aspect-[4/5]" style="transition-delay:.18s">
+        <div class="absolute inset-0 bg-[url('End-03.jpg')] bg-cover bg-center transition-transform duration-700 group-hover:scale-105"></div>
+        <div class="absolute inset-0 flex flex-col justify-end bg-[linear-gradient(to_top,rgba(6,8,16,.94)_0%,rgba(6,8,16,.5)_44%,transparent_100%)] p-6">
+          <h3 class="font-display text-h3 font-bold text-display">Partnerships that work</h3>
+          <p class="mt-2 max-w-[34ch] text-small text-mid">Deep alliances with leading technology partners that unify your ecosystem.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GCC ================= -->
+<section id="gcc" class="border-t border-line bg-surface px-gutter py-16 lg:py-24">
+  <div class="mx-auto max-w-[1400px]">
+    <div class="rv lg:flex lg:items-end lg:justify-between lg:gap-8">
+      <div>
+        <p class="text-lede font-semibold tracking-[.06em] text-brand">GCC Capability</p>
+        <h2 class="mt-3.5 max-w-[20ch] font-display text-h2 font-semibold text-display">BCT&rsquo;s AI-powered GCC capability</h2>
+      </div>
+      <a href="#" class="mt-6 inline-flex min-h-12 shrink-0 items-center gap-2.5 bg-brand px-6 text-body font-bold text-[#04121C] transition hover:bg-brand-300 lg:mt-0">
+        Take a free GCC assessment <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+    <p class="rv mt-6 max-w-[68ch] text-lede text-mid">BCT embeds AI into your Global Capability Center from day one. Powered by <b class="font-semibold text-hi">AigeniX&trade;</b>, our agentic AI platform automates the domains below &mdash; accelerating operations, agility, and time-to-market.</p>
+
+    <div class="mt-10 grid gap-3.5 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3">
+      <article class="rv border border-line bg-base p-6 transition hover:border-line-blue lg:p-7">
+        <div class="mb-5 h-10 w-10" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke-width="1.1" class="h-full w-full">
+            <rect x="4.5" y="10.5" width="24" height="20" stroke="#FFFFFF"/><rect x="11.5" y="15.5" width="24" height="20" stroke="#A5A5A5"/>
+            <circle cx="23.5" cy="22" r="3.4" fill="#1294D7"/><path d="M17 31c1.6-3 4-4.4 6.5-4.4S28.4 28 30 31" stroke="#A5A5A5"/>
+          </svg>
+        </div>
+        <h3 class="font-display text-h3 font-bold text-hi">Human Resource Operations</h3>
+        <p class="mt-3 text-small text-mid">Onboarding, queries, and workforce requests handled end-to-end by agentic AI, cutting manual effort and turnaround time for every employee interaction.</p>
+      </article>
+      <article class="rv border border-line bg-base p-6 transition hover:border-line-blue lg:p-7" style="transition-delay:.09s">
+        <div class="mb-5 h-10 w-10" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke-width="1.1" class="h-full w-full">
+            <path d="M8.5 4.5h17l6 6v25h-23Z" stroke="#FFFFFF"/><path d="M25 4.5v6h6" stroke="#A5A5A5"/>
+            <path d="M13 17h14M13 22h14" stroke="#1294D7"/><path d="M13 27h9" stroke="#A5A5A5"/>
+            <circle cx="27" cy="28" r="4.6" fill="#1294D7"/>
+          </svg>
+        </div>
+        <h3 class="font-display text-h3 font-bold text-hi">Finance Operations</h3>
+        <p class="mt-3 text-small text-mid">Invoicing, reconciliation, and reporting streamlined with continuous accuracy, giving finance teams real-time visibility into cash flow and compliance.</p>
+      </article>
+      <article class="rv border border-line bg-base p-6 transition hover:border-line-blue sm:col-span-2 lg:col-span-1 lg:p-7" style="transition-delay:.18s">
+        <div class="mb-5 h-10 w-10" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke-width="1.1" class="h-full w-full">
+            <rect x="4.5" y="9.5" width="19" height="24" stroke="#FFFFFF"/>
+            <rect x="8" y="14" width="5" height="6" fill="#1294D7"/><rect x="15" y="14" width="5" height="6" stroke="#A5A5A5"/>
+            <rect x="8" y="24" width="5" height="6" stroke="#A5A5A5"/><rect x="15" y="24" width="5" height="6" stroke="#A5A5A5"/>
+            <circle cx="31" cy="13" r="4" stroke="#A5A5A5"/><circle cx="34" cy="24" r="4" stroke="#A5A5A5"/><circle cx="30" cy="33" r="4" stroke="#A5A5A5"/>
+            <path d="M24 15h3M24 24h6M24 31h2" stroke="#1294D7" stroke-dasharray="2 3"/>
+          </svg>
+        </div>
+        <h3 class="font-display text-h3 font-bold text-hi">Knowledge Operations</h3>
+        <p class="mt-3 text-small text-mid">Institutional knowledge captured, structured, and instantly retrievable across every team, so critical expertise never walks out the door when people do.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRODUCTS ================= -->
+<section id="products" class="border-t border-line px-gutter py-16 lg:py-24">
+  <div class="mx-auto max-w-[1400px]">
+    <div class="rv">
+      <p class="text-lede font-semibold tracking-[.06em] text-brand">Products</p>
+      <h2 class="mt-3.5 max-w-[18ch] font-display text-h2 font-semibold text-display">Products designed for impact</h2>
+      <p class="mt-5 max-w-[58ch] text-lede text-mid">We solve operational challenges. Each platform combines domain expertise with scalable architecture for cloud, data, and AI outcomes.</p>
+    </div>
+
+    <!-- category filter: a scrollable chip rail on phones, a row at md -->
+    <div class="mt-9 -mx-gutter overflow-x-auto px-gutter [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" role="tablist" aria-label="Product categories">
+      <div class="flex w-max gap-2.5 md:w-auto md:flex-wrap">
+        <button type="button" role="tab" aria-selected="true"  data-cat="pa" class="pcat min-h-11 whitespace-nowrap border border-brand bg-brand px-4 text-small font-semibold text-[#04121C]">Predictive Analytics</button>
+        <button type="button" role="tab" aria-selected="false" data-cat="ip" class="pcat min-h-11 whitespace-nowrap border border-line px-4 text-small font-semibold text-mid transition hover:text-hi">AI-led IP</button>
+        <button type="button" role="tab" aria-selected="false" data-cat="sc" class="pcat min-h-11 whitespace-nowrap border border-line px-4 text-small font-semibold text-mid transition hover:text-hi">Digital Supply Chain</button>
+        <button type="button" role="tab" aria-selected="false" data-cat="ea" class="pcat min-h-11 whitespace-nowrap border border-line px-4 text-small font-semibold text-mid transition hover:text-hi">Enterprise Apps</button>
+        <button type="button" role="tab" aria-selected="false" data-cat="dx" class="pcat min-h-11 whitespace-nowrap border border-line px-4 text-small font-semibold text-mid transition hover:text-hi">Digital Experience</button>
+      </div>
+    </div>
+
+    <div class="mt-6 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" id="prodGrid">
+      <article class="prod border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="pa"><h3 class="font-display text-h3 font-bold text-hi">retina360</h3><p class="mt-2.5 text-small text-mid">Improve operational efficiency, asset availability and ROI through Data Science.</p></article>
+      <article class="prod border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="pa"><h3 class="font-display text-h3 font-bold text-hi">midas360</h3><p class="mt-2.5 text-small text-mid">Empower metro rail operations with advanced decision analytics and asset management.</p></article>
+      <article class="prod border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="pa"><h3 class="font-display text-h3 font-bold text-hi">rt360</h3><p class="mt-2.5 text-small text-mid">Streamline governance, risk, and compliance with cutting-edge digital solutions.</p></article>
+      <article class="prod border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="pa"><h3 class="font-display text-h3 font-bold text-hi">radar360</h3><p class="mt-2.5 text-small text-mid">Ensure compliance and efficiency through automated AI powered audit solutions.</p></article>
+      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="ip"><h3 class="font-display text-h3 font-bold text-hi">CloudXcel.Ai</h3><p class="mt-2.5 text-small text-mid">Improve agility, optimize costs and ensure continuous compliance through automation and AI.</p></article>
+      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="ip"><h3 class="font-display text-h3 font-bold text-hi">AigeniX</h3><p class="mt-2.5 text-small text-mid">Accelerate development, improve quality and reduce time-to-market through autonomous AI and governance.</p></article>
+      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="sc"><h3 class="font-display text-h3 font-bold text-hi">FuelTrans</h3><p class="mt-2.5 text-small text-mid">Automate fuel retail operations with IoT, Cloud and AI/ML technologies to maximize value.</p></article>
+      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="sc"><h3 class="font-display text-h3 font-bold text-hi">CueTrans</h3><p class="mt-2.5 text-small text-mid">Enhance fleet visibility with our intelligent vehicle monitoring system.</p></article>
+      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="ea"><h3 class="font-display text-h3 font-bold text-hi">Procure360</h3><p class="mt-2.5 text-small text-mid">Revolutionize supplier management with AI-driven insights and automation.</p></article>
+      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="ea"><h3 class="font-display text-h3 font-bold text-hi">Geodatafy</h3><p class="mt-2.5 text-small text-mid">Unlock operational transparency with integrated data solutions for oil and gas, energy firms.</p></article>
+      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="dx"><h3 class="font-display text-h3 font-bold text-hi">Dropthought</h3><p class="mt-2.5 text-small text-mid">Capture real-time feedback to enhance experiences and drive improvements.</p></article>
+      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="dx"><h3 class="font-display text-h3 font-bold text-hi">dtWorks</h3><p class="mt-2.5 text-small text-mid">Enable seamless workflow and intelligent operations to enhance customer experience.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHO WE ARE + STATS ================= -->
+<section id="who" class="relative overflow-hidden border-t border-line px-gutter py-16 lg:py-24">
+  <div class="absolute inset-x-0 bottom-0 -z-10 h-2/3 bg-[url('img_wave.png')] bg-cover bg-bottom opacity-70" aria-hidden="true"></div>
+  <div class="absolute inset-0 -z-10 bg-[linear-gradient(180deg,#060810_0%,rgba(6,8,16,.75)_36%,rgba(6,8,16,.35)_100%)]" aria-hidden="true"></div>
+  <div class="mx-auto max-w-[1400px]">
+    <div class="rv">
+      <p class="text-lede font-semibold tracking-[.06em] text-brand">Who we are</p>
+      <h2 class="mt-3.5 max-w-[18ch] font-display text-h2 font-semibold text-display">A global enterprise transformation partner</h2>
+    </div>
+    <dl class="rv mt-12 grid grid-cols-1 gap-10 sm:grid-cols-3 lg:mt-16">
+      <div>
+        <div class="mb-5 h-1 w-11 bg-brand" aria-hidden="true"></div>
+        <dt class="font-display text-[clamp(40px,11vw,60px)] font-semibold leading-none tracking-[-.03em] text-display">27</dt>
+        <dd class="mt-3.5 text-[11px] font-medium uppercase tracking-[.18em] text-mid">Years</dd>
+      </div>
+      <div>
+        <div class="mb-5 h-1 w-11 bg-brand" aria-hidden="true"></div>
+        <dt class="font-display text-[clamp(40px,11vw,60px)] font-semibold leading-none tracking-[-.03em] text-display">50+</dt>
+        <dd class="mt-3.5 text-[11px] font-medium uppercase tracking-[.18em] text-mid">Countries</dd>
+      </div>
+      <div>
+        <div class="mb-5 h-1 w-11 bg-brand" aria-hidden="true"></div>
+        <dt class="font-display text-[clamp(40px,11vw,60px)] font-semibold leading-none tracking-[-.03em] text-display">2,200+</dt>
+        <dd class="mt-3.5 text-[11px] font-medium uppercase tracking-[.18em] text-mid">Enterprise clients</dd>
+      </div>
+    </dl>
+    <p class="rv mt-12 max-w-[64ch] text-lede text-mid">Founded in Oman in 1999, BCT serves global enterprises, including several Fortune 500 companies, through its Services, Products, Consulting, Partnerships, and KPO businesses.</p>
+  </div>
+</section>
+
+<!-- ================= WHY BCT ================= -->
+<section id="why" class="border-t border-line bg-surface py-16 lg:py-24">
+  <div class="mx-auto max-w-[1400px] px-gutter">
+    <div class="rv">
+      <p class="text-lede font-semibold tracking-[.06em] text-brand">Why BCT</p>
+      <h2 class="mt-3.5 max-w-[26ch] font-display text-h2 font-semibold text-display">Why the world&rsquo;s most demanding enterprises choose BCT</h2>
+      <p class="mt-5 max-w-[62ch] text-lede text-mid">Governments, Fortune 500s, and mission-critical industries have trusted BCT inside their most vital systems for 27 years.</p>
+    </div>
+  </div>
+  <!-- five cards: a swipeable rail on phones, a grid from lg -->
+  <div class="mt-10 lg:mt-14">
+    <div class="rail mx-auto max-w-[1400px] lg:grid lg:grid-cols-3 lg:gap-3.5 lg:overflow-visible xl:grid-cols-5 lg:[&>*]:max-w-none">
+      <article class="border border-line bg-card p-6"><h3 class="font-display text-h3 font-bold text-hi">We build, run, and improve it</h3><p class="mt-3 text-small text-mid">Full operational ownership of mission-critical infrastructure, higher uptime, faster resolution, and less load on your internal IT.</p></article>
+      <article class="border border-line bg-card p-6"><h3 class="font-display text-h3 font-bold text-hi">Platform-led, not people-led</h3><p class="mt-3 text-small text-mid">Proprietary platforms accelerate deployment and deliver repeatable outcomes at scale, without growing headcount.</p></article>
+      <article class="border border-line bg-card p-6"><h3 class="font-display text-h3 font-bold text-hi">AI in the core, not layered on</h3><p class="mt-3 text-small text-mid">AI integrated directly into your infrastructure, predictive intelligence, automation, and real-time decisions where they matter.</p></article>
+      <article class="border border-line bg-card p-6"><h3 class="font-display text-h3 font-bold text-hi">Proven at the highest stakes</h3><p class="mt-3 text-small text-mid">Trusted where failure isn&rsquo;t an option, national payments, core banking, industrial operations, and government.</p></article>
+      <article class="border border-line bg-card p-6"><h3 class="font-display text-h3 font-bold text-hi">Engineering accountability</h3><p class="mt-3 text-small text-mid">Engineering expertise and operational ownership drive faster execution and measurable outcomes, not workforce size.</p></article>
+    </div>
+    <p class="mt-4 px-gutter text-small text-low lg:hidden">Swipe for more &rarr;</p>
+  </div>
+</section>
+
+<!-- ================= CASE STUDIES ================= -->
+<section id="cases" class="border-t border-line px-gutter py-16 lg:py-24">
+  <div class="mx-auto max-w-[1400px]">
+    <div class="rv">
+      <p class="text-lede font-semibold tracking-[.06em] text-brand">Our work</p>
+      <h2 class="mt-3.5 font-display text-h2 font-semibold text-display">Case Study</h2>
+      <p class="mt-5 max-w-[62ch] text-lede text-mid">See how BCT solves complex challenges and delivers business impact through disciplined execution and scalable solutions.</p>
+    </div>
+    <div class="mt-10 grid gap-8 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-7">
+      <a class="rv group block" href="#">
+        <span class="block aspect-[3/2] border border-line bg-[url('r360-case-1.webp')] bg-cover bg-center transition group-hover:border-line-blue"></span>
+        <span class="mt-4 block text-[11px] font-medium uppercase tracking-[.1em] text-low">Government &middot; AI &middot; Analytics</span>
+        <h3 class="mt-3 line-clamp-2 font-display text-h3 font-bold text-display transition group-hover:text-hi">Creating a future-ready e-Governance ecosystem</h3>
+        <p class="mt-2.5 text-small text-mid">Harnessing AI and analytics to enhance citizen engagement and service reliability.</p>
+        <span class="mt-4 inline-flex min-h-11 items-center gap-2 text-small font-semibold text-brand">Read more &rarr;</span>
+      </a>
+      <a class="rv group block" href="#" style="transition-delay:.09s">
+        <span class="block aspect-[3/2] border border-line bg-[url('r360-case-2.webp')] bg-cover bg-center transition group-hover:border-line-blue"></span>
+        <span class="mt-4 block text-[11px] font-medium uppercase tracking-[.1em] text-low">Technology &middot; Automation &middot; CX</span>
+        <h3 class="mt-3 line-clamp-2 font-display text-h3 font-bold text-display transition group-hover:text-hi">Accelerating service excellence with AI-led development</h3>
+        <p class="mt-2.5 text-small text-mid">Intelligent, automated software delivery, enhancing agent efficiency and customer experience.</p>
+        <span class="mt-4 inline-flex min-h-11 items-center gap-2 text-small font-semibold text-brand">Read more &rarr;</span>
+      </a>
+      <a class="rv group block sm:col-span-2 lg:col-span-1" href="#" style="transition-delay:.18s">
+        <span class="block aspect-[3/2] border border-line bg-[url('r360-case-3.webp')] bg-cover bg-center transition group-hover:border-line-blue sm:aspect-[16/6] lg:aspect-[3/2]"></span>
+        <span class="mt-4 block text-[11px] font-medium uppercase tracking-[.1em] text-low">Fintech &middot; Cloud &middot; Temenos</span>
+        <h3 class="mt-3 line-clamp-2 font-display text-h3 font-bold text-display transition group-hover:text-hi">Scaling global fintech payments with a cloud-native platform</h3>
+        <p class="mt-2.5 text-small text-mid">Cloud-native Temenos enabling scalable global transaction processing.</p>
+        <span class="mt-4 inline-flex min-h-11 items-center gap-2 text-small font-semibold text-brand">Read more &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INSIGHTS ================= -->
+<section id="insights" class="border-t border-line px-gutter py-16 lg:py-24">
+  <div class="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[300px_1fr] lg:gap-14">
+    <div class="rv">
+      <p class="text-lede font-semibold tracking-[.06em] text-brand">Insights</p>
+      <h2 class="mt-3.5 font-display text-h2 font-semibold text-hi">Blogs</h2>
+      <p class="mt-3 text-lede text-mid">Perspectives that matter</p>
+      <a href="#" class="mt-6 inline-flex min-h-11 items-center gap-2.5 text-body font-semibold text-hi transition-colors hover:text-brand-300">
+        View all <span class="grid h-8 w-8 place-items-center bg-brand font-extrabold text-[#04121C]" aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+    <div class="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+      <a class="rv group flex flex-col overflow-hidden border border-line bg-surface p-6 transition hover:border-line-blue" href="#">
+        <span class="-mx-6 -mt-6 mb-5 block aspect-[16/9] bg-[url('r360-blog-1.webp')] bg-cover bg-center transition-transform duration-500 group-hover:scale-105"></span>
+        <h3 class="line-clamp-2 font-display text-h3 font-bold text-hi">AI Agents in Action</h3>
+        <p class="mt-2.5 mb-auto text-small text-mid">Driving efficiency across IT Ops, development, and testing.</p>
+        <span class="mt-5 inline-flex min-h-11 items-center text-small font-semibold text-brand">Read more &rarr;</span>
+      </a>
+      <a class="rv group flex flex-col overflow-hidden border border-line bg-surface p-6 transition hover:border-line-blue" href="#" style="transition-delay:.09s">
+        <span class="-mx-6 -mt-6 mb-5 block aspect-[16/9] bg-[url('r360-blog-2.webp')] bg-cover bg-center transition-transform duration-500 group-hover:scale-105"></span>
+        <h3 class="line-clamp-2 font-display text-h3 font-bold text-hi">AI Without a Data Strategy</h3>
+        <p class="mt-2.5 mb-auto text-small text-mid">Why modern data architecture is the foundation for AI adoption.</p>
+        <span class="mt-5 inline-flex min-h-11 items-center text-small font-semibold text-brand">Read more &rarr;</span>
+      </a>
+      <a class="rv group flex flex-col overflow-hidden border border-line bg-surface p-6 transition hover:border-line-blue sm:col-span-2 lg:col-span-1" href="#" style="transition-delay:.18s">
+        <span class="-mx-6 -mt-6 mb-5 block aspect-[16/9] bg-[url('r360-blog-3.webp')] bg-cover bg-center transition-transform duration-500 group-hover:scale-105 sm:aspect-[16/5] lg:aspect-[16/9]"></span>
+        <h3 class="line-clamp-2 font-display text-h3 font-bold text-hi">Why AI Maturity Matters</h3>
+        <p class="mt-2.5 mb-auto text-small text-mid">Lessons from early adopters on turning AI into advantage.</p>
+        <span class="mt-5 inline-flex min-h-11 items-center text-small font-semibold text-brand">Read more &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CAREERS ================= -->
+<section id="careers" class="border-t border-line px-gutter py-16 lg:py-24">
+  <div class="mx-auto grid max-w-[1400px] items-center gap-10 xl:grid-cols-2 xl:gap-16">
+    <div class="rv aspect-[16/10] border border-line bg-[url('pov-card-meeting.jpg')] bg-cover bg-center xl:aspect-[4/3]"></div>
+    <div class="rv">
+      <p class="text-lede font-semibold tracking-[.06em] text-brand">Careers</p>
+      <h2 class="mt-3.5 max-w-[16ch] font-display text-h2 font-semibold text-hi">Where talent meets <em class="not-italic text-brand">opportunity</em></h2>
+      <p class="mt-5 max-w-[46ch] text-lede text-mid">BCT is where engineers build systems that cannot fail, taking end-to-end ownership of solutions deployed across 50 countries. If you want to grow by solving problems that matter at scale, explore opportunities with BCT.</p>
+      <a href="https://www.bahwancybertek.com/careers/" class="mt-8 inline-flex min-h-12 items-center gap-2.5 bg-brand px-6 text-body font-bold text-[#04121C] transition hover:bg-brand-300">
+        Careers at BCT <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="border-t border-line px-gutter pt-16 lg:pt-20">
+  <div class="mx-auto max-w-[1400px]">
+    <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.7fr_1.5fr_1.35fr] lg:gap-12">
+      <div class="sm:col-span-2 lg:col-span-1">
+        <span class="foot-logo" role="img" aria-label="Bahwan CyberTek"></span>
+        <p class="mt-5 max-w-[42ch] text-body text-mid">Bahwan CyberTek is a global technology transformation partner, driving innovation and equipping companies for the future.</p>
+        <div class="mt-7 flex gap-3">
+          <a href="#" aria-label="Facebook" class="grid h-11 w-11 place-items-center border border-line bg-white/5 text-mid transition hover:border-line-blue hover:text-hi"><svg class="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H17V3.6c-.29-.04-1.3-.12-2.47-.12-2.44 0-4.11 1.49-4.11 4.23v2.36H7.7V13h2.72v8h3.08z"/></svg></a>
+          <a href="#" aria-label="X" class="grid h-11 w-11 place-items-center border border-line bg-white/5 text-mid transition hover:border-line-blue hover:text-hi"><svg class="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M17.5 3h3.1l-6.77 7.73L21.8 21h-6.23l-4.88-6.38L5.11 21H2l7.24-8.27L2.5 3h6.39l4.41 5.83L17.5 3zm-1.09 16.15h1.72L7.66 4.76H5.82l10.59 14.39z"/></svg></a>
+          <a href="#" aria-label="LinkedIn" class="grid h-11 w-11 place-items-center border border-line bg-white/5 text-mid transition hover:border-line-blue hover:text-hi"><svg class="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M6.94 5a1.94 1.94 0 1 1-3.88 0 1.94 1.94 0 0 1 3.88 0zM3.3 8.4h3.28V21H3.3V8.4zm5.28 0h3.14v1.72h.05c.44-.83 1.5-1.7 3.1-1.7 3.31 0 3.92 2.18 3.92 5.02V21h-3.27v-4.9c0-1.17-.02-2.67-1.63-2.67-1.63 0-1.88 1.27-1.88 2.58V21H8.58V8.4z"/></svg></a>
+          <a href="#" aria-label="YouTube" class="grid h-11 w-11 place-items-center border border-line bg-white/5 text-mid transition hover:border-line-blue hover:text-hi"><svg class="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M21.58 7.19a2.5 2.5 0 0 0-1.76-1.77C18.25 5 12 5 12 5s-6.25 0-7.82.42A2.5 2.5 0 0 0 2.42 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .42 4.81 2.5 2.5 0 0 0 1.76 1.77C5.75 19 12 19 12 19s6.25 0 7.82-.42a2.5 2.5 0 0 0 1.76-1.77A26 26 0 0 0 22 12a26 26 0 0 0-.42-4.81zM10 15V9l5.2 3-5.2 3z"/></svg></a>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="mb-4 text-[12px] font-semibold uppercase tracking-[.16em] text-low">Quick links</h2>
+        <!-- single column on phones: two 157px columns was the original's tightest spot -->
+        <div class="grid grid-cols-1 gap-x-8 sm:grid-cols-2">
+          <a class="flex min-h-11 items-center text-body text-mid transition hover:text-hi" href="#careers">Careers</a>
+          <a class="flex min-h-11 items-center text-body text-mid transition hover:text-hi" href="#">Contact Us</a>
+          <a class="flex min-h-11 items-center text-body text-mid transition hover:text-hi" href="#who">About us</a>
+          <a class="flex min-h-11 items-center text-body text-mid transition hover:text-hi" href="#">Partnership</a>
+          <a class="flex min-h-11 items-center text-body text-mid transition hover:text-hi" href="#insights">Insights</a>
+          <a class="flex min-h-11 items-center text-body text-mid transition hover:text-hi" href="#">News and Events</a>
+          <a class="flex min-h-11 items-center text-body text-mid transition hover:text-hi" href="#cases">Case Studies</a>
+          <a class="flex min-h-11 items-center text-body text-mid transition hover:text-hi" href="#">ESG</a>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="mb-4 text-[12px] font-semibold uppercase tracking-[.16em] text-low">Get in touch</h2>
+        <div class="flex flex-col gap-5">
+          <p class="flex items-start gap-3 text-body text-mid"><svg class="mt-1 h-[17px] w-[17px] shrink-0 fill-none stroke-current stroke-[1.6] text-low" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>5th Floor, No. 780, Beian Road Zhongshan District, Taipei 10464, Taiwan.</p>
+          <a class="flex min-h-11 items-center gap-3 text-body text-mid transition hover:text-hi" href="tel:+886285015201"><svg class="h-[17px] w-[17px] shrink-0 fill-none stroke-current stroke-[1.6] text-low" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L19 13l2 5v3a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg>+886 2 85015201</a>
+          <a class="flex min-h-11 items-center gap-3 break-all text-body text-mid transition hover:text-hi" href="mailto:talktous@bahwancybertek.com"><svg class="h-[17px] w-[17px] shrink-0 fill-none stroke-current stroke-[1.6] text-low" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>talktous@bahwancybertek.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-line py-6 text-small text-low">
+      <span>&copy; 2026 Bahwan CyberTek. All rights reserved.</span>
+      <span class="flex items-center gap-4">
+        <a class="flex min-h-11 items-center transition hover:text-mid" href="#">Cookie Policy</a>
+        <span aria-hidden="true">|</span>
+        <a class="flex min-h-11 items-center transition hover:text-mid" href="#">Privacy Policy</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<button id="toTop" type="button" aria-label="Back to top"
+        class="pointer-events-none fixed bottom-5 right-5 z-[95] grid h-12 w-12 translate-y-3 place-items-center border border-line bg-[rgba(12,15,24,.72)] text-mid opacity-0 backdrop-blur-md transition-all duration-300 hover:border-line-blue hover:text-brand-300">
+  <svg class="h-4 w-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+/* nav shadow on scroll */
+var nav = document.getElementById('nav');
+addEventListener('scroll', function(){
+  nav.classList.toggle('border-line', scrollY > 24);
+  nav.classList.toggle('bg-base/90', scrollY > 24);
+}, {passive:true});
+
+/* ---- mobile drawer ---- */
+(function(){
+  var btn = document.getElementById('menuBtn');
+  var panel = document.getElementById('mobileNav');
+  var scrim = document.getElementById('navScrim');
+  var bars = btn.querySelectorAll('.bar');
+  var open = false;
+
+  function set(state){
+    open = state;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    panel.setAttribute('aria-hidden', String(!open));
+    panel.classList.toggle('translate-x-full', !open);
+    scrim.hidden = false;
+    scrim.classList.toggle('opacity-100', open);
+    scrim.classList.toggle('pointer-events-auto', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+    /* the three bars fold into a cross */
+    bars[0].style.transform = open ? 'translateY(7px) rotate(45deg)' : '';
+    bars[1].style.opacity   = open ? '0' : '';
+    bars[2].style.transform = open ? 'translateY(-7px) rotate(-45deg)' : '';
+    if (open) panel.querySelector('a').focus({preventScroll:true});
+  }
+  btn.addEventListener('click', function(){ set(!open); });
+  scrim.addEventListener('click', function(){ set(false); });
+  panel.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ set(false); }); });
+  addEventListener('keydown', function(e){ if (e.key === 'Escape' && open) { set(false); btn.focus(); } });
+  /* leaving the mobile breakpoint with the drawer open would trap scroll */
+  matchMedia('(min-width: 1024px)').addEventListener('change', function(e){ if (e.matches && open) set(false); });
+})();
+
+/* ---- product category filter ---- */
+(function(){
+  var tabs = document.querySelectorAll('.pcat');
+  var cards = document.querySelectorAll('.prod');
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      var cat = t.dataset.cat;
+      tabs.forEach(function(x){
+        var on = x === t;
+        x.setAttribute('aria-selected', String(on));
+        x.classList.toggle('bg-brand', on);
+        x.classList.toggle('border-brand', on);
+        x.classList.toggle('text-[#04121C]', on);
+        x.classList.toggle('border-line', !on);
+        x.classList.toggle('text-mid', !on);
+      });
+      cards.forEach(function(c){ c.classList.toggle('hidden', c.dataset.cat !== cat); });
+    });
+  });
+})();
+
+/* ---- scroll reveal ---- */
+var io = new IntersectionObserver(function(es){
+  es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+}, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+
+/* ---- back to top ---- */
+(function(){
+  var b = document.getElementById('toTop');
+  function s(){
+    var on = (window.scrollY || 0) > 600;
+    b.classList.toggle('opacity-0', !on);
+    b.classList.toggle('translate-y-3', !on);
+    b.classList.toggle('pointer-events-none', !on);
+  }
+  addEventListener('scroll', s, {passive:true}); s();
+  b.addEventListener('click', function(){ scrollTo({top:0, behavior:'smooth'}); });
+})();
+</script>
+</body>
+</html>
