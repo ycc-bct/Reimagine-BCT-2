@@ -1,0 +1,54 @@
+/* ============================================================================
+   BCT design tokens — verbatim from BCT-V4.html
+   This file is the single source of truth. Copy this :root block into any new
+   page rather than re-typing values. See Design.md for the rules.
+   ========================================================================= */
+:root{
+  /* ---- surfaces ---- */
+  --bg-base:    #060810;
+  --bg-surface: #0C0F1A;
+  --bg-card:    #111522;
+  --bg-hover:   #161B2C;
+
+  /* ---- brand blue ---- */
+  --blue-500:   #0092D7;
+  --blue-300:   #5FBEEA;
+  --blue-700:   #0A6395;
+  --blue-900:   #06344F;
+  --blue-950:   #072338;
+
+  /* ---- text ---- */
+  --text-hi:      #F5F8FC;
+  --text-display: #D7DFE9;   /* large display headings — silver, not pure white */
+  --text-mid:     rgba(242,246,250,.68);
+  --text-low:     rgba(242,246,250,.44);
+
+  /* ---- lines & glow ---- */
+  --border:       rgba(255,255,255,.13);
+  --border-blue:  rgba(0,146,215,.4);
+  --glow:         rgba(0,146,215,.18);
+
+  /* ---- light band ---- */
+  --light-bg:     #EDF3F7;
+  --light-card:   #FFFFFF;
+  --light-text:   #0A1620;
+  --light-mid:    rgba(10,22,32,.62);
+  --light-low:    rgba(10,22,32,.42);
+  --light-border: rgba(10,22,32,.12);
+
+  /* ---- type ---- */
+  --font-display: 'Poppins', sans-serif;
+  --font-body:    'Poppins', sans-serif;
+
+  --fs-h2: clamp(32px,4vw,52px);   /* section titles     */
+  --fs-h3: clamp(19px,1.5vw,22px); /* card & sub-headings */
+
+  /* body copy — three roles, one value each. every paragraph on the page
+     resolves to one of these, so a size never drifts per-section. */
+  --fs-lede:  15.5px;  --lh-lede:  1.70;  /* the paragraph under a section title */
+  --fs-body:  14.5px;  --lh-body:  1.70;  /* copy inside a card or column        */
+  --fs-small: 13.5px;  --lh-small: 1.60;  /* captions, meta, dense descriptions  */
+
+  /* ---- rhythm ---- */
+  --pad-x: clamp(24px, 5vw, 72px);
+}

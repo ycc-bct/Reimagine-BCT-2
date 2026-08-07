@@ -1,0 +1,55 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Line-break rules" />
+
+# Line-break rules
+
+The headline discipline — the rules most often broken by editing copy.
+
+## Titles must never exceed two lines
+
+Applies to `.hero-h1`, `.section-title`, and every card title.
+
+Enforced three ways, in order of preference:
+
+**1. Size the line to its container**, so the break point cannot move with the viewport.
+
+```css
+.hero-h1 { container-type: inline-size; }
+.hero-h1 .l1,
+.hero-h1 .l2 { font-size: min(94px, 9.4cqw); text-wrap: balance; }
+```
+
+Each line is set in `cqw` — a share of the headline column, not the viewport — so both lines hold
+at every width.
+
+**2. Rewrite the copy.** If a title wraps to three lines, shorten the words. Do not shrink the font
+to fix it; that breaks the scale for every other title on the page.
+
+**3. A hard `<br>` only as a last resort**, and only where the copy is fixed and the column width
+is known.
+
+## Verify by measurement, never by eye
+
+Poppins wraps unpredictably around hyphenated compounds.
+
+```js
+const el = document.querySelector('.section-title');
+const lines = el.getBoundingClientRect().height /
+              parseFloat(getComputedStyle(el).lineHeight);
+// lines must be <= 2
+```
+
+Re-check at **1920 / 1440 / 1280 / 1024 / 768 / 390**. A title that holds at 1440 routinely breaks
+at 1280. The live counter in *Foundations → Typography → Line Break Rule* does this for you.
+
+## Paragraph wrapping
+
+| Rule | Implementation |
+|---|---|
+| Body copy never wider than ~65–75 characters | `max-width` in `ch` — `34ch` inside cards, `46ch`–`64ch` for ledes |
+| Short centred paragraphs get even line lengths | `text-wrap: balance` |
+| Long paragraphs avoid orphans | `text-wrap: pretty` — applied globally to `p` |
+
+`balance` is for headings and short centred copy only; browsers ignore it past a line-count
+threshold, so long paragraphs use `pretty`.
