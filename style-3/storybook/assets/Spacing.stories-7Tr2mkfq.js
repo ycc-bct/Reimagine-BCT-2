@@ -1,4 +1,4 @@
-import{h as c,l as n}from"./_helpers-CtHPbzQ_.js";const b={title:"Foundations/Spacing"},t=(i,v)=>`
+import{h as c,l as n}from"./helpers-CtHPbzQ_.js";const b={title:"Foundations/Spacing"},t=(i,v)=>`
   <div style="display:flex;align-items:center;gap:18px;padding:9px 0">
     <div style="width:60px;font:600 13px var(--font-body);color:var(--text-hi);text-align:right">${i}</div>
     <div style="height:14px;width:${i};background:var(--blue-500);flex:none"></div>

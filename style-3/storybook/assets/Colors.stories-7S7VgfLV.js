@@ -1,4 +1,4 @@
-import{h as c,l as t,g as a,s as e}from"./_helpers-CtHPbzQ_.js";const h={title:"Foundations/Color"},o=()=>c(`
+import{h as c,l as t,g as a,s as e}from"./helpers-CtHPbzQ_.js";const h={title:"Foundations/Color"},o=()=>c(`
   <div style="padding:8px">
     ${t("Surfaces")}
     ${a([e("--bg-base","#060810","Page background"),e("--bg-surface","#0C0F1A","Section that separates from the page"),e("--bg-card","#111522","Card and tile fill"),e("--bg-hover","#161B2C","Card fill on hover")].join(""))}

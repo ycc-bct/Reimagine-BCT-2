@@ -1,4 +1,4 @@
-import { h, label } from './_helpers.js';
+import { h, label } from './helpers.js';
 
 export default { title: 'Foundations/Typography' };
 

@@ -1,4 +1,4 @@
-import{h as l}from"./_helpers-CtHPbzQ_.js";const $={title:"Foundations/Typography"},e=(t,n,o,a)=>`
+import{h as l}from"./helpers-CtHPbzQ_.js";const $={title:"Foundations/Typography"},e=(t,n,o,a)=>`
   <div style="border-bottom:1px solid var(--border);padding:26px 0">
     <div style="display:flex;justify-content:space-between;gap:24px;align-items:baseline;margin-bottom:14px">
       <div style="font:600 13.5px var(--font-body);color:var(--text-hi)">${t}</div>

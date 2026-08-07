@@ -1,4 +1,4 @@
-import { h, swatch, grid, label } from './_helpers.js';
+import { h, swatch, grid, label } from './helpers.js';
 
 export default { title: 'Foundations/Color' };
 
