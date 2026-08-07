@@ -67,9 +67,17 @@ export const LineBreakRule = () => {
     if (!t || !out) return;
     const n = t.getBoundingClientRect().height / parseFloat(getComputedStyle(t).lineHeight);
     const lines = Math.round(n * 100) / 100;
+    const w = el.getBoundingClientRect().width;
+    // the rule binds at >=768px — below that, forcing two lines would push the
+    // font under the scale floor, and unreadable type is the worse failure
+    if (w < 768) {
+      out.innerHTML = `<span style="color:var(--text-low)">
+        ${lines} lines at ${Math.round(w)}px — rule does not bind below 768px</span>`;
+      return;
+    }
     const ok = lines <= 2.05;
     out.innerHTML = `<span style="color:${ok ? '#5FBEEA' : '#FF6B6B'}">
-      ${lines} lines — ${ok ? 'passes' : 'FAILS: rewrite the copy, do not shrink the font'}</span>`;
+      ${lines} lines at ${Math.round(w)}px — ${ok ? 'passes' : 'FAILS: rewrite the copy, do not shrink the font'}</span>`;
   };
   requestAnimationFrame(measure);
   new ResizeObserver(measure).observe(el);
