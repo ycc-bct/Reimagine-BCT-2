@@ -139,7 +139,9 @@ a:focus-visible,article:focus-visible{outline:2px solid var(--blue-500);outline-
 
 /* ------------------------------------------------- point-of-view lock-up -- */
 .hb-eyebrow{
-  position:relative; z-index:3; margin:calc(var(--u) * 34) 0 0 calc(var(--u) * 20);
+  /* the widest gap in the phone stack: it is the seam between the hero
+     lock-up and the point-of-view lock-up, not spacing inside either one */
+  position:relative; z-index:3; margin:calc(var(--u) * 68) 0 0 calc(var(--u) * 20);
   width:calc(var(--u) * 313);
   font-weight:600;
   font-size:   max(12px, calc(var(--u) * 14));
