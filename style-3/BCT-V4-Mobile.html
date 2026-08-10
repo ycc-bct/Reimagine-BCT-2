@@ -93,51 +93,61 @@
   </div>
 </section>
 
-<!-- ================= POINT OF VIEW ================= -->
-<section class="relative z-[3] -mt-[var(--spacing-povlift)] px-gutter pb-16 lg:pb-24">
-  <div class="mx-auto grid max-w-[1400px] gap-3.5 sm:grid-cols-2 xl:grid-cols-[1.6fr_1fr_1fr] xl:grid-rows-[minmax(360px,auto)_auto] xl:gap-0">
-    <!-- statement panel -->
-    <div class="rv flex flex-col justify-between gap-10 [container-type:inline-size] bg-[linear-gradient(168deg,#0A2038_0%,#0B4E8F_58%,#0E9BE0_100%)] p-7 sm:p-9 sm:col-span-2 xl:col-span-1 xl:col-start-1 xl:row-span-2 xl:p-11">
-      <div>
-        <p class="text-lede font-bold tracking-[.06em] text-white/85">Our point of view</p>
-        <h2 class="mt-3.5 font-display text-[min(34px,6cqw)] font-bold leading-[1.14] tracking-[-.025em] text-white">The future belongs to enterprises that operationalize AI</h2>
-      </div>
-      <p class="max-w-[38ch] text-body text-white/70">AI market leaders aren&rsquo;t winning because they have access to better AI. They&rsquo;re winning because they&rsquo;ve embedded it into the way their organizations operate.</p>
-    </div>
-
-    <!-- visual: a still lifted from the hero footage -->
-    <div class="rv min-h-[180px] bg-[url('pov-visual.jpg')] bg-cover bg-[position:50%_62%] sm:col-span-2 xl:col-span-2 xl:col-start-2 xl:row-start-1 xl:min-h-[280px]" role="img" aria-label="Abstract blue fluid detail from the hero visual"></div>
-
-    <!-- the two points, in the Style A card language: hairline icon, then copy -->
-    <div class="rv flex flex-col justify-between gap-6 bg-[radial-gradient(75%_156%_at_85%_25%,#134369_0%,#0E1C30_100%)] p-7 sm:p-9 xl:col-start-2 xl:row-start-2 xl:min-h-[255px]">
-      <div>
-        <div class="mb-4 h-9 w-9" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" stroke-width="1.1" class="h-full w-full">
-            <path d="M20 4.5l13 5.5v9.5c0 9-6 16-13 18.5C13 35 7 28 7 19.5V10l13-5.5Z" stroke="#FFFFFF"/>
-            <circle cx="20" cy="19" r="6.4" fill="#1294D7"/>
-            <path d="M17.2 19l2 2 3.8-4.2" stroke="#04121C"/>
-          </svg>
+<!-- ================= POINT OF VIEW =================
+     Below xl the four panels sit on one horizontal track: the section is
+     pinned and vertical scroll pans it sideways, so reading on past the
+     statement uncovers the two points. At xl it reverts to the desktop grid.
+     JS adds .pov-pan (and the pin height) only when the pan is actually on. -->
+<section id="pov" class="relative z-[3] -mt-[var(--spacing-povlift)] pb-16 xl:pb-24">
+  <div id="povPin" class="relative">
+    <div id="povStage" class="flex items-center xl:block">
+      <div id="povTrack" class="pov-track xl:mx-auto xl:grid xl:max-w-[1400px] xl:grid-cols-[1.6fr_1fr_1fr] xl:grid-rows-[minmax(360px,auto)_auto] xl:gap-0">
+        <!-- statement panel -->
+        <div class="pov-panel rv flex flex-col justify-between gap-8 [container-type:inline-size] bg-[linear-gradient(168deg,#0A2038_0%,#0B4E8F_58%,#0E9BE0_100%)] p-7 sm:p-9 xl:col-start-1 xl:row-span-2 xl:p-11">
+          <div>
+            <p class="text-lede font-bold tracking-[.06em] text-white/85">Our point of view</p>
+            <h2 class="mt-3.5 font-display text-[min(34px,6cqw)] font-bold leading-[1.14] tracking-[-.025em] text-white">The future belongs to enterprises that operationalize AI</h2>
+          </div>
+          <p class="max-w-[38ch] text-body text-white/70">AI market leaders aren&rsquo;t winning because they have access to better AI. They&rsquo;re winning because they&rsquo;ve embedded it into the way their organizations operate.</p>
         </div>
-        <h3 class="font-display text-h3 font-semibold text-hi">Accountability beyond adoption</h3>
-      </div>
-      <p class="text-small text-mid">Lasting success comes from AI that&rsquo;s secure, trusted, and accountable from strategy through scale.</p>
-    </div>
 
-    <div class="rv flex flex-col justify-between gap-6 bg-[radial-gradient(100%_100%_at_55%_100%,#245F90_0%,#0E1C30_100%)] p-7 sm:p-9 xl:col-start-3 xl:row-start-2 xl:min-h-[255px]">
-      <div>
-        <div class="mb-4 h-9 w-9" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" stroke-width="1.1" class="h-full w-full">
-            <path d="M20 5.5l14 7.5-14 7.5-14-7.5L20 5.5Z" stroke="#FFFFFF"/>
-            <path d="M6 21l14 7.5L34 21" stroke="#A5A5A5"/>
-            <path d="M6 28l14 7.5L34 28" stroke="#A5A5A5"/>
-            <circle cx="20" cy="13" r="3.4" fill="#1294D7"/>
-          </svg>
+        <!-- visual: a still lifted from the hero footage -->
+        <div class="pov-panel rv bg-[url('pov-visual.jpg')] bg-cover bg-[position:50%_62%] xl:col-span-2 xl:col-start-2 xl:row-start-1 xl:min-h-[280px]" role="img" aria-label="Abstract blue fluid detail from the hero visual"></div>
+
+        <!-- the two points, in the Style A card language: hairline icon, then copy -->
+        <div class="pov-panel rv flex flex-col justify-between gap-6 bg-[radial-gradient(75%_156%_at_85%_25%,#134369_0%,#0E1C30_100%)] p-7 sm:p-9 xl:col-start-2 xl:row-start-2 xl:min-h-[255px]">
+          <div>
+            <div class="mb-4 h-9 w-9" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none" stroke-width="1.1" class="h-full w-full">
+                <path d="M20 4.5l13 5.5v9.5c0 9-6 16-13 18.5C13 35 7 28 7 19.5V10l13-5.5Z" stroke="#FFFFFF"/>
+                <circle cx="20" cy="19" r="6.4" fill="#1294D7"/>
+                <path d="M17.2 19l2 2 3.8-4.2" stroke="#04121C"/>
+              </svg>
+            </div>
+            <h3 class="font-display text-h3 font-semibold text-hi">Accountability beyond adoption</h3>
+          </div>
+          <p class="text-small text-mid">Lasting success comes from AI that&rsquo;s secure, trusted, and accountable from strategy through scale.</p>
         </div>
-        <h3 class="font-display text-h3 font-semibold text-hi">Structured capability is advantage</h3>
+
+        <div class="pov-panel rv flex flex-col justify-between gap-6 bg-[radial-gradient(100%_100%_at_55%_100%,#245F90_0%,#0E1C30_100%)] p-7 sm:p-9 xl:col-start-3 xl:row-start-2 xl:min-h-[255px]">
+          <div>
+            <div class="mb-4 h-9 w-9" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none" stroke-width="1.1" class="h-full w-full">
+                <path d="M20 5.5l14 7.5-14 7.5-14-7.5L20 5.5Z" stroke="#FFFFFF"/>
+                <path d="M6 21l14 7.5L34 21" stroke="#A5A5A5"/>
+                <path d="M6 28l14 7.5L34 28" stroke="#A5A5A5"/>
+                <circle cx="20" cy="13" r="3.4" fill="#1294D7"/>
+              </svg>
+            </div>
+            <h3 class="font-display text-h3 font-semibold text-hi">Structured capability is advantage</h3>
+          </div>
+          <p class="text-small text-mid">Repeatable execution, strong governance, and integration into core operations, built to scale across the enterprise.</p>
+        </div>
       </div>
-      <p class="text-small text-mid">Repeatable execution, strong governance, and integration into core operations, built to scale across the enterprise.</p>
     </div>
   </div>
+  <!-- progress hairline, only while the pan is live -->
+  <div id="povBar" class="pointer-events-none absolute bottom-0 left-0 hidden h-0.5 w-full bg-white/12"><span class="block h-full w-0 bg-brand"></span></div>
 </section>
 
 <!-- ================= WHAT WE DO ================= -->
@@ -147,22 +157,22 @@
       <p class="text-lede font-semibold tracking-[.06em] text-brand">What we do</p>
       <h2 class="mt-3.5 max-w-[20ch] font-display text-h2 font-semibold text-display">End-to-end enterprise digital capability</h2>
     </div>
-    <div class="mt-10 grid gap-3.5 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3">
-      <article class="rv group relative aspect-[4/3] overflow-hidden border border-line sm:aspect-[4/5] lg:aspect-[4/5]">
+    <div class="rail mt-10 lg:mt-14 lg:grid lg:grid-cols-3 lg:gap-3.5 lg:overflow-visible lg:[&>*]:max-w-none">
+      <article class="rv group relative aspect-[4/5] overflow-hidden border border-line">
         <div class="absolute inset-0 bg-[url('End-01.jpg')] bg-cover bg-center transition-transform duration-700 group-hover:scale-105"></div>
         <div class="absolute inset-0 flex flex-col justify-end bg-[linear-gradient(to_top,rgba(6,8,16,.94)_0%,rgba(6,8,16,.5)_44%,transparent_100%)] p-6">
           <h3 class="font-display text-h3 font-bold text-display">End-to-end capability</h3>
           <p class="mt-2 max-w-[34ch] text-small text-mid">Strategy, engineering, and operations across cloud, data, AI, and managed services.</p>
         </div>
       </article>
-      <article class="rv group relative aspect-[4/3] overflow-hidden border border-line sm:aspect-[4/5] lg:aspect-[4/5]" style="transition-delay:.09s">
+      <article class="rv group relative aspect-[4/5] overflow-hidden border border-line" style="transition-delay:.09s">
         <div class="absolute inset-0 bg-[url('End-02.jpg')] bg-cover bg-center transition-transform duration-700 group-hover:scale-105"></div>
         <div class="absolute inset-0 flex flex-col justify-end bg-[linear-gradient(to_top,rgba(6,8,16,.94)_0%,rgba(6,8,16,.5)_44%,transparent_100%)] p-6">
           <h3 class="font-display text-h3 font-bold text-display">Industries we serve</h3>
           <p class="mt-2 max-w-[34ch] text-small text-mid">AI-powered, scalable transformation across regulated, mission-critical industries.</p>
         </div>
       </article>
-      <article class="rv group relative aspect-[4/3] overflow-hidden border border-line sm:col-span-2 sm:aspect-[16/7] lg:col-span-1 lg:aspect-[4/5]" style="transition-delay:.18s">
+      <article class="rv group relative aspect-[4/5] overflow-hidden border border-line" style="transition-delay:.18s">
         <div class="absolute inset-0 bg-[url('End-03.jpg')] bg-cover bg-center transition-transform duration-700 group-hover:scale-105"></div>
         <div class="absolute inset-0 flex flex-col justify-end bg-[linear-gradient(to_top,rgba(6,8,16,.94)_0%,rgba(6,8,16,.5)_44%,transparent_100%)] p-6">
           <h3 class="font-display text-h3 font-bold text-display">Partnerships that work</h3>
@@ -246,87 +256,87 @@
       </div>
     </div>
 
-    <div class="mt-6 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" id="prodGrid">
+    <div class="mt-6 grid grid-cols-2 gap-3.5 lg:grid-cols-3 xl:grid-cols-4" id="prodGrid">
       <article class="prod group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="pa">
-        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/retina360.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="retina360 logo"></span>
-        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/retina360.jpg')] bg-[length:56%_auto] bg-center bg-no-repeat" role="img" aria-label="retina360 logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-4 text-center sm:p-5">
           <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">retina360</h3>
           <p class="mt-2 text-small text-mid">Improve operational efficiency, asset availability and ROI through Data Science.</p>
         </div>
       </article>
       <article class="prod group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="pa">
-        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/midas360.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="midas360 logo"></span>
-        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/midas360.jpg')] bg-[length:56%_auto] bg-center bg-no-repeat" role="img" aria-label="midas360 logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-4 text-center sm:p-5">
           <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">midas360</h3>
           <p class="mt-2 text-small text-mid">Empower metro rail operations with advanced decision analytics and asset management.</p>
         </div>
       </article>
       <article class="prod group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="pa">
-        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/rt360.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="rt360 logo"></span>
-        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/rt360.jpg')] bg-[length:56%_auto] bg-center bg-no-repeat" role="img" aria-label="rt360 logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-4 text-center sm:p-5">
           <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">rt360</h3>
           <p class="mt-2 text-small text-mid">Streamline governance, risk, and compliance with cutting-edge digital solutions.</p>
         </div>
       </article>
       <article class="prod group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="pa">
-        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/radar360.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="radar360 logo"></span>
-        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/radar360.jpg')] bg-[length:56%_auto] bg-center bg-no-repeat" role="img" aria-label="radar360 logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-4 text-center sm:p-5">
           <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">radar360</h3>
           <p class="mt-2 text-small text-mid">Ensure compliance and efficiency through automated AI powered audit solutions.</p>
         </div>
       </article>
       <article class="prod hidden group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="ip">
-        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/cloudxcel.ai.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="CloudXcel.Ai logo"></span>
-        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/cloudxcel.ai.jpg')] bg-[length:56%_auto] bg-center bg-no-repeat" role="img" aria-label="CloudXcel.Ai logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-4 text-center sm:p-5">
           <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">CloudXcel.Ai</h3>
           <p class="mt-2 text-small text-mid">Improve agility, optimize costs and ensure continuous compliance through automation and AI.</p>
         </div>
       </article>
       <article class="prod hidden group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="ip">
-        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/aigenix.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="AigeniX logo"></span>
-        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/aigenix.jpg')] bg-[length:56%_auto] bg-center bg-no-repeat" role="img" aria-label="AigeniX logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-4 text-center sm:p-5">
           <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">AigeniX</h3>
           <p class="mt-2 text-small text-mid">Accelerate development, improve quality and reduce time-to-market through autonomous AI and governance.</p>
         </div>
       </article>
       <article class="prod hidden group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="sc">
-        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/fueltrans.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="FuelTrans logo"></span>
-        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/fueltrans.jpg')] bg-[length:56%_auto] bg-center bg-no-repeat" role="img" aria-label="FuelTrans logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-4 text-center sm:p-5">
           <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">FuelTrans</h3>
           <p class="mt-2 text-small text-mid">Automate fuel retail operations with IoT, Cloud and AI/ML technologies to maximize value.</p>
         </div>
       </article>
       <article class="prod hidden group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="sc">
-        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/cuetrans.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="CueTrans logo"></span>
-        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/cuetrans.jpg')] bg-[length:56%_auto] bg-center bg-no-repeat" role="img" aria-label="CueTrans logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-4 text-center sm:p-5">
           <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">CueTrans</h3>
           <p class="mt-2 text-small text-mid">Enhance fleet visibility with our intelligent vehicle monitoring system.</p>
         </div>
       </article>
       <article class="prod hidden group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="ea">
-        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/procure360.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="Procure360 logo"></span>
-        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/procure360.jpg')] bg-[length:56%_auto] bg-center bg-no-repeat" role="img" aria-label="Procure360 logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-4 text-center sm:p-5">
           <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">Procure360</h3>
           <p class="mt-2 text-small text-mid">Revolutionize supplier management with AI-driven insights and automation.</p>
         </div>
       </article>
       <article class="prod hidden group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="ea">
-        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/geodatafy.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="Geodatafy logo"></span>
-        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/geodatafy.jpg')] bg-[length:56%_auto] bg-center bg-no-repeat" role="img" aria-label="Geodatafy logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-4 text-center sm:p-5">
           <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">Geodatafy</h3>
           <p class="mt-2 text-small text-mid">Unlock operational transparency with integrated data solutions for oil and gas, energy firms.</p>
         </div>
       </article>
       <article class="prod hidden group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="dx">
-        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/dropthought.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="Dropthought logo"></span>
-        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/dropthought.jpg')] bg-[length:56%_auto] bg-center bg-no-repeat" role="img" aria-label="Dropthought logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-4 text-center sm:p-5">
           <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">Dropthought</h3>
           <p class="mt-2 text-small text-mid">Capture real-time feedback to enhance experiences and drive improvements.</p>
         </div>
       </article>
       <article class="prod hidden group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="dx">
-        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/dtworks.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="dtWorks logo"></span>
-        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/dtworks.jpg')] bg-[length:56%_auto] bg-center bg-no-repeat" role="img" aria-label="dtWorks logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-4 text-center sm:p-5">
           <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">dtWorks</h3>
           <p class="mt-2 text-small text-mid">Enable seamless workflow and intelligent operations to enhance customer experience.</p>
         </div>
@@ -413,7 +423,6 @@
         </div>
       </article>
     </div>
-    <p class="mt-4 px-gutter text-small text-low lg:hidden">Swipe for more &rarr;</p>
   </div>
 </section>
 
@@ -425,7 +434,7 @@
       <h2 class="mt-3.5 font-display text-h2 font-semibold text-display">Case Study</h2>
       <p class="mt-5 max-w-[62ch] text-lede text-mid">See how BCT solves complex challenges and delivers business impact through disciplined execution and scalable solutions.</p>
     </div>
-    <div class="mt-10 grid gap-8 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-7">
+    <div class="rail mt-10 lg:mt-14 lg:grid lg:grid-cols-3 lg:gap-7 lg:overflow-visible lg:[&>*]:max-w-none">
       <a class="rv group block" href="#">
         <span class="block aspect-[3/2] border border-line bg-[url('r360-case-1.webp')] bg-cover bg-center transition group-hover:border-line-blue"></span>
         <span class="mt-4 block text-[11px] font-medium uppercase tracking-[.1em] text-low">Government &middot; AI &middot; Analytics</span>
@@ -440,8 +449,8 @@
         <p class="mt-2.5 text-small text-mid">Intelligent, automated software delivery, enhancing agent efficiency and customer experience.</p>
         <span class="mt-4 inline-flex min-h-11 items-center gap-2 text-small font-semibold text-brand">Read more &rarr;</span>
       </a>
-      <a class="rv group block sm:col-span-2 lg:col-span-1" href="#" style="transition-delay:.18s">
-        <span class="block aspect-[3/2] border border-line bg-[url('r360-case-3.webp')] bg-cover bg-center transition group-hover:border-line-blue sm:aspect-[16/6] lg:aspect-[3/2]"></span>
+      <a class="rv group block" href="#" style="transition-delay:.18s">
+        <span class="block aspect-[3/2] border border-line bg-[url('r360-case-3.webp')] bg-cover bg-center transition group-hover:border-line-blue"></span>
         <span class="mt-4 block text-[11px] font-medium uppercase tracking-[.1em] text-low">Fintech &middot; Cloud &middot; Temenos</span>
         <h3 class="mt-3 line-clamp-2 font-display text-h3 font-bold text-display transition group-hover:text-hi">Scaling global fintech payments with a cloud-native platform</h3>
         <p class="mt-2.5 text-small text-mid">Cloud-native Temenos enabling scalable global transaction processing.</p>
@@ -462,7 +471,7 @@
         View all <span class="grid h-8 w-8 place-items-center bg-brand font-extrabold text-[#04121C]" aria-hidden="true">&rarr;</span>
       </a>
     </div>
-    <div class="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="rail lg:grid lg:grid-cols-3 lg:gap-3.5 lg:overflow-visible lg:[&>*]:max-w-none">
       <a class="rv group flex flex-col overflow-hidden border border-line bg-surface p-6 transition hover:border-line-blue" href="#">
         <span class="-mx-6 -mt-6 mb-5 block aspect-[16/9] bg-[url('r360-blog-1.webp')] bg-cover bg-center transition-transform duration-500 group-hover:scale-105"></span>
         <h3 class="line-clamp-2 font-display text-h3 font-bold text-hi">AI Agents in Action</h3>
@@ -475,8 +484,8 @@
         <p class="mt-2.5 mb-auto text-small text-mid">Why modern data architecture is the foundation for AI adoption.</p>
         <span class="mt-5 inline-flex min-h-11 items-center text-small font-semibold text-brand">Read more &rarr;</span>
       </a>
-      <a class="rv group flex flex-col overflow-hidden border border-line bg-surface p-6 transition hover:border-line-blue sm:col-span-2 lg:col-span-1" href="#" style="transition-delay:.18s">
-        <span class="-mx-6 -mt-6 mb-5 block aspect-[16/9] bg-[url('r360-blog-3.webp')] bg-cover bg-center transition-transform duration-500 group-hover:scale-105 sm:aspect-[16/5] lg:aspect-[16/9]"></span>
+      <a class="rv group flex flex-col overflow-hidden border border-line bg-surface p-6 transition hover:border-line-blue" href="#" style="transition-delay:.18s">
+        <span class="-mx-6 -mt-6 mb-5 block aspect-[16/9] bg-[url('r360-blog-3.webp')] bg-cover bg-center transition-transform duration-500 group-hover:scale-105"></span>
         <h3 class="line-clamp-2 font-display text-h3 font-bold text-hi">Why AI Maturity Matters</h3>
         <p class="mt-2.5 mb-auto text-small text-mid">Lessons from early adopters on turning AI into advantage.</p>
         <span class="mt-5 inline-flex min-h-11 items-center text-small font-semibold text-brand">Read more &rarr;</span>
@@ -624,6 +633,77 @@ var io = new IntersectionObserver(function(es){
   es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
 }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
 document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+
+/* ---- point of view: vertical scroll pans the four panels sideways ----
+   Only below xl, and never under reduced-motion — in both of those cases the
+   stage stays a normal swipe rail, which reaches the same four panels. */
+(function(){
+  var sec   = document.getElementById('pov'),
+      pin   = document.getElementById('povPin'),
+      stage = document.getElementById('povStage'),
+      track = document.getElementById('povTrack'),
+      bar   = document.getElementById('povBar');
+  if (!sec || !track) return;
+
+  var wide   = matchMedia('(min-width: 1280px)'),
+      calm   = matchMedia('(prefers-reduced-motion: reduce)'),
+      travel = 0, on = false;
+
+  function measure(){
+    // distance the track must move for its last panel to reach the right edge
+    travel = Math.max(0, track.scrollWidth - stage.clientWidth);
+    // vertical room to spend on that pan: one viewport to read, plus the travel
+    pin.style.height = (window.innerHeight + travel) + 'px';
+  }
+
+  function enable(){
+    if (on) return;
+    on = true;
+    sec.classList.add('pov-pan');
+    bar.classList.remove('hidden');
+    stage.scrollLeft = 0;
+    measure(); paint();
+  }
+  function disable(){
+    if (!on) return;
+    on = false;
+    sec.classList.remove('pov-pan');
+    bar.classList.add('hidden');
+    pin.style.height = '';
+    track.style.transform = '';
+  }
+
+  function paint(){
+    if (!on) return;
+    var top = pin.getBoundingClientRect().top,
+        p   = travel ? Math.min(1, Math.max(0, -top / travel)) : 0;
+    track.style.transform = 'translate3d(' + (-p * travel) + 'px,0,0)';
+    bar.firstElementChild.style.width = (p * 100) + '%';
+  }
+
+  function sync(){
+    (wide.matches || calm.matches) ? disable() : enable();
+    if (on) { measure(); paint(); }
+  }
+
+  addEventListener('scroll', paint, {passive:true});
+  addEventListener('resize', sync);
+  wide.addEventListener('change', sync);
+  calm.addEventListener('change', sync);
+  addEventListener('load', sync);
+  // Width at parse time is not trustworthy — fonts, images and the scrollbar
+  // all move it. Re-decide when the document's *width* changes; height is
+  // ignored because measure() sets the pin height and would loop.
+  if (window.ResizeObserver){
+    var lastW = document.documentElement.clientWidth;
+    new ResizeObserver(function(){
+      var w = document.documentElement.clientWidth;
+      if (w === lastW) return;
+      lastW = w; sync();
+    }).observe(document.documentElement);
+  }
+  sync();
+})();
 
 /* ---- back to top ---- */
 (function(){
