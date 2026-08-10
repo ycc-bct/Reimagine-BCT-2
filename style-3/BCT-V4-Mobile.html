@@ -147,8 +147,6 @@
         </div>
       </div>
       </div>
-      <!-- progress hairline, only while the pan is live -->
-      <div id="povBar" class="pointer-events-none absolute bottom-0 left-0 z-[4] hidden h-0.5 w-full bg-white/12"><span class="block h-full w-0 bg-brand"></span></div>
     </div>
   </div>
 </section>
@@ -646,8 +644,7 @@ document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
       hs    = document.getElementById('heroStage'),
       copy  = document.getElementById('heroCopy'),
       stage = document.getElementById('povStage'),
-      track = document.getElementById('povTrack'),
-      bar   = document.getElementById('povBar');
+      track = document.getElementById('povTrack');
   if (!sec || !track) return;
 
   var wide   = matchMedia('(min-width: 1280px)'),
@@ -658,7 +655,8 @@ document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
   // negative offset: the screen shows its bottom edge, where the panel strip
   // is. That only reads if the whole strip fits on screen once stuck.
   function fits(){
-    return stage.getBoundingClientRect().height + 64 <= window.innerHeight;
+    var pad = parseFloat(getComputedStyle(hs).paddingBottom) || 0;
+    return stage.getBoundingClientRect().height + pad + 64 <= window.innerHeight;
   }
 
   function measure(){
@@ -674,7 +672,6 @@ document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
     if (on) return;
     on = true;
     sec.classList.add('pov-pan');
-    bar.classList.remove('hidden');
     stage.scrollLeft = 0;
     measure(); paint();
   }
@@ -682,7 +679,6 @@ document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
     if (!on) return;
     on = false;
     sec.classList.remove('pov-pan');
-    bar.classList.add('hidden');
     pin.style.height = '';
     track.style.transform = '';
   }
@@ -694,7 +690,6 @@ document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
     var top = pin.getBoundingClientRect().top,
         p   = travel ? Math.min(1, Math.max(0, (-top - lift) / travel)) : 0;
     track.style.transform = 'translate3d(' + (-p * travel) + 'px,0,0)';
-    bar.firstElementChild.style.width = (p * 100) + '%';
   }
 
   function sync(){

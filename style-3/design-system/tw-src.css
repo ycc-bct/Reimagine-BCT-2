@@ -125,7 +125,14 @@
        strip each get real room, and the first screen shows the headline with
        the top of the panels under it. Height lives here rather than as a
        min-h-* utility — utilities are a later cascade layer and would win. */
-    #heroStage { --hero-h: 120svh; min-height: var(--hero-h); }
+    #heroStage {
+      --hero-h: 138svh;
+      min-height: var(--hero-h);
+      /* the panel strip stops short of the stage's bottom edge rather than
+         running into it — the gap is what makes the strip read as sitting
+         inside the hero instead of being cropped by it */
+      padding-bottom: clamp(20px, 4svh, 44px);
+    }
     .pov-panel { flex: 0 0 82vw; max-width: 420px; height: 100%; scroll-snap-align: start; }
     #povStage {
       flex: 0 0 auto; height: clamp(340px, 46svh, 480px);
@@ -136,7 +143,7 @@
     /* short viewports: buy the panel strip back some room from the headline
        block's padding rather than letting it slide off the first screen */
     @media (max-height: 700px) {
-      #heroStage { --hero-h: 132svh; }
+      #heroStage { --hero-h: 150svh; }
       #heroCopy { padding-top: 88px; padding-bottom: 20px; }
     }
     /* Pan running: the stage sticks at a negative offset so the screen holds
@@ -148,7 +155,6 @@
     .pov-pan #povTrack { will-change: transform; }
   }
   @media (min-width: 1280px) {
-    #povBar { display: none; }
     #povStage { display: block; }
   }
 
