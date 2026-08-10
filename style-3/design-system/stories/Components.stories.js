@@ -83,8 +83,10 @@ export const LineArtIcon = () => h(`
 `);
 
 export const ScrollReveal = () => {
+  // timer kick-off + resolve by id — see the note in Typography.stories.js
+  const uid = 'rvp-' + Math.random().toString(36).slice(2, 8);
   const el = h(`
-    <div style="padding:8px">
+    <div id="${uid}" style="padding:8px">
       <button style="background:var(--blue-500);color:#04121C;border:none;font:700 14px var(--font-body);padding:12px 22px;cursor:pointer">Replay</button>
       <div class="row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px">
         ${[0,1,2].map(i => `
@@ -96,13 +98,20 @@ export const ScrollReveal = () => {
     </div>
   `);
   const play = () => {
-    const items = el.querySelectorAll('.rv');
+    const scope = document.getElementById(uid);
+    if (!scope) return;
+    const items = scope.querySelectorAll('.rv');
     items.forEach(i => { i.style.opacity = '0'; i.style.transform = 'translateY(28px)'; });
     requestAnimationFrame(() => requestAnimationFrame(() => {
       items.forEach(i => { i.style.opacity = '1'; i.style.transform = 'none'; });
     }));
   };
-  el.querySelector('button').addEventListener('click', play);
-  requestAnimationFrame(play);
+  const start = () => {
+    const scope = document.getElementById(uid);
+    if (!scope) { setTimeout(start, 50); return; }
+    scope.querySelector('button').addEventListener('click', play);
+    play();
+  };
+  setTimeout(start, 0);
   return el;
 };

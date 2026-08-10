@@ -47,8 +47,12 @@ export const BodyRoles = () => h(`
 `);
 
 export const LineBreakRule = () => {
+  // Kicked off with a timer, not requestAnimationFrame: a Storybook tab that
+  // is not visible when the story loads never fires rAF, and the readout would
+  // stay blank for good. The node is re-resolved by id so a re-render is fine.
+  const uid = 'lbr-' + Math.random().toString(36).slice(2, 8);
   const el = h(`
-    <div style="padding:8px">
+    <div id="${uid}" style="padding:8px">
       <div style="font:400 13.5px var(--font-body);color:var(--text-mid);max-width:64ch;margin-bottom:24px">
         Titles must never exceed two lines. Resize the preview and watch the counter — it measures
         the live line count, the only reliable check. Poppins wraps unpredictably around hyphenated
@@ -63,11 +67,13 @@ export const LineBreakRule = () => {
     </div>
   `);
   const measure = () => {
-    const t = el.querySelector('.probe'), out = el.querySelector('.readout');
+    const scope = document.getElementById(uid);
+    if (!scope) return;
+    const t = scope.querySelector('.probe'), out = scope.querySelector('.readout');
     if (!t || !out) return;
     const n = t.getBoundingClientRect().height / parseFloat(getComputedStyle(t).lineHeight);
     const lines = Math.round(n * 100) / 100;
-    const w = el.getBoundingClientRect().width;
+    const w = scope.getBoundingClientRect().width;
     // the rule binds at >=768px — below that, forcing two lines would push the
     // font under the scale floor, and unreadable type is the worse failure
     if (w < 768) {
@@ -79,7 +85,12 @@ export const LineBreakRule = () => {
     out.innerHTML = `<span style="color:${ok ? '#5FBEEA' : '#FF6B6B'}">
       ${lines} lines at ${Math.round(w)}px — ${ok ? 'passes' : 'FAILS: rewrite the copy, do not shrink the font'}</span>`;
   };
-  requestAnimationFrame(measure);
-  new ResizeObserver(measure).observe(el);
+  const start = () => {
+    const scope = document.getElementById(uid);
+    if (!scope) { setTimeout(start, 50); return; }
+    measure();
+    new ResizeObserver(measure).observe(scope);
+  };
+  setTimeout(start, 0);
   return el;
 };

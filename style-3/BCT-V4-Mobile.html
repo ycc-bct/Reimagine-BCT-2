@@ -71,36 +71,38 @@
 
 <main id="main">
 
-<!-- ================= HERO ================= -->
-<section class="relative flex min-h-[88svh] flex-col justify-end overflow-hidden px-gutter pt-28 pb-[calc(var(--spacing-povlift)+3.5rem)] sm:justify-center lg:min-h-screen">
-  <video class="absolute inset-0 -z-20 h-full w-full object-cover" autoplay loop muted playsinline src="hero-blue.mp4" aria-hidden="true"></video>
-  <div class="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(6,8,16,.72)_0%,rgba(6,8,16,.32)_38%,rgba(6,8,16,.58)_74%,#060810_100%)]" aria-hidden="true"></div>
-
-  <div class="mx-auto w-full max-w-[1400px] lg:grid lg:grid-cols-[1.6fr_1fr] lg:items-end lg:gap-16">
-    <div class="[container-type:inline-size]">
-      <h1 class="load load-2 font-display text-[min(84px,8.6cqw)] font-bold leading-[1.08] tracking-[-.03em] text-display">
-        Engineering for the<br> intelligent enterprise
-      </h1>
-    </div>
-    <div class="mt-8 lg:mt-0">
-      <div class="load load-3 mb-6 h-1 w-11 bg-brand" aria-hidden="true"></div>
-      <p class="load load-4 max-w-[52ch] text-lede text-mid">BCT builds, operates, and powers mission-critical digital infrastructure using proprietary platforms, deep domain expertise, and AI to engineer, modernize, and continuously improve enterprise operations.</p>
-      <a href="#products" class="load load-5 mt-8 inline-flex min-h-11 items-center gap-2.5 text-body font-semibold text-hi transition-colors hover:text-brand-300">
-        Explore our products
-        <span class="grid h-8 w-8 place-items-center bg-brand font-extrabold text-[#04121C]" aria-hidden="true">&rarr;</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ================= POINT OF VIEW =================
-     Below xl the four panels sit on one horizontal track: the section is
-     pinned and vertical scroll pans it sideways, so reading on past the
-     statement uncovers the two points. At xl it reverts to the desktop grid.
-     JS adds .pov-pan (and the pin height) only when the pan is actually on. -->
-<section id="pov" class="relative z-[3] -mt-[var(--spacing-povlift)] pb-16 xl:pb-24">
+<!-- ================= HERO + POINT OF VIEW =================
+     One section, one first screen: the headline sits above and the four
+     point-of-view panels run along the bottom, so the statement is already
+     on screen at load. Below xl the whole composition pins and vertical
+     scroll pans the panels sideways to uncover the two points; at xl the
+     panels fall back into the desktop grid. JS adds .pov-pan only when the
+     pan is actually running. -->
+<section id="hero" class="relative">
   <div id="povPin" class="relative">
-    <div id="povStage" class="flex items-center xl:block">
+    <div id="heroStage" class="flex min-h-svh flex-col overflow-hidden xl:min-h-screen xl:pb-24">
+      <video class="absolute inset-0 -z-20 h-full w-full object-cover" autoplay loop muted playsinline src="hero-blue.mp4" aria-hidden="true"></video>
+      <div class="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(6,8,16,.72)_0%,rgba(6,8,16,.32)_38%,rgba(6,8,16,.58)_74%,#060810_100%)]" aria-hidden="true"></div>
+
+      <div id="heroCopy" class="flex flex-1 flex-col justify-end px-gutter pt-28 pb-10 xl:pb-16">
+        <div class="mx-auto w-full max-w-[1400px] lg:grid lg:grid-cols-[1.6fr_1fr] lg:items-end lg:gap-16">
+          <div class="[container-type:inline-size]">
+            <h1 class="load load-2 font-display text-[min(84px,8.6cqw)] font-bold leading-[1.08] tracking-[-.03em] text-display">
+              Engineering for the<br> intelligent enterprise
+            </h1>
+          </div>
+          <div class="mt-8 lg:mt-0">
+            <div class="load load-3 mb-6 h-1 w-11 bg-brand" aria-hidden="true"></div>
+            <p class="load load-4 max-w-[52ch] text-lede text-mid">BCT builds, operates, and powers mission-critical digital infrastructure using proprietary platforms, deep domain expertise, and AI to engineer, modernize, and continuously improve enterprise operations.</p>
+            <a href="#products" class="load load-5 mt-8 inline-flex min-h-11 items-center gap-2.5 text-body font-semibold text-hi transition-colors hover:text-brand-300">
+              Explore our products
+              <span class="grid h-8 w-8 place-items-center bg-brand font-extrabold text-[#04121C]" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div id="povStage" class="relative z-[3] flex">
       <div id="povTrack" class="pov-track xl:mx-auto xl:grid xl:max-w-[1400px] xl:grid-cols-[1.6fr_1fr_1fr] xl:grid-rows-[minmax(360px,auto)_auto] xl:gap-0">
         <!-- statement panel -->
         <div class="pov-panel rv flex flex-col justify-between gap-8 [container-type:inline-size] bg-[linear-gradient(168deg,#0A2038_0%,#0B4E8F_58%,#0E9BE0_100%)] p-7 sm:p-9 xl:col-start-1 xl:row-span-2 xl:p-11">
@@ -144,10 +146,11 @@
           <p class="text-small text-mid">Repeatable execution, strong governance, and integration into core operations, built to scale across the enterprise.</p>
         </div>
       </div>
+      </div>
+      <!-- progress hairline, only while the pan is live -->
+      <div id="povBar" class="pointer-events-none absolute bottom-0 left-0 z-[4] hidden h-0.5 w-full bg-white/12"><span class="block h-full w-0 bg-brand"></span></div>
     </div>
   </div>
-  <!-- progress hairline, only while the pan is live -->
-  <div id="povBar" class="pointer-events-none absolute bottom-0 left-0 hidden h-0.5 w-full bg-white/12"><span class="block h-full w-0 bg-brand"></span></div>
 </section>
 
 <!-- ================= WHAT WE DO ================= -->
@@ -638,8 +641,9 @@ document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
    Only below xl, and never under reduced-motion — in both of those cases the
    stage stays a normal swipe rail, which reaches the same four panels. */
 (function(){
-  var sec   = document.getElementById('pov'),
+  var sec   = document.getElementById('hero'),
       pin   = document.getElementById('povPin'),
+      copy  = document.getElementById('heroCopy'),
       stage = document.getElementById('povStage'),
       track = document.getElementById('povTrack'),
       bar   = document.getElementById('povBar');
@@ -648,6 +652,17 @@ document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
   var wide   = matchMedia('(min-width: 1280px)'),
       calm   = matchMedia('(prefers-reduced-motion: reduce)'),
       travel = 0, on = false;
+
+  // The headline and the panel strip have to share one screen. On a short
+  // viewport they don't fit, and pinning would crop the panels — so the pan
+  // only runs when the composition actually has the room for it.
+  function fits(){
+    var inner = copy.firstElementChild, cs = getComputedStyle(copy);
+    var need  = inner.getBoundingClientRect().height +
+                parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) +
+                (parseFloat(getComputedStyle(stage).minHeight) || 0);
+    return need <= window.innerHeight;
+  }
 
   function measure(){
     // distance the track must move for its last panel to reach the right edge
@@ -682,7 +697,7 @@ document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
   }
 
   function sync(){
-    (wide.matches || calm.matches) ? disable() : enable();
+    (wide.matches || calm.matches || !fits()) ? disable() : enable();
     if (on) { measure(); paint(); }
   }
 

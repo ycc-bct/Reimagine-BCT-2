@@ -57,13 +57,15 @@
 }
 
 @layer base {
-  html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+  /* the horizontal-overflow guard belongs on html, not body: on body it makes
+     body its own scroll container in some engines, which breaks the sticky
+     hero pin. On html it clips through the viewport scrollport instead. */
+  html { scroll-behavior: smooth; scroll-padding-top: 64px; overflow-x: hidden; }
   body {
     background: var(--color-base);
     color: var(--color-hi);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
   }
   ::selection { background: var(--color-brand); color: #04121C; }
   p { text-wrap: pretty; }
@@ -103,6 +105,61 @@
   }
   .rail::-webkit-scrollbar { display: none; }
   .rail > * { scroll-snap-align: start; flex: 0 0 78%; max-width: 320px; }
+
+  /* ---- Point of view: four equal panels on one horizontal track ----
+     The default is a plain swipe rail, so the panels are always reachable
+     even if the pan script never runs. When JS engages the scroll-driven
+     pan it adds .pov-pan, which pins the stage and takes over the offset. */
+  /* panels sit flush against each other — no gap, matching the desktop band */
+  .pov-track { display: flex; gap: 0; padding-inline: var(--spacing-gutter); }
+
+  /* position lives here, not as a `relative` utility: utilities sit in a later
+     cascade layer and would beat the sticky rule below no matter its specificity */
+  #heroStage { position: relative; }
+
+  /* Every rail/pin rule is scoped below xl, so width alone decides the layout.
+     At xl none of this applies and the xl: utilities in the markup restore the
+     desktop grid — even if the script left .pov-pan on the section. */
+  @media (max-width: 1279.98px) {
+    .pov-panel { flex: 0 0 82vw; max-width: 420px; height: 100%; scroll-snap-align: start; }
+    /* the track takes whatever height the headline leaves, with a readable
+       floor — so the panels are always exactly as tall as the space allows */
+    #povStage {
+      flex: 0 1 auto; min-height: clamp(230px, 34svh, 340px);
+      overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory;
+      scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    }
+    #povStage::-webkit-scrollbar { display: none; }
+    #povTrack { min-height: inherit; }
+    /* short viewports: buy the panel strip back some room from the headline
+       block's padding rather than letting it slide off the first screen */
+    @media (max-height: 700px) {
+      #heroCopy { padding-top: 88px; padding-bottom: 20px; }
+    }
+    /* pan running: pin the whole first screen, JS drives the offset */
+    .pov-pan #heroStage { position: sticky; top: 0; height: 100svh; }
+    .pov-pan #povStage { overflow: hidden; scroll-snap-type: none; }
+    .pov-pan #povTrack { will-change: transform; }
+  }
+  @media (min-width: 1280px) {
+    #povBar { display: none; }
+    #povStage { display: block; }
+  }
+
+  /* Why-BCT photo cards. Keyed off hover capability, not width — same as the
+     desktop build. A pointer device gets the hover reveal (copy slides up,
+     photo blurs behind it); a touch device has no hover to give, so the photo
+     is blurred from the start and the copy simply stays open. */
+  .why-bg { filter: blur(3px); }
+  @media (hover: hover) {
+    .why-bg { filter: none; transition: filter .5s ease, transform .6s cubic-bezier(.22,1,.36,1); }
+    .why-card:hover .why-bg { filter: blur(6px); }
+    .why-copy {
+      max-height: 0; opacity: 0; transform: translateY(8px); overflow: hidden;
+      transition: max-height .5s ease, opacity .4s ease, transform .45s ease;
+    }
+    .why-card:hover .why-copy { max-height: 180px; opacity: 1; transform: none; }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

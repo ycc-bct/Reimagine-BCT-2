@@ -4,8 +4,10 @@ export default { title: 'Foundations/Responsive' };
 
 /* ---- the body scale, live: the values change with the preview width ---- */
 export const BodyScaleFloor = () => {
+  // timer kick-off + resolve by id — see the note in Typography.stories.js
+  const uid = 'bsf-' + Math.random().toString(36).slice(2, 8);
   const el = h(`
-    <div style="padding:8px">
+    <div id="${uid}" style="padding:8px">
       <div style="font:400 13.5px var(--font-body);color:var(--text-mid);max-width:64ch">
         The three body roles keep their names at every width — only their values change. Switch the
         viewport toolbar between a phone and a desktop and watch the readout: below 768px each role
@@ -30,14 +32,22 @@ export const BodyScaleFloor = () => {
     </div>
   `);
   const read = () => {
-    const out = el.querySelector('.readout');
-    const g = (s) => getComputedStyle(el.querySelector(s)).fontSize;
-    const w = Math.round(el.getBoundingClientRect().width);
+    const scope = document.getElementById(uid);
+    if (!scope) return;
+    const out = scope.querySelector('.readout');
+    if (!out) return;
+    const g = (s) => getComputedStyle(scope.querySelector(s)).fontSize;
+    const w = Math.round(scope.getBoundingClientRect().width);
     const tier = w < 768 ? 'mobile tier (<768)' : 'desktop tier (≥768)';
     out.textContent = `${w}px — ${tier} · lede ${g('.r-lede')} · body ${g('.r-body')} · small ${g('.r-small')}`;
   };
-  requestAnimationFrame(read);
-  new ResizeObserver(read).observe(el);
+  const start = () => {
+    const scope = document.getElementById(uid);
+    if (!scope) { setTimeout(start, 50); return; }
+    read();
+    new ResizeObserver(read).observe(scope);
+  };
+  setTimeout(start, 0);
   return el;
 };
 
