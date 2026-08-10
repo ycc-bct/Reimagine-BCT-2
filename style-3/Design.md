@@ -304,9 +304,12 @@ change — only their values do.
 
 | Role | ≥768px | <768px |
 |---|---|---|
-| `--fs-lede` | 15.5 / 1.70 | **16 / 1.72** |
-| `--fs-body` | 14.5 / 1.70 | **15 / 1.70** |
-| `--fs-small` | 13.5 / 1.60 | **14 / 1.60** |
+| `--fs-lede` | 15.5 / 1.70 | **15 / 1.72** |
+| `--fs-body` | 14.5 / 1.70 | **14 / 1.70** |
+| `--fs-small` | 13.5 / 1.60 | **13 / 1.60** |
+
+Tuned on device: the first pass floored these *above* the desktop scale, which read too large in a
+narrow column. They now sit just under it, with the extra line-height carrying the legibility.
 
 ### Breakpoint map
 
@@ -343,4 +346,9 @@ underneath. It reverts to a grid once the columns can hold their width.
    far too big against a 40%-wide column. Size headlines in `cqw` against a
    `container-type: inline-size` parent.
 3. **The densest grid tier belongs at `xl`, not `lg`.** Four product columns at 1024 leaves ~230px
-   each, which pushes every card title to three lines.
+   each, which pushes every card title to three lines. The same applies to any bento: hold the full
+   multi-column arrangement back to `xl` and let it stack or go two-up at `lg`.
+4. **A two-line break has to exist at a word boundary.** Solving `total_width / 2 <= column` is not
+   sufficient — a heading can measure narrow enough overall and still take three lines because the
+   words do not divide there. The POV statement sat at 289 / 423 / 27px, with a two-character
+   orphan. Binary-search the size in the browser rather than computing it.

@@ -78,14 +78,14 @@
 
   <div class="mx-auto w-full max-w-[1400px] lg:grid lg:grid-cols-[1.6fr_1fr] lg:items-end lg:gap-16">
     <div class="[container-type:inline-size]">
-      <h1 class="font-display text-[min(94px,8.6cqw)] font-bold leading-[1.06] tracking-[-.03em] text-display max-sm:text-[clamp(34px,9.6vw,52px)]">
-        Engineering for the<br class="hidden sm:block"> intelligent enterprise
+      <h1 class="load load-2 font-display text-[min(84px,8.6cqw)] font-bold leading-[1.08] tracking-[-.03em] text-display">
+        Engineering for the<br> intelligent enterprise
       </h1>
     </div>
     <div class="mt-8 lg:mt-0">
-      <div class="mb-6 h-1 w-11 bg-brand" aria-hidden="true"></div>
-      <p class="max-w-[52ch] text-lede text-mid">BCT builds, operates, and powers mission-critical digital infrastructure using proprietary platforms, deep domain expertise, and AI to engineer, modernize, and continuously improve enterprise operations.</p>
-      <a href="#products" class="mt-8 inline-flex min-h-11 items-center gap-2.5 text-body font-semibold text-hi transition-colors hover:text-brand-300">
+      <div class="load load-3 mb-6 h-1 w-11 bg-brand" aria-hidden="true"></div>
+      <p class="load load-4 max-w-[52ch] text-lede text-mid">BCT builds, operates, and powers mission-critical digital infrastructure using proprietary platforms, deep domain expertise, and AI to engineer, modernize, and continuously improve enterprise operations.</p>
+      <a href="#products" class="load load-5 mt-8 inline-flex min-h-11 items-center gap-2.5 text-body font-semibold text-hi transition-colors hover:text-brand-300">
         Explore our products
         <span class="grid h-8 w-8 place-items-center bg-brand font-extrabold text-[#04121C]" aria-hidden="true">&rarr;</span>
       </a>
@@ -95,9 +95,48 @@
 
 <!-- ================= POINT OF VIEW ================= -->
 <section class="border-t border-line bg-surface px-gutter py-16 lg:py-24">
-  <div class="mx-auto max-w-[1400px]">
-    <p class="text-lede font-semibold tracking-[.06em] text-brand">Our point of view</p>
-    <p class="mt-4 max-w-[24ch] font-display text-h2 font-semibold text-display">The future belongs to enterprises that operationalize AI</p>
+  <div class="mx-auto grid max-w-[1400px] gap-3.5 sm:grid-cols-2 xl:grid-cols-[1.6fr_1fr_1fr] xl:grid-rows-[minmax(360px,auto)_auto] xl:gap-0">
+    <!-- statement panel -->
+    <div class="rv flex flex-col justify-between gap-10 [container-type:inline-size] bg-[linear-gradient(168deg,#0A2038_0%,#0B4E8F_58%,#0E9BE0_100%)] p-7 sm:p-9 sm:col-span-2 xl:col-span-1 xl:col-start-1 xl:row-span-2 xl:p-11">
+      <div>
+        <p class="text-lede font-bold tracking-[.06em] text-white/85">Our point of view</p>
+        <h2 class="mt-3.5 font-display text-[min(34px,6cqw)] font-bold leading-[1.14] tracking-[-.025em] text-white">The future belongs to enterprises that operationalize AI</h2>
+      </div>
+      <p class="max-w-[38ch] text-body text-white/70">AI market leaders aren&rsquo;t winning because they have access to better AI. They&rsquo;re winning because they&rsquo;ve embedded it into the way their organizations operate.</p>
+    </div>
+
+    <!-- visual: a still lifted from the hero footage -->
+    <div class="rv min-h-[180px] bg-[url('pov-visual.jpg')] bg-cover bg-[position:50%_62%] sm:col-span-2 xl:col-span-2 xl:col-start-2 xl:row-start-1 xl:min-h-[280px]" role="img" aria-label="Abstract blue fluid detail from the hero visual"></div>
+
+    <!-- the two points, in the Style A card language: hairline icon, then copy -->
+    <div class="rv flex flex-col justify-between gap-6 bg-[radial-gradient(75%_156%_at_85%_25%,#134369_0%,#0E1C30_100%)] p-7 sm:p-9 xl:col-start-2 xl:row-start-2 xl:min-h-[255px]">
+      <div>
+        <div class="mb-4 h-9 w-9" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke-width="1.1" class="h-full w-full">
+            <path d="M20 4.5l13 5.5v9.5c0 9-6 16-13 18.5C13 35 7 28 7 19.5V10l13-5.5Z" stroke="#FFFFFF"/>
+            <circle cx="20" cy="19" r="6.4" fill="#1294D7"/>
+            <path d="M17.2 19l2 2 3.8-4.2" stroke="#04121C"/>
+          </svg>
+        </div>
+        <h3 class="font-display text-h3 font-semibold text-hi">Accountability beyond adoption</h3>
+      </div>
+      <p class="text-small text-mid">Lasting success comes from AI that&rsquo;s secure, trusted, and accountable from strategy through scale.</p>
+    </div>
+
+    <div class="rv flex flex-col justify-between gap-6 bg-[radial-gradient(100%_100%_at_55%_100%,#245F90_0%,#0E1C30_100%)] p-7 sm:p-9 xl:col-start-3 xl:row-start-2 xl:min-h-[255px]">
+      <div>
+        <div class="mb-4 h-9 w-9" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke-width="1.1" class="h-full w-full">
+            <path d="M20 5.5l14 7.5-14 7.5-14-7.5L20 5.5Z" stroke="#FFFFFF"/>
+            <path d="M6 21l14 7.5L34 21" stroke="#A5A5A5"/>
+            <path d="M6 28l14 7.5L34 28" stroke="#A5A5A5"/>
+            <circle cx="20" cy="13" r="3.4" fill="#1294D7"/>
+          </svg>
+        </div>
+        <h3 class="font-display text-h3 font-semibold text-hi">Structured capability is advantage</h3>
+      </div>
+      <p class="text-small text-mid">Repeatable execution, strong governance, and integration into core operations, built to scale across the enterprise.</p>
+    </div>
   </div>
 </section>
 
@@ -109,21 +148,21 @@
       <h2 class="mt-3.5 max-w-[20ch] font-display text-h2 font-semibold text-display">End-to-end enterprise digital capability</h2>
     </div>
     <div class="mt-10 grid gap-3.5 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3">
-      <article class="rv group relative aspect-[16/10] overflow-hidden border border-line sm:aspect-[4/5] lg:aspect-[4/5]">
+      <article class="rv group relative aspect-[4/3] overflow-hidden border border-line sm:aspect-[4/5] lg:aspect-[4/5]">
         <div class="absolute inset-0 bg-[url('End-01.jpg')] bg-cover bg-center transition-transform duration-700 group-hover:scale-105"></div>
         <div class="absolute inset-0 flex flex-col justify-end bg-[linear-gradient(to_top,rgba(6,8,16,.94)_0%,rgba(6,8,16,.5)_44%,transparent_100%)] p-6">
           <h3 class="font-display text-h3 font-bold text-display">End-to-end capability</h3>
           <p class="mt-2 max-w-[34ch] text-small text-mid">Strategy, engineering, and operations across cloud, data, AI, and managed services.</p>
         </div>
       </article>
-      <article class="rv group relative aspect-[16/10] overflow-hidden border border-line sm:aspect-[4/5] lg:aspect-[4/5]" style="transition-delay:.09s">
+      <article class="rv group relative aspect-[4/3] overflow-hidden border border-line sm:aspect-[4/5] lg:aspect-[4/5]" style="transition-delay:.09s">
         <div class="absolute inset-0 bg-[url('End-02.jpg')] bg-cover bg-center transition-transform duration-700 group-hover:scale-105"></div>
         <div class="absolute inset-0 flex flex-col justify-end bg-[linear-gradient(to_top,rgba(6,8,16,.94)_0%,rgba(6,8,16,.5)_44%,transparent_100%)] p-6">
           <h3 class="font-display text-h3 font-bold text-display">Industries we serve</h3>
           <p class="mt-2 max-w-[34ch] text-small text-mid">AI-powered, scalable transformation across regulated, mission-critical industries.</p>
         </div>
       </article>
-      <article class="rv group relative aspect-[16/10] overflow-hidden border border-line sm:col-span-2 sm:aspect-[16/7] lg:col-span-1 lg:aspect-[4/5]" style="transition-delay:.18s">
+      <article class="rv group relative aspect-[4/3] overflow-hidden border border-line sm:col-span-2 sm:aspect-[16/7] lg:col-span-1 lg:aspect-[4/5]" style="transition-delay:.18s">
         <div class="absolute inset-0 bg-[url('End-03.jpg')] bg-cover bg-center transition-transform duration-700 group-hover:scale-105"></div>
         <div class="absolute inset-0 flex flex-col justify-end bg-[linear-gradient(to_top,rgba(6,8,16,.94)_0%,rgba(6,8,16,.5)_44%,transparent_100%)] p-6">
           <h3 class="font-display text-h3 font-bold text-display">Partnerships that work</h3>
@@ -208,18 +247,18 @@
     </div>
 
     <div class="mt-6 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" id="prodGrid">
-      <article class="prod border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="pa"><h3 class="font-display text-h3 font-bold text-hi">retina360</h3><p class="mt-2.5 text-small text-mid">Improve operational efficiency, asset availability and ROI through Data Science.</p></article>
-      <article class="prod border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="pa"><h3 class="font-display text-h3 font-bold text-hi">midas360</h3><p class="mt-2.5 text-small text-mid">Empower metro rail operations with advanced decision analytics and asset management.</p></article>
-      <article class="prod border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="pa"><h3 class="font-display text-h3 font-bold text-hi">rt360</h3><p class="mt-2.5 text-small text-mid">Streamline governance, risk, and compliance with cutting-edge digital solutions.</p></article>
-      <article class="prod border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="pa"><h3 class="font-display text-h3 font-bold text-hi">radar360</h3><p class="mt-2.5 text-small text-mid">Ensure compliance and efficiency through automated AI powered audit solutions.</p></article>
-      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="ip"><h3 class="font-display text-h3 font-bold text-hi">CloudXcel.Ai</h3><p class="mt-2.5 text-small text-mid">Improve agility, optimize costs and ensure continuous compliance through automation and AI.</p></article>
-      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="ip"><h3 class="font-display text-h3 font-bold text-hi">AigeniX</h3><p class="mt-2.5 text-small text-mid">Accelerate development, improve quality and reduce time-to-market through autonomous AI and governance.</p></article>
-      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="sc"><h3 class="font-display text-h3 font-bold text-hi">FuelTrans</h3><p class="mt-2.5 text-small text-mid">Automate fuel retail operations with IoT, Cloud and AI/ML technologies to maximize value.</p></article>
-      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="sc"><h3 class="font-display text-h3 font-bold text-hi">CueTrans</h3><p class="mt-2.5 text-small text-mid">Enhance fleet visibility with our intelligent vehicle monitoring system.</p></article>
-      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="ea"><h3 class="font-display text-h3 font-bold text-hi">Procure360</h3><p class="mt-2.5 text-small text-mid">Revolutionize supplier management with AI-driven insights and automation.</p></article>
-      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="ea"><h3 class="font-display text-h3 font-bold text-hi">Geodatafy</h3><p class="mt-2.5 text-small text-mid">Unlock operational transparency with integrated data solutions for oil and gas, energy firms.</p></article>
-      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="dx"><h3 class="font-display text-h3 font-bold text-hi">Dropthought</h3><p class="mt-2.5 text-small text-mid">Capture real-time feedback to enhance experiences and drive improvements.</p></article>
-      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="dx"><h3 class="font-display text-h3 font-bold text-hi">dtWorks</h3><p class="mt-2.5 text-small text-mid">Enable seamless workflow and intelligent operations to enhance customer experience.</p></article>
+      <article class="prod border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="pa"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/retina360.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="retina360 logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">retina360</h3><p class="mt-2.5 text-small text-mid">Improve operational efficiency, asset availability and ROI through Data Science.</p></article>
+      <article class="prod border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="pa"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/midas360.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="midas360 logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">midas360</h3><p class="mt-2.5 text-small text-mid">Empower metro rail operations with advanced decision analytics and asset management.</p></article>
+      <article class="prod border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="pa"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/rt360.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="rt360 logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">rt360</h3><p class="mt-2.5 text-small text-mid">Streamline governance, risk, and compliance with cutting-edge digital solutions.</p></article>
+      <article class="prod border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="pa"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/radar360.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="radar360 logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">radar360</h3><p class="mt-2.5 text-small text-mid">Ensure compliance and efficiency through automated AI powered audit solutions.</p></article>
+      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="ip"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/cloudxcel.ai.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="CloudXcel.Ai logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">CloudXcel.Ai</h3><p class="mt-2.5 text-small text-mid">Improve agility, optimize costs and ensure continuous compliance through automation and AI.</p></article>
+      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="ip"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/aigenix.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="AigeniX logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">AigeniX</h3><p class="mt-2.5 text-small text-mid">Accelerate development, improve quality and reduce time-to-market through autonomous AI and governance.</p></article>
+      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="sc"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/fueltrans.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="FuelTrans logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">FuelTrans</h3><p class="mt-2.5 text-small text-mid">Automate fuel retail operations with IoT, Cloud and AI/ML technologies to maximize value.</p></article>
+      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="sc"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/cuetrans.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="CueTrans logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">CueTrans</h3><p class="mt-2.5 text-small text-mid">Enhance fleet visibility with our intelligent vehicle monitoring system.</p></article>
+      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="ea"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/procure360.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="Procure360 logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">Procure360</h3><p class="mt-2.5 text-small text-mid">Revolutionize supplier management with AI-driven insights and automation.</p></article>
+      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="ea"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/geodatafy.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="Geodatafy logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">Geodatafy</h3><p class="mt-2.5 text-small text-mid">Unlock operational transparency with integrated data solutions for oil and gas, energy firms.</p></article>
+      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="dx"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/dropthought.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="Dropthought logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">Dropthought</h3><p class="mt-2.5 text-small text-mid">Capture real-time feedback to enhance experiences and drive improvements.</p></article>
+      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="dx"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/dtworks.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="dtWorks logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">dtWorks</h3><p class="mt-2.5 text-small text-mid">Enable seamless workflow and intelligent operations to enhance customer experience.</p></article>
     </div>
   </div>
 </section>
@@ -233,21 +272,21 @@
       <p class="text-lede font-semibold tracking-[.06em] text-brand">Who we are</p>
       <h2 class="mt-3.5 max-w-[18ch] font-display text-h2 font-semibold text-display">A global enterprise transformation partner</h2>
     </div>
-    <dl class="rv mt-12 grid grid-cols-1 gap-10 sm:grid-cols-3 lg:mt-16">
+    <dl class="rv mt-12 grid grid-cols-3 gap-5 sm:gap-10 lg:mt-16">
       <div>
-        <div class="mb-5 h-1 w-11 bg-brand" aria-hidden="true"></div>
-        <dt class="font-display text-[clamp(40px,11vw,60px)] font-semibold leading-none tracking-[-.03em] text-display">27</dt>
-        <dd class="mt-3.5 text-[11px] font-medium uppercase tracking-[.18em] text-mid">Years</dd>
+        <div class="mb-4 h-1 w-8 bg-brand sm:mb-5 sm:w-11" aria-hidden="true"></div>
+        <dt class="font-display text-[clamp(28px,7.4vw,60px)] font-semibold leading-none tracking-[-.03em] text-display">27</dt>
+        <dd class="mt-3 text-[10px] font-medium uppercase tracking-[.14em] text-mid sm:text-[11px] sm:tracking-[.18em]">Years</dd>
       </div>
       <div>
-        <div class="mb-5 h-1 w-11 bg-brand" aria-hidden="true"></div>
-        <dt class="font-display text-[clamp(40px,11vw,60px)] font-semibold leading-none tracking-[-.03em] text-display">50+</dt>
-        <dd class="mt-3.5 text-[11px] font-medium uppercase tracking-[.18em] text-mid">Countries</dd>
+        <div class="mb-4 h-1 w-8 bg-brand sm:mb-5 sm:w-11" aria-hidden="true"></div>
+        <dt class="font-display text-[clamp(28px,7.4vw,60px)] font-semibold leading-none tracking-[-.03em] text-display">50+</dt>
+        <dd class="mt-3 text-[10px] font-medium uppercase tracking-[.14em] text-mid sm:text-[11px] sm:tracking-[.18em]">Countries</dd>
       </div>
       <div>
-        <div class="mb-5 h-1 w-11 bg-brand" aria-hidden="true"></div>
-        <dt class="font-display text-[clamp(40px,11vw,60px)] font-semibold leading-none tracking-[-.03em] text-display">2,200+</dt>
-        <dd class="mt-3.5 text-[11px] font-medium uppercase tracking-[.18em] text-mid">Enterprise clients</dd>
+        <div class="mb-4 h-1 w-8 bg-brand sm:mb-5 sm:w-11" aria-hidden="true"></div>
+        <dt class="font-display text-[clamp(28px,7.4vw,60px)] font-semibold leading-none tracking-[-.03em] text-display">2.2K</dt>
+        <dd class="mt-3 text-[10px] font-medium uppercase tracking-[.14em] text-mid sm:text-[11px] sm:tracking-[.18em]">Enterprise clients</dd>
       </div>
     </dl>
     <p class="rv mt-12 max-w-[64ch] text-lede text-mid">Founded in Oman in 1999, BCT serves global enterprises, including several Fortune 500 companies, through its Services, Products, Consulting, Partnerships, and KPO businesses.</p>

@@ -1,4 +1,4 @@
-import{j as e,M as i}from"./blocks-BOjmTF4R.js";import{useMDXComponents as s}from"./index-CdcpAkXI.js";import"./preload-helper-Dp1pzeXC.js";import"./iframe-VIAPTthy.js";function t(r){const n={code:"code",em:"em",h1:"h1",h2:"h2",p:"p",pre:"pre",strong:"strong",...s(),...r.components};return e.jsxs(e.Fragment,{children:[e.jsx(i,{title:"Foundations/Line-break rules"}),`
+import{j as e,M as i}from"./blocks-D3eWQnx7.js";import{useMDXComponents as s}from"./index-nCq2JDQf.js";import"./preload-helper-Dp1pzeXC.js";import"./iframe-m3Zg2xvi.js";function t(r){const n={code:"code",em:"em",h1:"h1",h2:"h2",p:"p",pre:"pre",strong:"strong",...s(),...r.components};return e.jsxs(e.Fragment,{children:[e.jsx(i,{title:"Foundations/Line-break rules"}),`
 `,e.jsx(n.h1,{id:"line-break-rules",children:"Line-break rules"}),`
 `,e.jsx(n.p,{children:"The headline discipline — the rules most often broken by editing copy."}),`
 `,e.jsx(n.h2,{id:"titles-must-never-exceed-two-lines",children:"Titles must never exceed two lines"}),`

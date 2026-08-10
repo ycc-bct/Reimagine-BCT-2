@@ -61,8 +61,8 @@
    ========================================================================= */
 @media (max-width: 767px){
   :root{
-    --fs-lede:  16px;  --lh-lede:  1.72;
-    --fs-body:  15px;  --lh-body:  1.70;
-    --fs-small: 14px;  --lh-small: 1.60;
+    --fs-lede:  15px;  --lh-lede:  1.72;
+    --fs-body:  14px;  --lh-body:  1.70;
+    --fs-small: 13px;  --lh-small: 1.60;
   }
 }
