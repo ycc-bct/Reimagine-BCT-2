@@ -102,9 +102,11 @@ export const ScrollReveal = () => {
     if (!scope) return;
     const items = scope.querySelectorAll('.rv');
     items.forEach(i => { i.style.opacity = '0'; i.style.transform = 'translateY(28px)'; });
-    requestAnimationFrame(() => requestAnimationFrame(() => {
+    // a timer, not rAF: in a tab that is not visible rAF never fires and the
+    // cards would be left reset to opacity 0 with the reveal never running
+    setTimeout(() => {
       items.forEach(i => { i.style.opacity = '1'; i.style.transform = 'none'; });
-    }));
+    }, 30);
   };
   const start = () => {
     const scope = document.getElementById(uid);

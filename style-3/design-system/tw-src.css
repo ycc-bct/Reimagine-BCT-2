@@ -121,23 +121,29 @@
      At xl none of this applies and the xl: utilities in the markup restore the
      desktop grid — even if the script left .pov-pan on the section. */
   @media (max-width: 1279.98px) {
+    /* The stage runs taller than one screen: the headline block and the panel
+       strip each get real room, and the first screen shows the headline with
+       the top of the panels under it. Height lives here rather than as a
+       min-h-* utility — utilities are a later cascade layer and would win. */
+    #heroStage { --hero-h: 120svh; min-height: var(--hero-h); }
     .pov-panel { flex: 0 0 82vw; max-width: 420px; height: 100%; scroll-snap-align: start; }
-    /* the track takes whatever height the headline leaves, with a readable
-       floor — so the panels are always exactly as tall as the space allows */
     #povStage {
-      flex: 0 1 auto; min-height: clamp(230px, 34svh, 340px);
+      flex: 0 0 auto; height: clamp(340px, 46svh, 480px);
       overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory;
       scrollbar-width: none; -webkit-overflow-scrolling: touch;
     }
     #povStage::-webkit-scrollbar { display: none; }
-    #povTrack { min-height: inherit; }
     /* short viewports: buy the panel strip back some room from the headline
        block's padding rather than letting it slide off the first screen */
     @media (max-height: 700px) {
+      #heroStage { --hero-h: 132svh; }
       #heroCopy { padding-top: 88px; padding-bottom: 20px; }
     }
-    /* pan running: pin the whole first screen, JS drives the offset */
-    .pov-pan #heroStage { position: sticky; top: 0; height: 100svh; }
+    /* Pan running: the stage sticks at a negative offset so the screen holds
+       its bottom edge — where the panels are — while JS drives the offset. */
+    .pov-pan #heroStage {
+      position: sticky; top: calc(100svh - var(--hero-h)); height: var(--hero-h);
+    }
     .pov-pan #povStage { overflow: hidden; scroll-snap-type: none; }
     .pov-pan #povTrack { will-change: transform; }
   }

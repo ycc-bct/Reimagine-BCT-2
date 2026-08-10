@@ -1,4 +1,4 @@
-import{h as r}from"./helpers-CtHPbzQ_.js";const R={title:"Components"},a=()=>r(`
+import{h as r}from"./helpers-CtHPbzQ_.js";const R={title:"Components"},s=()=>r(`
   <div style="padding:8px">
     <div class="eyebrow" style="font-family:var(--font-display);font-weight:600;font-size:16px;letter-spacing:.06em;color:var(--blue-500)">Our Solutions</div>
     <h2 style="font-family:var(--font-display);font-weight:600;font-size:var(--fs-h2);line-height:1.05;letter-spacing:-.02em;color:var(--text-display);margin-top:14px">
@@ -9,7 +9,7 @@ import{h as r}from"./helpers-CtHPbzQ_.js";const R={title:"Components"},a=()=>r(`
       Always in this order, always these three sizes.
     </p>
   </div>
-`),s=()=>r(`
+`),n=()=>r(`
   <div style="padding:8px;display:flex;gap:40px;align-items:center">
     <a href="#" style="color:var(--text-hi);text-decoration:none;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:10px;transition:color .15s"
        onmouseover="this.style.color='var(--blue-300)';this.querySelector('span').style.transform='translateX(4px)'"
@@ -19,7 +19,7 @@ import{h as r}from"./helpers-CtHPbzQ_.js";const R={title:"Components"},a=()=>r(`
     </a>
     <span style="font:400 12px var(--font-body);color:var(--text-low)">hover me — the tile slides 4px</span>
   </div>
-`),n=()=>r(`
+`),a=()=>r(`
   <div style="padding:8px">
     <a href="#" style="display:inline-flex;align-items:center;gap:10px;background:var(--blue-500);color:#04121C;font-weight:700;font-size:15px;text-decoration:none;padding:14px 26px;transition:background .2s,box-shadow .2s,transform .2s"
        onmouseover="this.style.background='var(--blue-300)';this.style.boxShadow='0 0 40px var(--glow)';this.style.transform='translateY(-2px)'"
@@ -70,7 +70,7 @@ import{h as r}from"./helpers-CtHPbzQ_.js";const R={title:"Components"},a=()=>r(`
         </div>`).join("")}
       </div>
     </div>
-  `),h=()=>{const e=document.getElementById(t);if(!e)return;const v=e.querySelectorAll(".rv");v.forEach(o=>{o.style.opacity="0",o.style.transform="translateY(28px)"}),requestAnimationFrame(()=>requestAnimationFrame(()=>{v.forEach(o=>{o.style.opacity="1",o.style.transform="none"})}))},y=()=>{const e=document.getElementById(t);if(!e){setTimeout(y,50);return}e.querySelector("button").addEventListener("click",h),h()};return setTimeout(y,0),p};var m,g,x;a.parameters={...a.parameters,docs:{...(m=a.parameters)==null?void 0:m.docs,source:{originalSource:`() => h(\`
+  `),h=()=>{const e=document.getElementById(t);if(!e)return;const v=e.querySelectorAll(".rv");v.forEach(o=>{o.style.opacity="0",o.style.transform="translateY(28px)"}),setTimeout(()=>{v.forEach(o=>{o.style.opacity="1",o.style.transform="none"})},30)},y=()=>{const e=document.getElementById(t);if(!e){setTimeout(y,50);return}e.querySelector("button").addEventListener("click",h),h()};return setTimeout(y,0),p};var g,m,x;s.parameters={...s.parameters,docs:{...(g=s.parameters)==null?void 0:g.docs,source:{originalSource:`() => h(\`
   <div style="padding:8px">
     <div class="eyebrow" style="font-family:var(--font-display);font-weight:600;font-size:16px;letter-spacing:.06em;color:var(--blue-500)">Our Solutions</div>
     <h2 style="font-family:var(--font-display);font-weight:600;font-size:var(--fs-h2);line-height:1.05;letter-spacing:-.02em;color:var(--text-display);margin-top:14px">
@@ -81,7 +81,7 @@ import{h as r}from"./helpers-CtHPbzQ_.js";const R={title:"Components"},a=()=>r(`
       Always in this order, always these three sizes.
     </p>
   </div>
-\`)`,...(x=(g=a.parameters)==null?void 0:g.docs)==null?void 0:x.source}}};var f,u,b;s.parameters={...s.parameters,docs:{...(f=s.parameters)==null?void 0:f.docs,source:{originalSource:`() => h(\`
+\`)`,...(x=(m=s.parameters)==null?void 0:m.docs)==null?void 0:x.source}}};var f,u,b;n.parameters={...n.parameters,docs:{...(f=n.parameters)==null?void 0:f.docs,source:{originalSource:`() => h(\`
   <div style="padding:8px;display:flex;gap:40px;align-items:center">
     <a href="#" style="color:var(--text-hi);text-decoration:none;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:10px;transition:color .15s"
        onmouseover="this.style.color='var(--blue-300)';this.querySelector('span').style.transform='translateX(4px)'"
@@ -91,7 +91,7 @@ import{h as r}from"./helpers-CtHPbzQ_.js";const R={title:"Components"},a=()=>r(`
     </a>
     <span style="font:400 12px var(--font-body);color:var(--text-low)">hover me — the tile slides 4px</span>
   </div>
-\`)`,...(b=(u=s.parameters)==null?void 0:u.docs)==null?void 0:b.source}}};var w,k,A;n.parameters={...n.parameters,docs:{...(w=n.parameters)==null?void 0:w.docs,source:{originalSource:`() => h(\`
+\`)`,...(b=(u=n.parameters)==null?void 0:u.docs)==null?void 0:b.source}}};var w,k,A;a.parameters={...a.parameters,docs:{...(w=a.parameters)==null?void 0:w.docs,source:{originalSource:`() => h(\`
   <div style="padding:8px">
     <a href="#" style="display:inline-flex;align-items:center;gap:10px;background:var(--blue-500);color:#04121C;font-weight:700;font-size:15px;text-decoration:none;padding:14px 26px;transition:background .2s,box-shadow .2s,transform .2s"
        onmouseover="this.style.background='var(--blue-300)';this.style.boxShadow='0 0 40px var(--glow)';this.style.transform='translateY(-2px)'"
@@ -99,7 +99,7 @@ import{h as r}from"./helpers-CtHPbzQ_.js";const R={title:"Components"},a=()=>r(`
       Take a free GCC assessment <span>&rarr;</span>
     </a>
   </div>
-\`)`,...(A=(k=n.parameters)==null?void 0:k.docs)==null?void 0:A.source}}};var F,S,z;i.parameters={...i.parameters,docs:{...(F=i.parameters)==null?void 0:F.docs,source:{originalSource:`() => h(\`
+\`)`,...(A=(k=a.parameters)==null?void 0:k.docs)==null?void 0:A.source}}};var F,S,z;i.parameters={...i.parameters,docs:{...(F=i.parameters)==null?void 0:F.docs,source:{originalSource:`() => h(\`
   <div style="padding:8px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">
     \${[['Real-Time Monitoring', 'Integrate multi-OEM SCADA data for centralized, real-time asset monitoring.'], ['Digital Twin', 'Mirror renewable assets in real time, driving innovation through digital twin technology.'], ['Anomaly Detection', 'Continuously monitor asset health and anticipate failures with predictive alerts.']].map(([t, c]) => \`
       <article style="background:var(--bg-card);border:1px solid var(--border);padding:26px 24px;transition:border-color .3s,box-shadow .3s,background .3s"
@@ -131,7 +131,7 @@ import{h as r}from"./helpers-CtHPbzQ_.js";const R={title:"Components"},a=()=>r(`
       @keyframes flow{to{stroke-dashoffset:-20}}
     </style>
   </div>
-\`)`,...(T=(E=d.parameters)==null?void 0:E.docs)==null?void 0:T.source}}};var q,B,I;c.parameters={...c.parameters,docs:{...(q=c.parameters)==null?void 0:q.docs,source:{originalSource:`() => {
+\`)`,...(T=(E=d.parameters)==null?void 0:E.docs)==null?void 0:T.source}}};var B,I,L;c.parameters={...c.parameters,docs:{...(B=c.parameters)==null?void 0:B.docs,source:{originalSource:`() => {
   // timer kick-off + resolve by id — see the note in Typography.stories.js
   const uid = 'rvp-' + Math.random().toString(36).slice(2, 8);
   const el = h(\`
@@ -154,12 +154,14 @@ import{h as r}from"./helpers-CtHPbzQ_.js";const R={title:"Components"},a=()=>r(`
       i.style.opacity = '0';
       i.style.transform = 'translateY(28px)';
     });
-    requestAnimationFrame(() => requestAnimationFrame(() => {
+    // a timer, not rAF: in a tab that is not visible rAF never fires and the
+    // cards would be left reset to opacity 0 with the reveal never running
+    setTimeout(() => {
       items.forEach(i => {
         i.style.opacity = '1';
         i.style.transform = 'none';
       });
-    }));
+    }, 30);
   };
   const start = () => {
     const scope = document.getElementById(uid);
@@ -172,4 +174,4 @@ import{h as r}from"./helpers-CtHPbzQ_.js";const R={title:"Components"},a=()=>r(`
   };
   setTimeout(start, 0);
   return el;
-}`,...(I=(B=c.parameters)==null?void 0:B.docs)==null?void 0:I.source}}};const j=["SectionHead","LinkArrow","ButtonSolid","Card","AccentRule","LineArtIcon","ScrollReveal"];export{l as AccentRule,n as ButtonSolid,i as Card,d as LineArtIcon,s as LinkArrow,c as ScrollReveal,a as SectionHead,j as __namedExportsOrder,R as default};
+}`,...(L=(I=c.parameters)==null?void 0:I.docs)==null?void 0:L.source}}};const j=["SectionHead","LinkArrow","ButtonSolid","Card","AccentRule","LineArtIcon","ScrollReveal"];export{l as AccentRule,a as ButtonSolid,i as Card,d as LineArtIcon,n as LinkArrow,c as ScrollReveal,s as SectionHead,j as __namedExportsOrder,R as default};

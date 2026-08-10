@@ -80,7 +80,7 @@
      pan is actually running. -->
 <section id="hero" class="relative">
   <div id="povPin" class="relative">
-    <div id="heroStage" class="flex min-h-svh flex-col overflow-hidden xl:min-h-screen xl:pb-24">
+    <div id="heroStage" class="flex flex-col overflow-hidden xl:min-h-screen xl:pb-24">
       <video class="absolute inset-0 -z-20 h-full w-full object-cover" autoplay loop muted playsinline src="hero-blue.mp4" aria-hidden="true"></video>
       <div class="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(6,8,16,.72)_0%,rgba(6,8,16,.32)_38%,rgba(6,8,16,.58)_74%,#060810_100%)]" aria-hidden="true"></div>
 
@@ -643,6 +643,7 @@ document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
 (function(){
   var sec   = document.getElementById('hero'),
       pin   = document.getElementById('povPin'),
+      hs    = document.getElementById('heroStage'),
       copy  = document.getElementById('heroCopy'),
       stage = document.getElementById('povStage'),
       track = document.getElementById('povTrack'),
@@ -651,24 +652,22 @@ document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
 
   var wide   = matchMedia('(min-width: 1280px)'),
       calm   = matchMedia('(prefers-reduced-motion: reduce)'),
-      travel = 0, on = false;
+      travel = 0, lift = 0, on = false;
 
-  // The headline and the panel strip have to share one screen. On a short
-  // viewport they don't fit, and pinning would crop the panels — so the pan
-  // only runs when the composition actually has the room for it.
+  // The stage is deliberately taller than the viewport, so it sticks at a
+  // negative offset: the screen shows its bottom edge, where the panel strip
+  // is. That only reads if the whole strip fits on screen once stuck.
   function fits(){
-    var inner = copy.firstElementChild, cs = getComputedStyle(copy);
-    var need  = inner.getBoundingClientRect().height +
-                parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) +
-                (parseFloat(getComputedStyle(stage).minHeight) || 0);
-    return need <= window.innerHeight;
+    return stage.getBoundingClientRect().height + 64 <= window.innerHeight;
   }
 
   function measure(){
     // distance the track must move for its last panel to reach the right edge
     travel = Math.max(0, track.scrollWidth - stage.clientWidth);
-    // vertical room to spend on that pan: one viewport to read, plus the travel
-    pin.style.height = (window.innerHeight + travel) + 'px';
+    // how far the stage rides above the viewport top once it is stuck
+    lift = Math.max(0, hs.getBoundingClientRect().height - window.innerHeight);
+    // the stage's own height, plus the scroll spent panning
+    pin.style.height = (hs.getBoundingClientRect().height + travel) + 'px';
   }
 
   function enable(){
@@ -690,8 +689,10 @@ document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
 
   function paint(){
     if (!on) return;
+    // the pan starts only once the stage has finished sticking, i.e. after the
+    // page has scrolled past the part of it that sits above the viewport
     var top = pin.getBoundingClientRect().top,
-        p   = travel ? Math.min(1, Math.max(0, -top / travel)) : 0;
+        p   = travel ? Math.min(1, Math.max(0, (-top - lift) / travel)) : 0;
     track.style.transform = 'translate3d(' + (-p * travel) + 'px,0,0)';
     bar.firstElementChild.style.width = (p * 100) + '%';
   }
