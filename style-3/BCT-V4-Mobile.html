@@ -72,7 +72,7 @@
 <main id="main">
 
 <!-- ================= HERO ================= -->
-<section class="relative flex min-h-[88svh] flex-col justify-end overflow-hidden px-gutter pb-14 pt-28 sm:justify-center lg:min-h-screen lg:pb-24">
+<section class="relative flex min-h-[88svh] flex-col justify-end overflow-hidden px-gutter pt-28 pb-[calc(var(--spacing-povlift)+3.5rem)] sm:justify-center lg:min-h-screen">
   <video class="absolute inset-0 -z-20 h-full w-full object-cover" autoplay loop muted playsinline src="hero-blue.mp4" aria-hidden="true"></video>
   <div class="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(6,8,16,.72)_0%,rgba(6,8,16,.32)_38%,rgba(6,8,16,.58)_74%,#060810_100%)]" aria-hidden="true"></div>
 
@@ -94,7 +94,7 @@
 </section>
 
 <!-- ================= POINT OF VIEW ================= -->
-<section class="border-t border-line bg-surface px-gutter py-16 lg:py-24">
+<section class="relative z-[3] -mt-[var(--spacing-povlift)] px-gutter pb-16 lg:pb-24">
   <div class="mx-auto grid max-w-[1400px] gap-3.5 sm:grid-cols-2 xl:grid-cols-[1.6fr_1fr_1fr] xl:grid-rows-[minmax(360px,auto)_auto] xl:gap-0">
     <!-- statement panel -->
     <div class="rv flex flex-col justify-between gap-10 [container-type:inline-size] bg-[linear-gradient(168deg,#0A2038_0%,#0B4E8F_58%,#0E9BE0_100%)] p-7 sm:p-9 sm:col-span-2 xl:col-span-1 xl:col-start-1 xl:row-span-2 xl:p-11">
@@ -247,18 +247,90 @@
     </div>
 
     <div class="mt-6 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" id="prodGrid">
-      <article class="prod border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="pa"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/retina360.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="retina360 logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">retina360</h3><p class="mt-2.5 text-small text-mid">Improve operational efficiency, asset availability and ROI through Data Science.</p></article>
-      <article class="prod border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="pa"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/midas360.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="midas360 logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">midas360</h3><p class="mt-2.5 text-small text-mid">Empower metro rail operations with advanced decision analytics and asset management.</p></article>
-      <article class="prod border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="pa"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/rt360.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="rt360 logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">rt360</h3><p class="mt-2.5 text-small text-mid">Streamline governance, risk, and compliance with cutting-edge digital solutions.</p></article>
-      <article class="prod border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="pa"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/radar360.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="radar360 logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">radar360</h3><p class="mt-2.5 text-small text-mid">Ensure compliance and efficiency through automated AI powered audit solutions.</p></article>
-      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="ip"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/cloudxcel.ai.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="CloudXcel.Ai logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">CloudXcel.Ai</h3><p class="mt-2.5 text-small text-mid">Improve agility, optimize costs and ensure continuous compliance through automation and AI.</p></article>
-      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="ip"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/aigenix.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="AigeniX logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">AigeniX</h3><p class="mt-2.5 text-small text-mid">Accelerate development, improve quality and reduce time-to-market through autonomous AI and governance.</p></article>
-      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="sc"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/fueltrans.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="FuelTrans logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">FuelTrans</h3><p class="mt-2.5 text-small text-mid">Automate fuel retail operations with IoT, Cloud and AI/ML technologies to maximize value.</p></article>
-      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="sc"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/cuetrans.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="CueTrans logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">CueTrans</h3><p class="mt-2.5 text-small text-mid">Enhance fleet visibility with our intelligent vehicle monitoring system.</p></article>
-      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="ea"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/procure360.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="Procure360 logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">Procure360</h3><p class="mt-2.5 text-small text-mid">Revolutionize supplier management with AI-driven insights and automation.</p></article>
-      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="ea"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/geodatafy.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="Geodatafy logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">Geodatafy</h3><p class="mt-2.5 text-small text-mid">Unlock operational transparency with integrated data solutions for oil and gas, energy firms.</p></article>
-      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="dx"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/dropthought.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="Dropthought logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">Dropthought</h3><p class="mt-2.5 text-small text-mid">Capture real-time feedback to enhance experiences and drive improvements.</p></article>
-      <article class="prod hidden border border-line bg-card p-6 transition hover:border-line-blue hover:bg-raise" data-cat="dx"><span class="mb-5 block aspect-[16/5] w-full bg-white bg-[url('logos/dtworks.jpg')] bg-[length:66%_auto] bg-center bg-no-repeat" role="img" aria-label="dtWorks logo"></span><h3 class="sr-only font-display text-h3 font-bold text-hi">dtWorks</h3><p class="mt-2.5 text-small text-mid">Enable seamless workflow and intelligent operations to enhance customer experience.</p></article>
+      <article class="prod group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="pa">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/retina360.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="retina360 logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+          <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">retina360</h3>
+          <p class="mt-2 text-small text-mid">Improve operational efficiency, asset availability and ROI through Data Science.</p>
+        </div>
+      </article>
+      <article class="prod group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="pa">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/midas360.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="midas360 logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+          <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">midas360</h3>
+          <p class="mt-2 text-small text-mid">Empower metro rail operations with advanced decision analytics and asset management.</p>
+        </div>
+      </article>
+      <article class="prod group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="pa">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/rt360.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="rt360 logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+          <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">rt360</h3>
+          <p class="mt-2 text-small text-mid">Streamline governance, risk, and compliance with cutting-edge digital solutions.</p>
+        </div>
+      </article>
+      <article class="prod group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="pa">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/radar360.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="radar360 logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+          <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">radar360</h3>
+          <p class="mt-2 text-small text-mid">Ensure compliance and efficiency through automated AI powered audit solutions.</p>
+        </div>
+      </article>
+      <article class="prod hidden group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="ip">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/cloudxcel.ai.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="CloudXcel.Ai logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+          <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">CloudXcel.Ai</h3>
+          <p class="mt-2 text-small text-mid">Improve agility, optimize costs and ensure continuous compliance through automation and AI.</p>
+        </div>
+      </article>
+      <article class="prod hidden group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="ip">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/aigenix.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="AigeniX logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+          <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">AigeniX</h3>
+          <p class="mt-2 text-small text-mid">Accelerate development, improve quality and reduce time-to-market through autonomous AI and governance.</p>
+        </div>
+      </article>
+      <article class="prod hidden group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="sc">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/fueltrans.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="FuelTrans logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+          <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">FuelTrans</h3>
+          <p class="mt-2 text-small text-mid">Automate fuel retail operations with IoT, Cloud and AI/ML technologies to maximize value.</p>
+        </div>
+      </article>
+      <article class="prod hidden group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="sc">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/cuetrans.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="CueTrans logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+          <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">CueTrans</h3>
+          <p class="mt-2 text-small text-mid">Enhance fleet visibility with our intelligent vehicle monitoring system.</p>
+        </div>
+      </article>
+      <article class="prod hidden group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="ea">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/procure360.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="Procure360 logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+          <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">Procure360</h3>
+          <p class="mt-2 text-small text-mid">Revolutionize supplier management with AI-driven insights and automation.</p>
+        </div>
+      </article>
+      <article class="prod hidden group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="ea">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/geodatafy.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="Geodatafy logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+          <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">Geodatafy</h3>
+          <p class="mt-2 text-small text-mid">Unlock operational transparency with integrated data solutions for oil and gas, energy firms.</p>
+        </div>
+      </article>
+      <article class="prod hidden group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="dx">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/dropthought.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="Dropthought logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+          <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">Dropthought</h3>
+          <p class="mt-2 text-small text-mid">Capture real-time feedback to enhance experiences and drive improvements.</p>
+        </div>
+      </article>
+      <article class="prod hidden group flex flex-col overflow-hidden border border-line bg-surface transition hover:border-line-blue hover:bg-card" data-cat="dx">
+        <span class="block aspect-[264/171] w-full bg-white bg-[url('logos/dtworks.jpg')] bg-[length:67.2%_auto] bg-center bg-no-repeat" role="img" aria-label="dtWorks logo"></span>
+        <div class="flex flex-1 flex-col border-t border-line p-5 text-center">
+          <h3 class="font-display text-[17px] font-semibold leading-[1.25] tracking-[-.01em] text-hi">dtWorks</h3>
+          <p class="mt-2 text-small text-mid">Enable seamless workflow and intelligent operations to enhance customer experience.</p>
+        </div>
+      </article>
     </div>
   </div>
 </section>
