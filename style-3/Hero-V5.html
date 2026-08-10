@@ -55,7 +55,18 @@ a:focus-visible,article:focus-visible{outline:2px solid var(--blue-500);outline-
   background:var(--bg);
   overflow:hidden;
   --u: calc(100cqw / 402);
-  height: calc(var(--u) * 1103);
+  /* Content-driven, not the frame's fixed 1103: the headline anchors on the
+     reference's 220 baseline and everything below it flows, so adding the
+     paragraph and the CTA pushes the field down instead of overlapping it.
+     The tail is the reference's gap under the second card (1103-789-289.67).
+
+     These two are percentages, not --u, and there is no horizontal padding:
+     cqw resolves against the container's CONTENT box, so a horizontal pad
+     would shrink --u for every descendant while the stage's own padding kept
+     resolving against the viewport — the cards came out 10% small that way.
+     Vertical padding percentages resolve against the width, so they are exact
+     and cost nothing. The 20 gutter lives on the children instead. */
+  padding: 54.7264% 0 6.0522%;
 }
 
 /* the hero footage, placed to the reference: 676 x 378 at (-137, 71), so it
@@ -75,18 +86,23 @@ a:focus-visible,article:focus-visible{outline:2px solid var(--blue-500);outline-
   left:0; width:100%;
   top:    calc(var(--u) * 338);
   height: calc(var(--u) * 111);
-  background:linear-gradient(180deg, rgba(11,13,21,0) 0%, #0B0D15 100%);
+  /* The reference had nothing under the headline, so a linear fade was enough.
+     The paragraph now sits across this band, so it reaches solid at 72% —
+     same rectangle, just no bright crest left showing through the copy. */
+  background:linear-gradient(180deg, rgba(11,13,21,0) 0%, rgba(11,13,21,.86) 52%, #0B0D15 72%, #0B0D15 100%);
 }
 
 /* the five column hairlines: each starts at its own height and runs to the
    bottom edge of the frame */
-.hb-rules{position:absolute;inset:0;z-index:1;pointer-events:none}
+/* each hairline starts at its own height, measured from the top of the first
+   card, and runs to the frame's bottom edge */
+.hb-rules{position:absolute;left:0;right:0;top:0;bottom:calc(var(--u) * -24.33);z-index:1;pointer-events:none}
 .hb-rules i{position:absolute;width:1px;bottom:0;background:var(--rule)}
-.hb-rules i:nth-child(1){left: 4.9751%; top:43.608%}
-.hb-rules i:nth-child(2){left:48.010%;  top:51.043%}
-.hb-rules i:nth-child(3){left:95.025%;  top:51.043%}
-.hb-rules i:nth-child(4){left:71.393%;  top:63.010%}
-.hb-rules i:nth-child(5){left:28.358%;  top:71.532%}
+.hb-rules i:nth-child(1){left: 4.9751%; top:0}
+.hb-rules i:nth-child(2){left:48.010%;  top:calc(var(--u) *  82)}
+.hb-rules i:nth-child(3){left:95.025%;  top:calc(var(--u) *  82)}
+.hb-rules i:nth-child(4){left:71.393%;  top:calc(var(--u) * 214)}
+.hb-rules i:nth-child(5){left:28.358%;  top:calc(var(--u) * 308)}
 
 /* ---------------------------------------------------------------- brand -- */
 .hb-brand{
@@ -105,8 +121,7 @@ a:focus-visible,article:focus-visible{outline:2px solid var(--blue-500);outline-
 
 /* ------------------------------------------------------------- headline -- */
 .hb-h1{
-  position:absolute; z-index:3; margin:0;
-  left:calc(var(--u) * 20); top:calc(var(--u) * 220);
+  position:relative; z-index:3; margin:0 0 0 calc(var(--u) * 20);
   width:calc(var(--u) * 307);
   font-weight:800;
   font-size:   max(23px, calc(var(--u) * 28));
@@ -124,8 +139,7 @@ a:focus-visible,article:focus-visible{outline:2px solid var(--blue-500);outline-
 
 /* ------------------------------------------------- point-of-view lock-up -- */
 .hb-eyebrow{
-  position:absolute; z-index:3; margin:0;
-  left:calc(var(--u) * 20); top:calc(var(--u) * 380);
+  position:relative; z-index:3; margin:calc(var(--u) * 34) 0 0 calc(var(--u) * 20);
   width:calc(var(--u) * 313);
   font-weight:600;
   font-size:   max(12px, calc(var(--u) * 14));
@@ -138,8 +152,7 @@ a:focus-visible,article:focus-visible{outline:2px solid var(--blue-500);outline-
    separated — a trailing space at a forced break collapses anyway. */
 .wide-br{display:none}
 .hb-statement{
-  position:absolute; z-index:3; margin:0;
-  left:calc(var(--u) * 20); top:calc(var(--u) * 409);
+  position:relative; z-index:3; margin:calc(var(--u) * 8) 0 0 calc(var(--u) * 20);  /* the reference's 8 gap */
   width:calc(var(--u) * 346);
   font-weight:700;
   font-size:   max(15px, calc(var(--u) * 18));
@@ -148,13 +161,22 @@ a:focus-visible,article:focus-visible{outline:2px solid var(--blue-500);outline-
 }
 
 /* ------------------------------------------------------- the two cards --- */
+/* The field holds the two cards and the hairlines together, so the whole
+   group keeps the reference's internal geometry wherever it lands. It bleeds
+   back out to the stage edges because the hairlines are placed against the
+   full frame width, not the gutter. */
+.hb-field{
+  position:relative; z-index:2;
+  margin-top:calc(var(--u) * 16);
+}
 .hb-pc{
-  position:absolute; z-index:2; overflow:hidden;
+  position:relative; z-index:2; overflow:hidden;
   width: calc(var(--u) * 230);
   background:#115080;
 }
-.hb-pc-1{ left:calc(var(--u) * 20);     top:calc(var(--u) * 481); height:calc(var(--u) * 290); }
-.hb-pc-2{ left:calc(var(--u) * 151.61); top:calc(var(--u) * 789); height:calc(var(--u) * 289.67); }
+.hb-pc-1{ height:calc(var(--u) * 290); margin-left:calc(var(--u) * 20); }
+/* the reference's own x, and 789 - (481 + 290) between the two */
+.hb-pc-2{ height:calc(var(--u) * 289.67); margin:calc(var(--u) * 18) 0 0 calc(var(--u) * 151.61); }
 
 .hb-pc-photo{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat}
 .hb-pc-2 .hb-pc-photo{transform:scaleX(-1)}          /* the reference mirrors the second photo */
@@ -192,7 +214,34 @@ a:focus-visible,article:focus-visible{outline:2px solid var(--blue-500);outline-
 
 /* the hero paragraph and CTA are not in the reference frame, so they are held
    back until there is a column to put them in */
-.hb-side{display:none}
+/* the hero paragraph, carrying the same three parts as the desktop column:
+   the blue rule above it and the arrow CTA below */
+.hb-side{
+  position:relative; z-index:3;
+  margin:calc(var(--u) * 28) 0 0 calc(var(--u) * 20);
+  width:calc(var(--u) * 346);
+}
+.hb-side .hb-bar{
+  width:calc(var(--u) * 44); height:calc(var(--u) * 4);
+  background:var(--blue-500); margin-bottom:calc(var(--u) * 20);
+}
+.hb-side p{
+  margin:0 0 calc(var(--u) * 20);
+  color:#E1E1E1;
+  font-size:max(14px, calc(var(--u) * 15));
+  line-height:1.6;
+}
+.hb-cta{
+  display:inline-flex; align-items:center; gap:10px; min-height:44px;
+  font-weight:600; font-size:max(13px, calc(var(--u) * 14));
+  text-decoration:none; color:#fff;
+}
+.hb-cta .ar{
+  display:grid; place-items:center; flex:none;
+  width:calc(var(--u) * 32); height:calc(var(--u) * 32); min-width:28px; min-height:28px;
+  background:var(--blue-500); color:#04121C; font-weight:800;
+}
+.hb-cta:hover{color:#5FBEEA}
 
 /* =========================================================================
    From 521px the frame's proportions stop serving the content: the cards
@@ -236,16 +285,18 @@ a:focus-visible,article:focus-visible{outline:2px solid var(--blue-500);outline-
      two stop agreeing the moment the column is narrower than the viewport */
   .hb-hcol{container-type:inline-size}
   .hb-h1{
-    position:static; width:auto;
+    position:static; width:auto; margin:0;
     font-size:min(61px, 9cqw);
     line-height:1.25; letter-spacing:-.02em;
     color:var(--text-display);
   }
   .hb-side{
-    display:block; padding-bottom:10px;
+    display:block; padding-bottom:10px; margin:0; width:auto;
   }
   .hb-side .hb-bar{width:44px;height:4px;background:var(--blue-500);margin-bottom:26px}
   .hb-side p{color:#E1E1E1;font-size:16px;line-height:1.5;margin:0 0 28px;max-width:340px}
+  .hb-cta{font-size:15px}
+  .hb-cta .ar{width:32px;height:32px}
   .hb-cta{
     display:inline-flex;align-items:center;gap:10px;min-height:44px;
     font-weight:600;font-size:15px;text-decoration:none;
@@ -262,14 +313,17 @@ a:focus-visible,article:focus-visible{outline:2px solid var(--blue-500);outline-
     position:relative;z-index:3;container-type:inline-size;
     max-width:min(680px,90%);margin:clamp(48px,7vw,96px) 0 0;
   }
-  .hb-eyebrow,.hb-statement{position:static;width:auto}
+  .hb-eyebrow,.hb-statement{position:static;width:auto;margin:0}
   .hb-eyebrow{font-size:14px;line-height:21px;font-weight:700;color:#1294D7}
   .hb-statement{margin-top:12px;font-size:clamp(22px,5.6cqw,40px);line-height:1.4;color:var(--text-display)}
   .wide-br{display:inline}
 
-  /* the cards return to the floating placement, sized off the stage */
+  /* the field stops being a positioning context, so the rules and the cards
+     resolve against the stage again and return to their floating placement */
+  .hb-field{position:static;margin:0;padding:0}
+  .hb-rules{inset:0}
   .hb-cards{position:absolute;inset:0;z-index:2;pointer-events:none}
-  .hb-pc{pointer-events:auto;width:clamp(210px,24vw,314px);height:auto;aspect-ratio:313.65/395.02}
+  .hb-pc{position:absolute;pointer-events:auto;margin:0;width:clamp(210px,24vw,314px);height:auto;aspect-ratio:313.65/395.02}
   .hb-pc-1{left:auto;right:8%;  top:auto;bottom:16%}
   .hb-pc-2{left:auto;right:32%; top:auto;bottom:3%}
   .hb-pc-body{padding:9.2% 7.5%}
@@ -310,7 +364,6 @@ a:focus-visible,article:focus-visible{outline:2px solid var(--blue-500);outline-
 <header class="hb">
   <video class="hb-video" autoplay loop muted playsinline aria-hidden="true" src="hero-blue.mp4"></video>
   <div class="hb-fade" aria-hidden="true"></div>
-  <div class="hb-rules" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
 
   <a class="hb-brand" href="#" aria-label="Bahwan CyberTek home"><span class="logo-img"></span></a>
 
@@ -330,6 +383,8 @@ a:focus-visible,article:focus-visible{outline:2px solid var(--blue-500);outline-
     <h2 class="hb-statement">The future belongs to enterprises <br class="wide-br">that operationalize AI</h2>
   </div>
 
+  <div class="hb-field">
+  <div class="hb-rules" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
   <div class="hb-cards">
     <article class="hb-pc hb-pc-1" tabindex="0">
       <div class="hb-pc-photo" aria-hidden="true"></div>
@@ -348,6 +403,7 @@ a:focus-visible,article:focus-visible{outline:2px solid var(--blue-500);outline-
         <div class="hb-pc-detail"><p>Repeatable execution, strong governance, and integration into core operations turn responsible AI into durable advantage, at scale.</p></div>
       </div>
     </article>
+  </div>
   </div>
 </header>
 
