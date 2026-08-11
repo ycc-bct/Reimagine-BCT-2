@@ -27,7 +27,12 @@
   font-family: var(--font);
 }
 .hb *, .hb *::before, .hb *::after { box-sizing: border-box; }
-.hb img, .hb video { display:block; max-width:100%; }
+/* No img/video reset either: `.hb video` is (0,1,1) and outranks
+   `.hb-video{max-width:none}` at (0,1,0), which clamps the hero footage to the
+   stage and stops it bleeding off the edges — the frame is deliberately 676
+   wide on a 402 stage. Tailwind preflight's own `img,video` rule is (0,0,1)
+   and loses to the hb- class, which is the behaviour we want. */
+.hb img { display:block; }
 .hb p { text-wrap: pretty; }
 /* No margin reset here: `.hb p` and `.hb h1` are (0,1,1) and would outrank the
    hb- classes below, which are (0,1,0) — that wipes every left gutter. Tailwind
