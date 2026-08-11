@@ -1,4 +1,4 @@
-import{j as e,M as i}from"./blocks-DICfSlOY.js";import{useMDXComponents as s}from"./index-Dyp6dkv8.js";import"./preload-helper-Dp1pzeXC.js";import"./iframe-ICLZc911.js";function t(r){const n={code:"code",em:"em",h1:"h1",h2:"h2",p:"p",pre:"pre",strong:"strong",...s(),...r.components};return e.jsxs(e.Fragment,{children:[e.jsx(i,{title:"Foundations/Line-break rules"}),`
+import{j as e,M as i}from"./blocks-DfjclhP1.js";import{useMDXComponents as s}from"./index-CfLAJyFP.js";import"./preload-helper-Dp1pzeXC.js";import"./iframe-vqQoqFfG.js";function r(t){const n={code:"code",em:"em",h1:"h1",h2:"h2",p:"p",pre:"pre",strong:"strong",...s(),...t.components};return e.jsxs(e.Fragment,{children:[e.jsx(i,{title:"Foundations/Line-break rules"}),`
 `,e.jsx(n.h1,{id:"line-break-rules",children:"Line-break rules"}),`
 `,e.jsx(n.p,{children:"The headline discipline — the rules most often broken by editing copy."}),`
 `,e.jsx(n.h2,{id:"titles-must-never-exceed-two-lines",children:"Titles must never exceed two lines"}),`
@@ -29,6 +29,7 @@ at 1280. The live counter in `,e.jsx(n.em,{children:"Foundations → Typography 
 |---|---|
 | Body copy never wider than ~65–75 characters | `,e.jsx(n.code,{children:"max-width"})," in ",e.jsx(n.code,{children:"ch"})," — ",e.jsx(n.code,{children:"34ch"})," inside cards, ",e.jsx(n.code,{children:"46ch"}),"–",e.jsx(n.code,{children:"64ch"}),` for ledes |
 | Short centred paragraphs get even line lengths | `,e.jsx(n.code,{children:"text-wrap: balance"}),` |
-| Long paragraphs avoid orphans | `,e.jsx(n.code,{children:"text-wrap: pretty"})," — applied globally to ",e.jsx(n.code,{children:"p"})," |"]}),`
+| Long paragraphs avoid orphans | `,e.jsx(n.code,{children:"text-wrap: pretty"})," — applied globally to ",e.jsx(n.code,{children:"p"}),` |
+| A last line is never a single word | `,e.jsx(n.code,{children:"text-wrap: pretty"}),", plus ",e.jsx(n.code,{children:"&nbsp;"})," between the final two words where a specific string must hold. Never shrink the font to close a widow. |"]}),`
 `,e.jsxs(n.p,{children:[e.jsx(n.code,{children:"balance"}),` is for headings and short centred copy only; browsers ignore it past a line-count
-threshold, so long paragraphs use `,e.jsx(n.code,{children:"pretty"}),"."]})]})}function d(r={}){const{wrapper:n}={...s(),...r.components};return n?e.jsx(n,{...r,children:e.jsx(t,{...r})}):t(r)}export{d as default};
+threshold, so long paragraphs use `,e.jsx(n.code,{children:"pretty"}),"."]})]})}function d(t={}){const{wrapper:n}={...s(),...t.components};return n?e.jsx(n,{...t,children:e.jsx(r,{...t})}):r(t)}export{d as default};

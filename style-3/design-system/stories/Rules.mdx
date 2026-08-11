@@ -50,6 +50,7 @@ at 1280. The live counter in *Foundations → Typography → Line Break Rule* do
 | Body copy never wider than ~65–75 characters | `max-width` in `ch` — `34ch` inside cards, `46ch`–`64ch` for ledes |
 | Short centred paragraphs get even line lengths | `text-wrap: balance` |
 | Long paragraphs avoid orphans | `text-wrap: pretty` — applied globally to `p` |
+| A last line is never a single word | `text-wrap: pretty`, plus `&nbsp;` between the final two words where a specific string must hold. Never shrink the font to close a widow. |
 
 `balance` is for headings and short centred copy only; browsers ignore it past a line-count
 threshold, so long paragraphs use `pretty`.

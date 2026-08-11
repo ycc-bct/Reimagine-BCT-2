@@ -15,7 +15,7 @@ export const Palette = () => h(`
     ${label('Brand blue')}
     ${grid([
       swatch('--blue-500', '#0092D7', 'The accent — CTAs, eyebrows, accent rules'),
-      swatch('--blue-300', '#5FBEEA', 'Hover state of anything already blue'),
+      swatch('--blue-300', '#5FBEEA', 'Hover only — never a resting text colour'),
       swatch('--blue-700', '#0A6395', 'Blue on a LIGHT background only'),
       swatch('--blue-900', '#06344F', 'Deep decorative fill'),
       swatch('--blue-950', '#072338', 'Deepest decorative fill'),
