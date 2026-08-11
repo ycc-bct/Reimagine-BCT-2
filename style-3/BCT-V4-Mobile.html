@@ -10,6 +10,400 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="bct-tailwind.css">
+<style>
+/* ===========================================================================
+   Layout B — the 402x1103 reference hero, brought over from Hero-V5.html.
+   Its tokens are scoped to .hb rather than :root so nothing leaks into the
+   Tailwind theme, and every selector here is class-based and hb- prefixed.
+   ======================================================================== */
+.hb{
+  --bg:        #0B0D15;
+  --rule:      #434343;
+  --eyebrow:   #CBCBCB;
+  --blue-500:  #0092D7;
+  --text-display:#D7DFE9;
+  --font: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  --pad-x: clamp(24px, 5vw, 72px);
+  font-family: var(--font);
+}
+.hb *, .hb *::before, .hb *::after { box-sizing: border-box; }
+.hb img, .hb video { display:block; max-width:100%; }
+.hb p { text-wrap: pretty; margin:0; }
+.hb h1, .hb h2, .hb h3 { margin:0; }
+
+/* ===========================================================================
+   Hero V5 — the phone composition from the 402 x 1103 reference frame,
+   made responsive. Every asset and every string here is Home-V4's: the same
+   hero-blue.mp4, the same two point-card photographs, the same headline,
+   statement and card copy.
+
+   Phone layout is driven by one unit, --u = stage width / 402, so each
+   coordinate below is the reference number verbatim (calc(var(--u) * 20) is
+   the spec's "left: 20px"). That keeps the file readable against the spec and
+   makes the whole composition scale as one piece instead of drifting apart
+   breakpoint by breakpoint. Type carries a floor via max() so it never falls
+   under the readable minimum on a 320px screen.
+   ======================================================================== */
+/* never leave a single word alone on the last line — see Design.md §3 */
+
+/* ---------------------------------------------------------------- stage -- */
+.hb{
+  position:relative;
+  container-type:inline-size;
+  background:var(--bg);
+  overflow:hidden;
+  --u: calc(100cqw / 402);
+}
+
+/* The hero and the point of view are two separate sections on a phone. The
+   hero keeps the reference's 220 baseline for the headline; the point of view
+   starts fresh below it and is reached by scrolling.
+
+   The vertical anchors are percentages, not --u, and there is no horizontal
+   padding on .hb: cqw resolves against the container's CONTENT box, so a
+   horizontal pad would shrink --u for every descendant while the stage's own
+   padding kept resolving against the viewport — the cards came out 10% small
+   that way. The 20 gutter lives on the children instead. */
+.hb-hero{
+  position:relative;
+  padding: 54.7264% 0 14%;
+}
+.hb-pov-sec{
+  position:relative;
+  padding: 13% 0 6.0522%;
+}
+
+/* the hero footage, placed to the reference: 676 x 378 at (-137, 71), so it
+   bleeds off both edges rather than sitting inside the gutter */
+.hb-video{
+  position:absolute; z-index:0; pointer-events:none;
+  max-width:none;            /* the frame deliberately runs wider than the stage */
+  left: calc(var(--u) * -137);
+  top:  calc(var(--u) * 71);
+  width:  calc(var(--u) * 676);
+  height: calc(var(--u) * 378);
+  object-fit:cover;
+}
+/* the fade that dissolves the footage into the background: 402 x 111 at y 338 */
+.hb-fade{
+  position:absolute; z-index:1; pointer-events:none;
+  left:0; width:100%;
+  top:    calc(var(--u) * 338);
+  height: calc(var(--u) * 111);
+  /* The reference had nothing under the headline, so a linear fade was enough.
+     The paragraph now sits across this band, so it reaches solid at 72% —
+     same rectangle, just no bright crest left showing through the copy. */
+  background:linear-gradient(180deg, rgba(11,13,21,0) 0%, rgba(11,13,21,.86) 52%, #0B0D15 72%, #0B0D15 100%);
+}
+
+/* the five column hairlines: each starts at its own height and runs to the
+   bottom edge of the frame */
+/* each hairline starts at its own height, measured from the top of the first
+   card, and runs to the frame's bottom edge */
+.hb-rules{position:absolute;left:0;right:0;top:0;bottom:calc(var(--u) * -24.33);z-index:1;pointer-events:none}
+.hb-rules i{position:absolute;width:1px;bottom:0;background:var(--rule)}
+/* four lines dividing the width evenly. The tops still descend, and the last
+   one lands on the top edge of the second card (360 + 18). */
+.hb-rules i:nth-child(1){left:20%; top:0}
+.hb-rules i:nth-child(2){left:40%; top:calc(var(--u) *  83)}
+.hb-rules i:nth-child(3){left:60%; top:calc(var(--u) * 218)}
+.hb-rules i:nth-child(4){left:80%; top:calc(var(--u) * 378)}
+
+/* ---------------------------------------------------------------- brand -- */
+.hb-brand{
+  position:absolute; z-index:4;
+  left:calc(var(--u) * 20);
+  /* the mark stays on the spec's 24px baseline; the link grows around it so
+     the tap target clears 44px without the logo appearing to move */
+  top:calc(var(--u) * 24 - max(0px, (44px - var(--u) * 31) / 2));
+  min-height:44px; display:flex; align-items:center;
+}
+.hb-brand .logo-img{
+  width: calc(var(--u) * 122);
+  height:calc(var(--u) * 31);
+  background-size:contain; background-repeat:no-repeat; background-position:left center;
+}
+
+/* ------------------------------------------------------------- headline -- */
+.hb-h1{
+  position:relative; z-index:3; margin:0 0 0 calc(var(--u) * 20);
+  width:calc(var(--u) * 307);
+  font-weight:800;
+  font-size:   max(23px, calc(var(--u) * 28));
+  line-height: max(33px, calc(var(--u) * 40));
+  letter-spacing:-.01em;
+  color:#FFFFFF;
+}
+.hb-h1 span{display:block}
+/* On a 320px screen the reference's 307-wide column cannot hold the longer
+   line at a readable size. Widen the measure rather than shrinking the type —
+   the type floor is what keeps the headline legible. */
+@media (max-width:380px){
+  .hb-h1{width:calc(100% - var(--u) * 40)}
+}
+
+/* ------------------------------------------------- point-of-view lock-up -- */
+.hb-eyebrow{
+  /* the seam between the two blocks is now the sections' own padding */
+  position:relative; z-index:3; margin:0 0 0 calc(var(--u) * 20);
+  width:calc(var(--u) * 313);
+  font-weight:600;
+  font-size:   max(12px, calc(var(--u) * 14));
+  line-height: max(18px, calc(var(--u) * 21));
+  color:var(--eyebrow);
+}
+/* The reference wraps this naturally inside its 346 column; a wide column
+   needs the break authored or it runs to three lines. The word space sits
+   *before* the <br> so that hiding the break still leaves "enterprises that"
+   separated — a trailing space at a forced break collapses anyway. */
+.wide-br{display:none}
+.hb-statement{
+  position:relative; z-index:3; margin:calc(var(--u) * 8) 0 0 calc(var(--u) * 20);  /* the reference's 8 gap */
+  width:calc(var(--u) * 346);
+  font-weight:700;
+  font-size:   max(15px, calc(var(--u) * 18));
+  line-height: max(23px, calc(var(--u) * 28));
+  color:#FFFFFF;
+}
+
+/* ------------------------------------------------------- the two cards --- */
+/* The field holds the two cards and the hairlines together, so the whole
+   group keeps the reference's internal geometry wherever it lands. It bleeds
+   back out to the stage edges because the hairlines are placed against the
+   full frame width, not the gutter. */
+.hb-field{
+  position:relative; z-index:2;
+  margin-top:calc(var(--u) * 16);
+}
+.hb-pc{
+  position:relative; z-index:2; overflow:hidden;
+  width: calc(var(--u) * 230);
+  background:#115080;
+}
+/* Taller than the reference's 290 because the supporting copy is permanent
+   now — the card holds the title, the copy, and enough photograph under them
+   to still read as a photograph. */
+.hb-pc-1{ height:calc(var(--u) * 360); margin-left:calc(var(--u) * 20); }
+.hb-pc-2{ height:calc(var(--u) * 360); margin:calc(var(--u) * 18) 0 0 calc(var(--u) * 151.61); }
+
+.hb-pc-photo{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat}
+.hb-pc-2 .hb-pc-photo{transform:scaleX(-1)}          /* the reference mirrors the second photo */
+/* The reference's veil assumed a title only. It now has to carry the copy as
+   well, so it holds through the text band and then clears completely — the
+   photograph below the text is untouched rather than dimmed all over.
+   It tops out at 90%, never fully solid, so the photograph reads through even
+   behind the title. */
+.hb-pc-veil{
+  position:absolute; inset:0;
+  background:linear-gradient(180deg,
+    rgba(9,19,35,.9) 0%, rgba(9,19,35,.9) 40%, rgba(9,19,35,.6) 58%,
+    rgba(9,19,35,.2) 74%, rgba(35,74,137,0) 88%);
+}
+.hb-pc-body{
+  position:absolute; z-index:4; left:0; right:0; top:0;
+  padding: 10.26% 7.65%;
+}
+.hb-pc h3{
+  margin:0; font-weight:700; letter-spacing:-.01em; color:#fff;
+  font-size:   max(13px, calc(var(--u) * 15));
+  line-height: 1.36;
+}
+/* The supporting copy is visible by DEFAULT. A touch device has no hover to
+   give, so anything gated behind :hover is simply unreachable there — the
+   copy would never be read on a phone. Only a pointer device gets the reveal,
+   and it is the pointer branch that opts into hiding it. */
+.hb-pc-detail{
+  margin-top:calc(var(--u) * 10);
+}
+.hb-pc-detail p{
+  margin:0; color:rgba(255,255,255,.92);
+  font-size:max(12px, calc(var(--u) * 13)); line-height:1.6;
+  /* it sits over the photograph, where the veil has already thinned out */
+  text-shadow:0 1px 10px rgba(4,12,20,.9), 0 1px 3px rgba(4,12,20,.8);
+}
+/* the all-over scrim is gone: the veil above now does the work, and the lower
+   half of the photograph is left clear */
+.hb-pc-veil2{display:none}
+@media (hover:hover) and (min-width:521px){
+  .hb-pc-detail{
+    opacity:0; transform:translateY(20px);
+    transition:opacity .35s ease, transform .45s cubic-bezier(.16,1,.3,1);
+  }
+  .hb-pc-detail p{text-shadow:none}
+  .hb-pc::after{
+    content:""; position:absolute; z-index:3; inset:0;
+    background:linear-gradient(0deg,rgba(7,57,88,.9) 0%,rgba(5,35,55,.64) 45%,rgba(0,146,215,0) 100%);
+    opacity:0; transition:opacity .32s ease; pointer-events:none;
+  }
+  .hb-pc:hover::after,.hb-pc:focus-within::after{opacity:1}
+  .hb-pc:hover .hb-pc-detail,.hb-pc:focus-within .hb-pc-detail{opacity:1;transform:none}
+}
+
+/* the hero paragraph and CTA are not in the reference frame, so they are held
+   back until there is a column to put them in */
+/* the hero paragraph, carrying the same three parts as the desktop column:
+   the blue rule above it and the arrow CTA below */
+.hb-side{
+  position:relative; z-index:3;
+  margin:calc(var(--u) * 28) 0 0 calc(var(--u) * 20);
+  width:calc(var(--u) * 346);
+}
+.hb-side .hb-bar{
+  width:calc(var(--u) * 44); height:calc(var(--u) * 4);
+  background:var(--blue-500); margin-bottom:calc(var(--u) * 20);
+}
+.hb-side p{
+  margin:0 0 calc(var(--u) * 20);
+  color:#E1E1E1;
+  font-size:max(14px, calc(var(--u) * 15));
+  line-height:1.6;
+}
+.hb-cta{
+  display:inline-flex; align-items:center; gap:10px; min-height:44px;
+  font-weight:600; font-size:max(13px, calc(var(--u) * 14));
+  text-decoration:none; color:#fff;
+}
+.hb-cta .ar{
+  display:grid; place-items:center; flex:none;
+  width:calc(var(--u) * 32); height:calc(var(--u) * 32); min-width:28px; min-height:28px;
+  background:var(--blue-500); color:#04121C; font-weight:800;
+}
+.hb-cta:hover{color:#5FBEEA}
+
+/* =========================================================================
+   From 521px the frame's proportions stop serving the content: the cards
+   would grow past 300px wide and the frame past 1430px tall. Above that the
+   composition rebuilds as Home-V4's own hero band — headline left, paragraph
+   and CTA right, statement beneath, the two cards floating over the field.
+   ====================================================================== */
+@media (min-width:521px){
+  .hb{
+    --u:1px;
+    height:auto; min-height:100svh;
+    padding:130px var(--pad-x) 72px;
+  }
+  /* both wrappers go static so the video, the fade, the hairlines and the
+     cards all resolve against .hb again and the desktop band is unchanged */
+  .hb-hero,.hb-pov-sec{position:static;padding:0}
+  .hb-video{left:0;top:0;width:100%;height:100%}
+  /* Home-V4's own hero veil: without it the eyebrow and the paragraph sit on
+     the bright crest of the footage and lose contrast. Same stops as V4, with
+     this frame's background colour. */
+  .hb-fade{
+    top:0; height:100%;
+    background:linear-gradient(180deg,
+      rgba(11,13,21,.58) 0%, rgba(11,13,21,.18) 28%,
+      rgba(11,13,21,.62) 44%, #0B0D15 54%, #0B0D15 100%);
+  }
+  /* evenly divided here too, so the lattice reads the same on both tiers */
+  .hb-rules i:nth-child(1){left:20%; top:54%}
+  .hb-rules i:nth-child(2){left:40%; top:58%}
+  .hb-rules i:nth-child(3){left:60%; top:64%}
+  .hb-rules i:nth-child(4){left:80%; top:71%}
+
+  .hb-brand{left:var(--pad-x);top:34px}
+  .hb-brand .logo-img{width:128px;height:34px}
+
+  .hb-inner{
+    position:relative; z-index:3;
+    display:grid; grid-template-columns:1.6fr 1fr; gap:clamp(32px,5vw,60px);
+    align-items:end;
+    max-width:1400px; margin:0 auto;
+  }
+  /* sized in cqw against its own column: a vw-based headline is measured
+     against the page while the text is measured against the column, and the
+     two stop agreeing the moment the column is narrower than the viewport */
+  .hb-hcol{container-type:inline-size}
+  .hb-h1{
+    position:static; width:auto; margin:0;
+    font-size:min(61px, 9cqw);
+    line-height:1.25; letter-spacing:-.02em;
+    color:var(--text-display);
+  }
+  .hb-side{
+    display:block; padding-bottom:10px; margin:0; width:auto;
+  }
+  .hb-side .hb-bar{width:44px;height:4px;background:var(--blue-500);margin-bottom:26px}
+  .hb-side p{color:#E1E1E1;font-size:16px;line-height:1.5;margin:0 0 28px;max-width:340px}
+  .hb-cta{font-size:15px}
+  .hb-cta .ar{width:32px;height:32px}
+  .hb-cta{
+    display:inline-flex;align-items:center;gap:10px;min-height:44px;
+    font-weight:600;font-size:15px;text-decoration:none;
+  }
+  .hb-cta .ar{
+    display:grid;place-items:center;width:32px;height:32px;
+    background:var(--blue-500);color:#04121C;font-weight:800;
+  }
+  .hb-cta:hover{color:#5FBEEA}
+
+  /* also a container: the statement is measured against this column, so the
+     authored break lands on line two instead of the copy running to three */
+  .hb-pov{
+    position:relative;z-index:3;container-type:inline-size;
+    max-width:min(680px,90%);margin:clamp(48px,7vw,96px) 0 0;
+  }
+  .hb-eyebrow,.hb-statement{position:static;width:auto;margin:0}
+  .hb-eyebrow{font-size:14px;line-height:21px;font-weight:700;color:#1294D7}
+  .hb-statement{margin-top:12px;font-size:clamp(22px,5.6cqw,40px);line-height:1.4;color:var(--text-display)}
+  .wide-br{display:inline}
+
+  /* the field stops being a positioning context, so the rules and the cards
+     resolve against the stage again and return to their floating placement */
+  .hb-field{position:static;margin:0;padding:0}
+  .hb-rules{inset:0}
+  .hb-cards{position:absolute;inset:0;z-index:2;pointer-events:none}
+  .hb-pc{position:absolute;pointer-events:auto;margin:0;width:clamp(210px,24vw,314px);height:auto;aspect-ratio:313.65/395.02}
+  .hb-pc-1{left:auto;right:8%;  top:auto;bottom:16%}
+  .hb-pc-2{left:auto;right:32%; top:auto;bottom:3%}
+  .hb-pc-body{padding:9.2% 7.5%}
+  .hb-pc h3{font-size:clamp(15px,1.5vw,22px)}
+  .hb-pc-detail{margin-top:clamp(10px,1.2vw,16px)}
+  .hb-pc-detail p{font-size:clamp(12px,1.02vw,14.5px)}
+}
+
+@media (min-width:1100px){
+  .hb{min-height:min(1240px,108svh)}
+  .hb-pc-1{right:6%;  bottom:18%}
+  .hb-pc-2{right:30%; bottom:4%}
+}
+
+/* ------------------------------------------------------------- motion ---- */
+/* the hero is on screen at load, so it still plays on a timer */
+@keyframes hbRise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+.hb-h1,.hb-side{opacity:0;animation:hbRise .9s cubic-bezier(.16,1,.3,1) forwards}
+.hb-h1{animation-delay:.14s}
+.hb-side{animation-delay:.30s}
+
+/* The point of view is scrolled to, so its reveal waits for .in — a load-timed
+   animation would have finished long before the block was ever on screen.
+   Each piece is observed on its own rather than the section as a whole: the
+   section is taller than the viewport, so a single observer on it would fire
+   while the cards were still far below the fold. */
+.hb-pov .hb-eyebrow,.hb-pov .hb-statement,.hb-pc{
+  opacity:0; transform:translateY(26px);
+  transition:opacity .7s ease, transform .8s cubic-bezier(.16,1,.3,1);
+}
+.hb-pc{transform:translateY(56px) scale(.94);transform-origin:center bottom}
+.hb-pov.in .hb-eyebrow,.hb-pov.in .hb-statement,.hb-pc.in{opacity:1;transform:none}
+.hb-pov.in .hb-statement{transition-delay:.10s}
+.hb-pc-2.in{transition-delay:.12s}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+  .hb-h1,.hb-side{opacity:1;animation:none}
+  .hb-pov .hb-eyebrow,.hb-pov .hb-statement,.hb-pc{opacity:1;transform:none;transition:none}
+  .hb-pc-detail{opacity:1;transform:none;transition:none}
+}
+
+/* ---- the A/B switcher, in the hero's own top-right ---- */
+.hero-variant{display:none}
+.hero-variant.is-on{display:block}
+.hero-tab[aria-selected="true"]{background:var(--color-brand);color:#04121C}
+.hero-tab[aria-selected="false"]{color:var(--color-mid)}
+.hero-tab[aria-selected="false"]:hover{color:var(--color-hi)}
+</style>
+
 <style>.logo-img{display:block;width:128px;height:34px;background:url(data:image/png;base64,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) left center/contain no-repeat}
 .foot-logo{display:block;width:128px;height:34px;background:url('data:image/png;base64,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') left center/contain no-repeat;margin-bottom:18px}</style>
 </head>
@@ -79,6 +473,14 @@
      panels fall back into the desktop grid. JS adds .pov-pan only when the
      pan is actually running. -->
 <section id="hero" class="relative">
+  <!-- layout switcher, inside the hero's own top-right rather than the page chrome -->
+  <div class="absolute right-gutter top-[76px] z-[60] flex gap-1 border border-line bg-base/70 p-1 backdrop-blur-sm"
+       role="tablist" aria-label="Hero layout">
+    <button type="button" role="tab" aria-selected="true"  data-v="A" class="hero-tab min-h-11 px-3.5 text-small font-semibold transition-colors">Layout A</button>
+    <button type="button" role="tab" aria-selected="false" data-v="B" class="hero-tab min-h-11 px-3.5 text-small font-semibold transition-colors">Layout B</button>
+  </div>
+
+  <div class="hero-variant is-on" data-v="A">
   <div id="povPin" class="relative">
     <div id="heroStage" class="flex flex-col overflow-hidden xl:min-h-screen xl:pb-24">
       <video class="absolute inset-0 -z-20 h-full w-full object-cover" autoplay loop muted playsinline src="hero-blue.mp4" aria-hidden="true"></video>
@@ -105,7 +507,7 @@
       <div id="povStage" class="relative z-[3] flex">
       <div id="povTrack" class="pov-track xl:mx-auto xl:grid xl:max-w-[1400px] xl:grid-cols-[1.6fr_1fr_1fr] xl:grid-rows-[minmax(360px,auto)_auto] xl:gap-0">
         <!-- statement panel -->
-        <div class="pov-panel rv flex flex-col justify-between gap-8 [container-type:inline-size] bg-[linear-gradient(168deg,#0A2038_0%,#0B4E8F_58%,#0E9BE0_100%)] p-7 sm:p-9 xl:col-start-1 xl:row-span-2 xl:p-11">
+        <div class="pov-panel pov-panel--wide rv flex flex-col justify-between gap-8 [container-type:inline-size] bg-[linear-gradient(168deg,#0A2038_0%,#0B4E8F_58%,#0E9BE0_100%)] p-7 sm:p-9 xl:col-start-1 xl:row-span-2 xl:p-11">
           <div>
             <p class="text-lede font-bold tracking-[.06em] text-white/85">Our point of view</p>
             <h2 class="mt-3.5 font-display text-[min(34px,6cqw)] font-bold leading-[1.14] tracking-[-.025em] text-white">The future belongs to enterprises that operationalize AI</h2>
@@ -128,7 +530,7 @@
             </div>
             <h3 class="font-display text-h3 font-semibold text-hi">Accountability beyond adoption</h3>
           </div>
-          <p class="text-small text-mid">Lasting success comes from AI that&rsquo;s secure, trusted, and accountable from strategy through scale.</p>
+          <p class="pov-copy text-small text-mid">Lasting success comes from AI that&rsquo;s secure, trusted, and accountable from strategy through scale.</p>
         </div>
 
         <div class="pov-panel rv flex flex-col justify-between gap-6 bg-[radial-gradient(100%_100%_at_55%_100%,#245F90_0%,#0E1C30_100%)] p-7 sm:p-9 xl:col-start-3 xl:row-start-2 xl:min-h-[255px]">
@@ -143,11 +545,64 @@
             </div>
             <h3 class="font-display text-h3 font-semibold text-hi">Structured capability is advantage</h3>
           </div>
-          <p class="text-small text-mid">Repeatable execution, strong governance, and integration into core operations, built to scale across the enterprise.</p>
+          <p class="pov-copy text-small text-mid">Repeatable execution, strong governance, and integration into core operations, built to scale across the enterprise.</p>
         </div>
       </div>
       </div>
     </div>
+  </div>
+  </div>
+
+  <div class="hero-variant" data-v="B">
+<div class="hb">
+<header class="hb-hero">
+  <video class="hb-video" autoplay loop muted playsinline aria-hidden="true" src="hero-blue.mp4"></video>
+  <div class="hb-fade" aria-hidden="true"></div>
+
+  <div class="hb-inner">
+    <div class="hb-hcol">
+      <h1 class="hb-h1"><span>Engineering for the</span><span>intelligent enterprise</span></h1>
+    </div>
+    <div class="hb-side">
+      <div class="hb-bar" aria-hidden="true"></div>
+      <p>BCT builds and operates mission-critical infrastructure, combining proprietary platforms and AI to modernize enterprises at scale.</p>
+      <a class="hb-cta" href="#products">Explore our products <span class="ar" aria-hidden="true">&rarr;</span></a>
+    </div>
+  </div>
+</header>
+
+<section class="hb-pov-sec" id="pov">
+  <div class="hb-pov">
+    <p class="hb-eyebrow">Our point of view</p>
+    <h2 class="hb-statement">The future belongs to enterprises <br class="wide-br">that operationalize AI</h2>
+  </div>
+
+  <div class="hb-field">
+  <div class="hb-rules" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="hb-cards">
+    <article class="hb-pc hb-pc-1" tabindex="0">
+      <div class="hb-pc-photo" aria-hidden="true"></div>
+      <div class="hb-pc-veil" aria-hidden="true"></div>
+      <div class="hb-pc-veil2" aria-hidden="true"></div>
+      <div class="hb-pc-body">
+        <h3>Accountability<br>beyond adoption</h3>
+        <div class="hb-pc-detail"><p>Technology alone rarely delivers value. Lasting success comes from AI that&rsquo;s secure, trusted, and accountable &mdash; from strategy through scale.</p></div>
+      </div>
+    </article>
+
+    <article class="hb-pc hb-pc-2" tabindex="0">
+      <div class="hb-pc-photo" aria-hidden="true"></div>
+      <div class="hb-pc-veil" aria-hidden="true"></div>
+      <div class="hb-pc-veil2" aria-hidden="true"></div>
+      <div class="hb-pc-body">
+        <h3>Structured capability<br>is advantage</h3>
+        <div class="hb-pc-detail"><p>Repeatable execution, strong governance, and integration into core operations turn responsible AI into durable advantage, at scale.</p></div>
+      </div>
+    </article>
+  </div>
+  </div>
+</section>
+</div>
   </div>
 </section>
 
@@ -390,35 +845,35 @@
     <div class="rail mx-auto max-w-[1400px] lg:grid lg:grid-cols-3 lg:gap-3.5 lg:overflow-visible xl:grid-cols-5 lg:[&>*]:max-w-none">
       <article class="why-card group relative h-[clamp(360px,58vh,460px)] overflow-hidden border border-line">
         <span class="absolute inset-0 scale-[1.02] bg-card bg-[url('why-build.jpg')] why-bg bg-cover bg-center transition duration-500 group-hover:scale-[1.09]" aria-hidden="true"></span>
-        <div class="absolute inset-0 z-[2] flex flex-col justify-end bg-[linear-gradient(to_top,rgba(6,8,16,.88)_0%,rgba(6,8,16,.15)_58%,transparent_100%)] p-7">
+        <div class="absolute inset-0 z-[2] flex flex-col justify-end bg-[linear-gradient(to_top,#060810_0%,rgba(6,8,16,.92)_26%,rgba(6,8,16,.62)_52%,rgba(6,8,16,.28)_74%,transparent_100%)] p-7">
           <h3 class="font-display text-[20px] font-semibold leading-[1.3] text-hi [text-shadow:0_2px_16px_rgba(0,0,0,.8),0_1px_3px_rgba(0,0,0,.6)]">We build, run,<br>and improve it</h3>
           <p class="why-copy mt-3.5 text-body leading-[var(--lh-small)] text-[#e6ebf0] [text-shadow:0_1px_12px_rgba(0,0,0,.85),0_1px_3px_rgba(0,0,0,.7)]">Full operational ownership of mission-critical infrastructure, higher uptime, faster resolution, and less load on your internal IT.</p>
         </div>
       </article>
       <article class="why-card group relative h-[clamp(360px,58vh,460px)] overflow-hidden border border-line">
         <span class="absolute inset-0 scale-[1.02] bg-card bg-[url('why-platform.jpg')] why-bg bg-cover bg-center transition duration-500 group-hover:scale-[1.09]" aria-hidden="true"></span>
-        <div class="absolute inset-0 z-[2] flex flex-col justify-end bg-[linear-gradient(to_top,rgba(6,8,16,.88)_0%,rgba(6,8,16,.15)_58%,transparent_100%)] p-7">
+        <div class="absolute inset-0 z-[2] flex flex-col justify-end bg-[linear-gradient(to_top,#060810_0%,rgba(6,8,16,.92)_26%,rgba(6,8,16,.62)_52%,rgba(6,8,16,.28)_74%,transparent_100%)] p-7">
           <h3 class="font-display text-[20px] font-semibold leading-[1.3] text-hi [text-shadow:0_2px_16px_rgba(0,0,0,.8),0_1px_3px_rgba(0,0,0,.6)]">Platform-led,<br>not people-led</h3>
           <p class="why-copy mt-3.5 text-body leading-[var(--lh-small)] text-[#e6ebf0] [text-shadow:0_1px_12px_rgba(0,0,0,.85),0_1px_3px_rgba(0,0,0,.7)]">Proprietary platforms accelerate deployment and deliver repeatable outcomes at scale, without growing headcount.</p>
         </div>
       </article>
       <article class="why-card group relative h-[clamp(360px,58vh,460px)] overflow-hidden border border-line">
         <span class="absolute inset-0 scale-[1.02] bg-card bg-[url('why-ai.jpg')] why-bg bg-cover bg-center transition duration-500 group-hover:scale-[1.09]" aria-hidden="true"></span>
-        <div class="absolute inset-0 z-[2] flex flex-col justify-end bg-[linear-gradient(to_top,rgba(6,8,16,.88)_0%,rgba(6,8,16,.15)_58%,transparent_100%)] p-7">
+        <div class="absolute inset-0 z-[2] flex flex-col justify-end bg-[linear-gradient(to_top,#060810_0%,rgba(6,8,16,.92)_26%,rgba(6,8,16,.62)_52%,rgba(6,8,16,.28)_74%,transparent_100%)] p-7">
           <h3 class="font-display text-[20px] font-semibold leading-[1.3] text-hi [text-shadow:0_2px_16px_rgba(0,0,0,.8),0_1px_3px_rgba(0,0,0,.6)]">AI in the core,<br>not layered on</h3>
           <p class="why-copy mt-3.5 text-body leading-[var(--lh-small)] text-[#e6ebf0] [text-shadow:0_1px_12px_rgba(0,0,0,.85),0_1px_3px_rgba(0,0,0,.7)]">AI integrated directly into your infrastructure, predictive intelligence, automation, and real-time decisions where they matter.</p>
         </div>
       </article>
       <article class="why-card group relative h-[clamp(360px,58vh,460px)] overflow-hidden border border-line">
         <span class="absolute inset-0 scale-[1.02] bg-card bg-[url('why-proven.jpg')] why-bg bg-cover bg-center transition duration-500 group-hover:scale-[1.09]" aria-hidden="true"></span>
-        <div class="absolute inset-0 z-[2] flex flex-col justify-end bg-[linear-gradient(to_top,rgba(6,8,16,.88)_0%,rgba(6,8,16,.15)_58%,transparent_100%)] p-7">
+        <div class="absolute inset-0 z-[2] flex flex-col justify-end bg-[linear-gradient(to_top,#060810_0%,rgba(6,8,16,.92)_26%,rgba(6,8,16,.62)_52%,rgba(6,8,16,.28)_74%,transparent_100%)] p-7">
           <h3 class="font-display text-[20px] font-semibold leading-[1.3] text-hi [text-shadow:0_2px_16px_rgba(0,0,0,.8),0_1px_3px_rgba(0,0,0,.6)]">Proven at the<br>highest stakes</h3>
           <p class="why-copy mt-3.5 text-body leading-[var(--lh-small)] text-[#e6ebf0] [text-shadow:0_1px_12px_rgba(0,0,0,.85),0_1px_3px_rgba(0,0,0,.7)]">Trusted where failure isn&rsquo;t an option, national payments, core banking, industrial operations, and government.</p>
         </div>
       </article>
       <article class="why-card group relative h-[clamp(360px,58vh,460px)] overflow-hidden border border-line">
         <span class="absolute inset-0 scale-[1.02] bg-card bg-[url('why-engineering.jpg')] why-bg bg-cover bg-center transition duration-500 group-hover:scale-[1.09]" aria-hidden="true"></span>
-        <div class="absolute inset-0 z-[2] flex flex-col justify-end bg-[linear-gradient(to_top,rgba(6,8,16,.88)_0%,rgba(6,8,16,.15)_58%,transparent_100%)] p-7">
+        <div class="absolute inset-0 z-[2] flex flex-col justify-end bg-[linear-gradient(to_top,#060810_0%,rgba(6,8,16,.92)_26%,rgba(6,8,16,.62)_52%,rgba(6,8,16,.28)_74%,transparent_100%)] p-7">
           <h3 class="font-display text-[20px] font-semibold leading-[1.3] text-hi [text-shadow:0_2px_16px_rgba(0,0,0,.8),0_1px_3px_rgba(0,0,0,.6)]">Engineering<br>accountability</h3>
           <p class="why-copy mt-3.5 text-body leading-[var(--lh-small)] text-[#e6ebf0] [text-shadow:0_1px_12px_rgba(0,0,0,.85),0_1px_3px_rgba(0,0,0,.7)]">Engineering expertise and operational ownership drive faster execution and measurable outcomes, not workforce size.</p>
         </div>
@@ -437,21 +892,21 @@
     </div>
     <div class="rail mt-10 lg:mt-14 lg:grid lg:grid-cols-3 lg:gap-7 lg:overflow-visible lg:[&>*]:max-w-none">
       <a class="rv group block" href="#">
-        <span class="block aspect-[3/2] border border-line bg-[url('r360-case-1.webp')] bg-cover bg-center transition group-hover:border-line-blue"></span>
+        <span class="block aspect-[3/2] border border-line bg-[url('v4-case-1.jpg')] bg-cover bg-center transition group-hover:border-line-blue"></span>
         <span class="mt-4 block text-[11px] font-medium uppercase tracking-[.1em] text-low">Government &middot; AI &middot; Analytics</span>
         <h3 class="mt-3 line-clamp-2 font-display text-h3 font-bold text-display transition group-hover:text-hi">Creating a future-ready e-Governance ecosystem</h3>
         <p class="mt-2.5 text-small text-mid">Harnessing AI and analytics to enhance citizen engagement and service reliability.</p>
         <span class="mt-4 inline-flex min-h-11 items-center gap-2 text-small font-semibold text-brand">Read more &rarr;</span>
       </a>
       <a class="rv group block" href="#" style="transition-delay:.09s">
-        <span class="block aspect-[3/2] border border-line bg-[url('r360-case-2.webp')] bg-cover bg-center transition group-hover:border-line-blue"></span>
+        <span class="block aspect-[3/2] border border-line bg-[url('v4-case-2.jpg')] bg-cover bg-center transition group-hover:border-line-blue"></span>
         <span class="mt-4 block text-[11px] font-medium uppercase tracking-[.1em] text-low">Technology &middot; Automation &middot; CX</span>
         <h3 class="mt-3 line-clamp-2 font-display text-h3 font-bold text-display transition group-hover:text-hi">Accelerating service excellence with AI-led development</h3>
         <p class="mt-2.5 text-small text-mid">Intelligent, automated software delivery, enhancing agent efficiency and customer experience.</p>
         <span class="mt-4 inline-flex min-h-11 items-center gap-2 text-small font-semibold text-brand">Read more &rarr;</span>
       </a>
       <a class="rv group block" href="#" style="transition-delay:.18s">
-        <span class="block aspect-[3/2] border border-line bg-[url('r360-case-3.webp')] bg-cover bg-center transition group-hover:border-line-blue"></span>
+        <span class="block aspect-[3/2] border border-line bg-[url('v4-case-3.jpg')] bg-cover bg-center transition group-hover:border-line-blue"></span>
         <span class="mt-4 block text-[11px] font-medium uppercase tracking-[.1em] text-low">Fintech &middot; Cloud &middot; Temenos</span>
         <h3 class="mt-3 line-clamp-2 font-display text-h3 font-bold text-display transition group-hover:text-hi">Scaling global fintech payments with a cloud-native platform</h3>
         <p class="mt-2.5 text-small text-mid">Cloud-native Temenos enabling scalable global transaction processing.</p>
@@ -498,7 +953,7 @@
 <!-- ================= CAREERS ================= -->
 <section id="careers" class="border-t border-line px-gutter py-16 lg:py-24">
   <div class="mx-auto grid max-w-[1400px] items-center gap-10 xl:grid-cols-2 xl:gap-16">
-    <div class="rv aspect-[16/10] border border-line bg-[url('pov-card-meeting.jpg')] bg-cover bg-center xl:aspect-[4/3]"></div>
+    <div class="rv aspect-[16/10] border border-line bg-[url('v4-careers.jpg')] bg-cover bg-center xl:aspect-[4/3]"></div>
     <div class="rv">
       <p class="text-lede font-semibold tracking-[.06em] text-brand">Careers</p>
       <h2 class="mt-3.5 max-w-[16ch] font-display text-h2 font-semibold text-hi">Where talent meets <em class="not-italic text-brand">opportunity</em></h2>
@@ -692,10 +1147,16 @@ document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
     track.style.transform = 'translate3d(' + (-p * travel) + 'px,0,0)';
   }
 
+  /* offsetParent is null while the variant is display:none, which is the
+     cheapest reliable "am I actually laid out" test — measuring a hidden
+     element returns zeroes and would pin the page to a bogus height */
+  function live(){ return hs.offsetParent !== null; }
+
   function sync(){
-    (wide.matches || calm.matches || !fits()) ? disable() : enable();
+    (wide.matches || calm.matches || !live() || !fits()) ? disable() : enable();
     if (on) { measure(); paint(); }
   }
+  window.__povSync = sync;
 
   addEventListener('scroll', paint, {passive:true});
   addEventListener('resize', sync);
@@ -714,6 +1175,48 @@ document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
     }).observe(document.documentElement);
   }
   sync();
+})();
+
+/* ---- hero layout switcher, and layout B's scroll reveal ---- */
+(function(){
+  var tabs = document.querySelectorAll('.hero-tab');
+  var panes = document.querySelectorAll('.hero-variant');
+  if (!tabs.length) return;
+
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      var v = t.dataset.v;
+      tabs.forEach(function(x){ x.setAttribute('aria-selected', String(x === t)); });
+      panes.forEach(function(p){ p.classList.toggle('is-on', p.dataset.v === v); });
+      /* layout A's pan measures the stage, so it has to re-decide once the
+         variant it belongs to is actually laid out again (or hidden) */
+      if (window.__povSync) window.__povSync();
+      revealB();
+      scrollTo({top: 0, behavior: 'smooth'});
+    });
+  });
+
+  /* Layout B's point of view is its own section and is scrolled to, so its
+     pieces reveal on arrival rather than on a load timer. Same one-way
+     geometry test as Hero-V5: nothing can end up scrolled past and invisible. */
+  var bTargets = [].slice.call(document.querySelectorAll('.hb-pov, .hb-pc'));
+  function revealB(){
+    for (var i = bTargets.length - 1; i >= 0; i--){
+      var el = bTargets[i];
+      if (el.offsetParent === null) continue;          // hidden variant, not yet
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.85){
+        el.classList.add('in');
+        bTargets.splice(i, 1);
+      }
+    }
+  }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches){
+    bTargets.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    addEventListener('scroll', revealB, {passive:true});
+    addEventListener('resize', revealB);
+    revealB();
+  }
 })();
 
 /* ---- back to top ---- */

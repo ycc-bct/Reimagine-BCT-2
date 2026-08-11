@@ -101,6 +101,10 @@
   .rail {
     display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
     padding-inline: var(--spacing-gutter); margin-inline: calc(var(--spacing-gutter) * -1);
+    /* Without this the snap area starts at the padding box, so the browser
+       rests at scrollLeft = gutter and the first card lands hard against the
+       screen edge — a full gutter out of line with the section title. */
+    scroll-padding-inline: var(--spacing-gutter);
     scrollbar-width: none; -webkit-overflow-scrolling: touch;
   }
   .rail::-webkit-scrollbar { display: none; }
@@ -116,6 +120,11 @@
   /* position lives here, not as a `relative` utility: utilities sit in a later
      cascade layer and would beat the sticky rule below no matter its specificity */
   #heroStage { position: relative; }
+
+  /* The two point cards should end level. Tying that to sentence length only
+     holds at one width, so the copy block takes the panel's remaining height
+     instead — equal by construction, whatever the copy does. */
+  .pov-copy { flex: 1 1 auto; }
 
   /* Every rail/pin rule is scoped below xl, so width alone decides the layout.
      At xl none of this applies and the xl: utilities in the markup restore the
@@ -133,7 +142,10 @@
          inside the hero instead of being cropped by it */
       padding-bottom: clamp(20px, 4svh, 44px);
     }
-    .pov-panel { flex: 0 0 82vw; max-width: 420px; height: 100%; scroll-snap-align: start; }
+    /* the statement is the one that has to carry a headline, so it keeps the
+       full measure; the panels beside it are narrower */
+    .pov-panel { flex: 0 0 68vw; max-width: 340px; height: 100%; scroll-snap-align: start; }
+    .pov-panel--wide { flex-basis: 82vw; max-width: 420px; }
     #povStage {
       flex: 0 0 auto; height: clamp(340px, 46svh, 480px);
       overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory;
@@ -158,14 +170,11 @@
     #povStage { display: block; }
   }
 
-  /* Why-BCT photo cards. Keyed off hover capability, not width — same as the
-     desktop build. A pointer device gets the hover reveal (copy slides up,
-     photo blurs behind it); a touch device has no hover to give, so the photo
-     is blurred from the start and the copy simply stays open. */
-  .why-bg { filter: blur(3px); }
+  /* Why-BCT photo cards. The photograph is never blurred — a gradient running
+     from solid at the foot of the card to clear at the top does the work, so
+     the picture stays a picture and the copy still reads over it. */
+  .why-bg { filter: none; transition: transform .6s cubic-bezier(.22,1,.36,1); }
   @media (hover: hover) {
-    .why-bg { filter: none; transition: filter .5s ease, transform .6s cubic-bezier(.22,1,.36,1); }
-    .why-card:hover .why-bg { filter: blur(6px); }
     .why-copy {
       max-height: 0; opacity: 0; transform: translateY(8px); overflow: hidden;
       transition: max-height .5s ease, opacity .4s ease, transform .45s ease;
