@@ -170,6 +170,40 @@
     #povStage { display: block; }
   }
 
+  /* ---- Careers: the picture opens full-bleed and settles into its frame ----
+     The section is taller than the screen and its inner block is pinned, so
+     the scroll through that extra height is what drives the shrink. Only
+     transform and opacity are animated — the frame's real size never changes,
+     which is also why the no-JS state is simply the finished layout. */
+  .cr2 { height: 210svh; }
+  .cr2-pin { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+  .cr2-media {
+    position: relative; overflow: hidden;
+    height: clamp(190px, 32svh, 300px);
+    transform-origin: center center; will-change: transform;
+  }
+  .cr2-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cr2-media::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(120deg, rgba(6,8,16,.34), transparent 55%);
+  }
+  .cr2-content { will-change: opacity, transform; }
+
+  @media (min-width: 1280px) {
+    .cr2 { height: auto; }
+    .cr2-pin { position: static; height: auto; overflow: visible;
+               padding-block: clamp(60px, 8vw, 100px); }
+    .cr2-media { height: auto; aspect-ratio: 4/3; transform: none !important; }
+    .cr2-content { opacity: 1 !important; transform: none !important; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cr2 { height: auto; }
+    .cr2-pin { position: static; height: auto; overflow: visible;
+               padding-block: clamp(48px, 9vw, 90px); }
+    .cr2-media { transform: none !important; }
+    .cr2-content { opacity: 1 !important; transform: none !important; }
+  }
+
   /* Why-BCT photo cards. The photograph is never blurred — a gradient running
      from solid at the foot of the card to clear at the top does the work, so
      the picture stays a picture and the copy still reads over it. */

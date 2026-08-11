@@ -28,8 +28,10 @@
 }
 .hb *, .hb *::before, .hb *::after { box-sizing: border-box; }
 .hb img, .hb video { display:block; max-width:100%; }
-.hb p { text-wrap: pretty; margin:0; }
-.hb h1, .hb h2, .hb h3 { margin:0; }
+.hb p { text-wrap: pretty; }
+/* No margin reset here: `.hb p` and `.hb h1` are (0,1,1) and would outrank the
+   hb- classes below, which are (0,1,0) — that wipes every left gutter. Tailwind
+   preflight already zeroes these elements anyway. */
 
 /* ===========================================================================
    Hero V5 — the phone composition from the 402 x 1103 reference frame,
@@ -397,6 +399,9 @@
 }
 
 /* ---- the A/B switcher, in the hero's own top-right ---- */
+/* the two point-card photographs, dimmed by the veil above them */
+.hb-pc-1 .hb-pc-photo{background-image:url('hb-card-accountability.jpg')}
+.hb-pc-2 .hb-pc-photo{background-image:url('hb-card-structured.jpg')}
 .hero-variant{display:none}
 .hero-variant.is-on{display:block}
 .hero-tab[aria-selected="true"]{background:var(--color-brand);color:#04121C}
@@ -642,16 +647,17 @@
 <!-- ================= GCC ================= -->
 <section id="gcc" class="border-t border-line bg-surface px-gutter py-16 lg:py-24">
   <div class="mx-auto max-w-[1400px]">
-    <div class="rv lg:flex lg:items-end lg:justify-between lg:gap-8">
+    <div class="rv">
       <div>
         <p class="text-lede font-semibold tracking-[.06em] text-brand">GCC Capability</p>
         <h2 class="mt-3.5 max-w-[20ch] font-display text-h2 font-semibold text-display">BCT&rsquo;s AI-powered GCC capability</h2>
       </div>
-      <a href="#" class="mt-6 inline-flex min-h-12 shrink-0 items-center gap-2.5 bg-brand px-6 text-body font-bold text-[#04121C] transition hover:bg-brand-300 lg:mt-0">
-        Take a free GCC assessment <span aria-hidden="true">&rarr;</span>
-      </a>
     </div>
     <p class="rv mt-6 max-w-[68ch] text-lede text-mid">BCT embeds AI into your Global Capability Center from day one. Powered by <b class="font-semibold text-hi">AigeniX&trade;</b>, our agentic AI platform automates the domains below &mdash; accelerating operations, agility, and time-to-market.</p>
+
+    <a href="#" class="rv mt-8 inline-flex min-h-12 items-center gap-2.5 bg-brand px-6 text-body font-bold text-[#04121C] transition hover:bg-brand-300">
+      Take a free GCC assessment <span aria-hidden="true">&rarr;</span>
+    </a>
 
     <div class="mt-10 grid gap-3.5 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3">
       <article class="rv border border-line bg-base p-6 transition hover:border-line-blue lg:p-7">
@@ -921,11 +927,13 @@
   <div class="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[300px_1fr] lg:gap-14">
     <div class="rv">
       <p class="text-lede font-semibold tracking-[.06em] text-brand">Insights</p>
-      <h2 class="mt-3.5 font-display text-h2 font-semibold text-hi">Blogs</h2>
+      <div class="mt-3.5 flex items-center justify-between gap-5">
+        <h2 class="font-display text-h2 font-semibold text-hi">Blogs</h2>
+        <a href="#" class="inline-flex min-h-11 shrink-0 items-center gap-2.5 text-body font-semibold text-hi transition-colors hover:text-brand-300">
+          View all <span class="grid h-8 w-8 place-items-center bg-brand font-extrabold text-[#04121C]" aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
       <p class="mt-3 text-lede text-mid">Perspectives that matter</p>
-      <a href="#" class="mt-6 inline-flex min-h-11 items-center gap-2.5 text-body font-semibold text-hi transition-colors hover:text-brand-300">
-        View all <span class="grid h-8 w-8 place-items-center bg-brand font-extrabold text-[#04121C]" aria-hidden="true">&rarr;</span>
-      </a>
     </div>
     <div class="rail lg:grid lg:grid-cols-3 lg:gap-3.5 lg:overflow-visible lg:[&>*]:max-w-none">
       <a class="rv group flex flex-col overflow-hidden border border-line bg-surface p-6 transition hover:border-line-blue" href="#">
@@ -951,16 +959,18 @@
 </section>
 
 <!-- ================= CAREERS ================= -->
-<section id="careers" class="border-t border-line px-gutter py-16 lg:py-24">
-  <div class="mx-auto grid max-w-[1400px] items-center gap-10 xl:grid-cols-2 xl:gap-16">
-    <div class="rv aspect-[16/10] border border-line bg-[url('v4-careers.jpg')] bg-cover bg-center xl:aspect-[4/3]"></div>
-    <div class="rv">
+<section id="careers" class="cr2 relative border-t border-line">
+  <div class="cr2-pin">
+    <div class="cr2-inner mx-auto flex h-full max-w-[1400px] flex-col justify-center gap-9 px-gutter xl:grid xl:grid-cols-2 xl:items-center xl:gap-16">
+    <div class="cr2-media border border-line"><img src="v4-careers.jpg" alt="" aria-hidden="true"></div>
+    <div class="cr2-content">
       <p class="text-lede font-semibold tracking-[.06em] text-brand">Careers</p>
       <h2 class="mt-3.5 max-w-[16ch] font-display text-h2 font-semibold text-hi">Where talent meets <em class="not-italic text-brand">opportunity</em></h2>
       <p class="mt-5 max-w-[46ch] text-lede text-mid">BCT is where engineers build systems that cannot fail, taking end-to-end ownership of solutions deployed across 50 countries. If you want to grow by solving problems that matter at scale, explore opportunities with BCT.</p>
       <a href="https://www.bahwancybertek.com/careers/" class="mt-8 inline-flex min-h-12 items-center gap-2.5 bg-brand px-6 text-body font-bold text-[#04121C] transition hover:bg-brand-300">
         Careers at BCT <span aria-hidden="true">&rarr;</span>
       </a>
+    </div>
     </div>
   </div>
 </section>
@@ -1217,6 +1227,78 @@ document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
     addEventListener('resize', revealB);
     revealB();
   }
+})();
+
+/* ---- careers: the picture opens full-bleed, then settles into its frame ----
+   Same choreography as the desktop build: the media starts scaled up enough to
+   cover the screen and centred on it, then lerps back to its own box over the
+   first stretch of the pin; the copy arrives once the picture has mostly
+   landed. Nothing but transform and opacity moves. */
+(function(){
+  var sec = document.getElementById('careers');
+  if (!sec || !sec.classList.contains('cr2')) return;
+  var media = sec.querySelector('.cr2-media'),
+      content = sec.querySelector('.cr2-content');
+  if (!media || !content) return;
+
+  var pinEl = sec.querySelector('.cr2-pin');
+  var wide = matchMedia('(min-width: 1280px)'),
+      calm = matchMedia('(prefers-reduced-motion: reduce)');
+  var queued = false;
+
+  function lerp(a, b, t){ return a + (b - a) * t; }
+  function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
+
+  /* The frame's untransformed geometry, measured once. getBoundingClientRect
+     reports the element WITH its transform, so reading it inside frame() feeds
+     each frame's own output back into the next one and the values run away.
+     Measure with the transform cleared, and store the offset from the pin —
+     the pin is what moves, and it never carries a transform. */
+  var geo = null;
+  function measure(){
+    var prev = media.style.transform;
+    media.style.transform = 'none';
+    var m = media.getBoundingClientRect(), pin = pinEl.getBoundingClientRect();
+    geo = { w: m.width, h: m.height, dx: m.left - pin.left, dy: m.top - pin.top };
+    media.style.transform = prev;
+  }
+
+  function frame(){
+    queued = false;
+    if (wide.matches || calm.matches){
+      media.style.transform = ''; content.style.opacity = ''; content.style.transform = '';
+      return;
+    }
+    var travel = sec.offsetHeight - window.innerHeight;
+    if (travel <= 0) return;
+    if (!geo || !geo.w) measure();
+    var p = clamp(-sec.getBoundingClientRect().top / travel, 0, 1);
+
+    /* the picture: full-bleed to framed over the first 55% */
+    var pin = pinEl.getBoundingClientRect();
+    var ip = clamp(p / 0.55, 0, 1);
+    /* uniform scale, so the framing never distorts — cover the screen both ways */
+    var startScale = Math.max(window.innerWidth / geo.w, window.innerHeight / geo.h);
+    var sc = lerp(startScale, 1, ip);
+    /* and slide it so the picture stays centred on the screen while it is big */
+    var cx = pin.left + geo.dx + geo.w / 2, cy = pin.top + geo.dy + geo.h / 2;
+    var tx = lerp(window.innerWidth / 2 - cx, 0, ip);
+    var ty = lerp(window.innerHeight / 2 - cy, 0, ip);
+    media.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + sc + ')';
+
+    /* the copy: in once the picture has mostly landed */
+    var cp = clamp((p - 0.5) / 0.28, 0, 1);
+    content.style.opacity = cp;
+    content.style.transform = 'translateY(' + lerp(28, 0, cp) + 'px)';
+  }
+
+  function onScroll(){ if (!queued){ queued = true; requestAnimationFrame(frame); } }
+  addEventListener('scroll', onScroll, {passive:true});
+  addEventListener('resize', function(){ measure(); onScroll(); });
+  wide.addEventListener('change', frame);
+  calm.addEventListener('change', frame);
+  addEventListener('load', function(){ measure(); frame(); });
+  frame();
 })();
 
 /* ---- back to top ---- */
