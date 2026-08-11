@@ -409,8 +409,29 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
 /* ============================================================
    CTA — centred close
    ============================================================ */
-.cta{border-top:1px solid var(--border)}
+/* a soft mesh of the palette blues: a bright bloom off-centre, a saturated
+   field, then the deep blues falling away to the page colour at the edges */
+.cta{
+  position:relative;overflow:hidden;border-top:1px solid var(--border);
+  background:
+    radial-gradient(46% 60% at 33% 32%, rgba(95,190,234,.22) 0%, rgba(95,190,234,0) 62%),
+    radial-gradient(40% 52% at 68% 62%, rgba(0,146,215,.18) 0%, rgba(0,146,215,0) 66%),
+    radial-gradient(72% 88% at 50% 46%, rgba(0,146,215,.28) 0%, rgba(0,146,215,0) 72%),
+    radial-gradient(96% 116% at 50% 50%, var(--blue-900) 0%, var(--blue-950) 58%, var(--bg-base) 88%),
+    var(--bg-base);
+}
+/* §1 rule 2 in mirror: on a blue field --blue-500 measures 1.04:1 and even
+   --blue-300 only reaches 3.68:1, so the eyebrow goes to --text-hi here —
+   the same move the light band makes when it drops to --blue-700 */
+.cta .eyebrow{color:var(--text-hi)}
+/* vignette — keeps the field off the section edges so it reads as a panel */
+.cta::before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(74% 82% at 50% 50%,
+    rgba(6,8,16,0) 38%, rgba(6,8,16,.55) 74%, rgba(6,8,16,.92) 92%, var(--bg-base) 100%);
+}
 .cta-inner{
+  position:relative;z-index:1;
   max-width:840px;margin:0 auto;text-align:center;
   padding:clamp(44px,5vw,72px) clamp(24px,4vw,56px);
 }
