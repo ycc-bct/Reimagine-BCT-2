@@ -55,6 +55,16 @@
   --pad-x: clamp(24px, 5vw, 72px);
 }
 
+/* Design.md §8 — body copy gets a floor on narrow screens. The three roles do
+   not change, only their values: light-on-dark copy at arm's length needs it. */
+@media (max-width:767.98px){
+  :root{
+    --fs-lede:  16px;  --lh-lede:  1.72;
+    --fs-body:  15px;  --lh-body:  1.70;
+    --fs-small: 14px;  --lh-small: 1.60;
+  }
+}
+
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:72px}
 body{
@@ -90,6 +100,9 @@ p{text-wrap:pretty}
   color:var(--text-mid);font-size:var(--fs-lede);line-height:var(--lh-lede);
   margin-top:20px;max-width:64ch;
 }
+/* the sectors lede is short enough to run the full column without breaking the
+   65-75 character guidance */
+.sectors .sec-lede{max-width:none}
 /* v2 section head — eyebrow, then the title across the full column width, then
    the CTA. Keeping the title off a shared row is what holds it to two lines at
    1280 and 1024 (Design.md §3). */
@@ -321,7 +334,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
   text-decoration:none;color:var(--text-hi);
 }
 .cf-visual{
-  display:block;aspect-ratio:6/4;
+  display:block;aspect-ratio:16/9;
   background:var(--bg-card) center/cover no-repeat;
 }
 .cf-panel{
@@ -443,6 +456,21 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
 @media (max-width:720px){
   .nav-links{display:none}
   .section{padding:80px var(--pad-x)}
+}
+/* Design.md §8 — every interactive element is at least 44px tall on touch
+   widths. Kept as an additive block so the header and footer rules above stay
+   byte-identical to the existing page. */
+@media (max-width:767.98px){
+  .logo,
+  .nav-links a,
+  .nav-locale,
+  .foot-col a,
+  .foot-legal a,
+  .foot-contact .crow a{min-height:44px}
+  .foot-legal a,
+  .foot-contact .crow a{display:inline-flex;align-items:center}
+  .foot-col a{display:flex;align-items:center}
+  .foot-social a{width:44px;height:44px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
@@ -592,7 +620,7 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
     <div class="section-head rv">
       <div class="eyebrow">Sectors</div>
       <h2 class="section-title">Empowering oil and gas industry sectors</h2>
-      <p class="sec-lede">Transforming upstream, downstream, renewable, and logistics with cutting-edge technology solutions.</p>
+      <p class="sec-lede">Transforming upstream, downstream, renewable, and logistics with cutting edge technology solutions.</p>
     </div>
   </div>
   <div class="wrap">
