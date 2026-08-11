@@ -115,11 +115,27 @@ A section never invents its own size.
 | `--fs-body` / `--lh-body` | `14.5px` | `1.70` | Copy inside a card or column |
 | `--fs-small` / `--lh-small` | `13.5px` | `1.60` | Captions, meta, dense descriptions |
 
+### Leading is set per role, not inherited
+
+A line-height belongs to the role, and a role that is one line long is not
+prose. Two rules that were wrong for a long time and are worth stating:
+
+- **An eyebrow takes `1.25`, never the lede's `1.70`.** Eyebrows are built out of
+  the lede size, and inheriting its leading gives a one-word label a line box half
+  again as tall as the text, which pushes the title away and makes the pair read
+  as two separate things instead of one lock-up.
+- **A section title takes `1.18`, not `1.08`.** At display sizes 1.08 sets the two
+  lines close enough that the descenders of the first crowd the second.
+
+In Tailwind, `text-*` carries its own line-height and sits in the utilities layer,
+so overriding it from a component class does not work — the leading has to be a
+`leading-*` utility in the markup, or part of the `--text-*` token itself.
+
 ### Component type
 
 | Element | Spec |
 |---|---|
-| `.eyebrow` | 16px / 600 / `letter-spacing:.06em` / `--blue-500` / not uppercase |
+| `.eyebrow` | 16px / 600 / `letter-spacing:.06em` / `--blue-500` / not uppercase / **`line-height:1.25`** |
 | `.section-title` | `--fs-h2` / 600 / `line-height:1.05` / `letter-spacing:-.02em` / `--text-display` |
 | `.hero-h1` | `clamp(42px,6.2vw,94px)` / 700 / `line-height:1.0` / `letter-spacing:-.03em` |
 | `.link-arrow` | 14px / 600 / `--text-hi`, with a 28×28 `--blue-500` arrow tile |

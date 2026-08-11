@@ -37,7 +37,7 @@
 
   /* section + card headings, fluid across the whole range */
   --text-h2: clamp(28px, 4.8vw, 52px);
-  --text-h2--line-height: 1.08;
+  --text-h2--line-height: 1.18;   /* 1.08 set the two lines too tight to breathe */
   --text-h2--letter-spacing: -0.02em;
   --text-h3: clamp(19px, 4.4vw, 22px);
   --text-h3--line-height: 1.25;
@@ -77,6 +77,12 @@
 }
 
 @layer components {
+  /* An eyebrow is a one-line label, not prose: inheriting the lede's 1.72
+     leading gave it a line box half again as tall as the text and pushed the
+     title away from it. The leading is set with a `leading-[1.25]` utility in
+     the markup, not here — text-lede carries its own line-height and utilities
+     sit in a later cascade layer, so a component rule loses to it. */
+
   /* the film grain that ties this page to the rest of the site */
   .grain::after {
     content: ""; position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: .05;
