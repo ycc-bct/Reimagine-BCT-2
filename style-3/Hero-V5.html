@@ -30,7 +30,6 @@
   --bg:        #0B0D15;   /* the reference frame's background          */
   --rule:      #434343;   /* the descending column hairlines           */
   --eyebrow:   #CBCBCB;
-  --blue:      #1D9DDB;   /* the highlight inside the card titles      */
   --blue-500:  #0092D7;
   --text-display:#D7DFE9;
   --font: 'Poppins', ui-sans-serif, system-ui, sans-serif;
@@ -106,13 +105,12 @@ a:focus-visible,article:focus-visible{outline:2px solid var(--blue-500);outline-
    card, and runs to the frame's bottom edge */
 .hb-rules{position:absolute;left:0;right:0;top:0;bottom:calc(var(--u) * -24.33);z-index:1;pointer-events:none}
 .hb-rules i{position:absolute;width:1px;bottom:0;background:var(--rule)}
-.hb-rules i:nth-child(1){left: 4.9751%; top:0}
-/* scaled with the cards so the lattice keeps the reference's rhythm; the last
-   one still lands on the top edge of the second card (440 + 18) */
-.hb-rules i:nth-child(2){left:48.010%;  top:calc(var(--u) * 124)}
-.hb-rules i:nth-child(3){left:95.025%;  top:calc(var(--u) * 124)}
-.hb-rules i:nth-child(4){left:71.393%;  top:calc(var(--u) * 325)}
-.hb-rules i:nth-child(5){left:28.358%;  top:calc(var(--u) * 458)}
+/* four lines dividing the width evenly. The tops still descend, and the last
+   one lands on the top edge of the second card (360 + 18). */
+.hb-rules i:nth-child(1){left:20%; top:0}
+.hb-rules i:nth-child(2){left:40%; top:calc(var(--u) *  83)}
+.hb-rules i:nth-child(3){left:60%; top:calc(var(--u) * 218)}
+.hb-rules i:nth-child(4){left:80%; top:calc(var(--u) * 378)}
 
 /* ---------------------------------------------------------------- brand -- */
 .hb-brand{
@@ -185,22 +183,24 @@ a:focus-visible,article:focus-visible{outline:2px solid var(--blue-500);outline-
   width: calc(var(--u) * 230);
   background:#115080;
 }
-/* Taller than the reference's 290: the supporting copy is permanent now, so
-   the card has to hold the title, the copy AND enough clear photograph under
-   them to still read as a photograph. 440 splits it about half and half. */
-.hb-pc-1{ height:calc(var(--u) * 440); margin-left:calc(var(--u) * 20); }
-.hb-pc-2{ height:calc(var(--u) * 440); margin:calc(var(--u) * 18) 0 0 calc(var(--u) * 151.61); }
+/* Taller than the reference's 290 because the supporting copy is permanent
+   now — the card holds the title, the copy, and enough photograph under them
+   to still read as a photograph. */
+.hb-pc-1{ height:calc(var(--u) * 360); margin-left:calc(var(--u) * 20); }
+.hb-pc-2{ height:calc(var(--u) * 360); margin:calc(var(--u) * 18) 0 0 calc(var(--u) * 151.61); }
 
 .hb-pc-photo{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat}
 .hb-pc-2 .hb-pc-photo{transform:scaleX(-1)}          /* the reference mirrors the second photo */
 /* The reference's veil assumed a title only. It now has to carry the copy as
    well, so it holds through the text band and then clears completely — the
-   photograph below the text is untouched rather than dimmed all over. */
+   photograph below the text is untouched rather than dimmed all over.
+   It tops out at 90%, never fully solid, so the photograph reads through even
+   behind the title. */
 .hb-pc-veil{
   position:absolute; inset:0;
   background:linear-gradient(180deg,
-    #091323 0%, #091323 17%, rgba(9,19,35,.88) 34%,
-    rgba(9,19,35,.52) 50%, rgba(9,19,35,.14) 66%, rgba(35,74,137,0) 78%);
+    rgba(9,19,35,.9) 0%, rgba(9,19,35,.9) 40%, rgba(9,19,35,.6) 58%,
+    rgba(9,19,35,.2) 74%, rgba(35,74,137,0) 88%);
 }
 .hb-pc-body{
   position:absolute; z-index:4; left:0; right:0; top:0;
@@ -211,7 +211,6 @@ a:focus-visible,article:focus-visible{outline:2px solid var(--blue-500);outline-
   font-size:   max(13px, calc(var(--u) * 15));
   line-height: 1.36;
 }
-.hb-pc h3 .hl{color:var(--blue)}
 /* The supporting copy is visible by DEFAULT. A touch device has no hover to
    give, so anything gated behind :hover is simply unreachable there — the
    copy would never be read on a phone. Only a pointer device gets the reveal,
@@ -299,11 +298,11 @@ a:focus-visible,article:focus-visible{outline:2px solid var(--blue-500);outline-
       rgba(11,13,21,.58) 0%, rgba(11,13,21,.18) 28%,
       rgba(11,13,21,.62) 44%, #0B0D15 54%, #0B0D15 100%);
   }
-  .hb-rules i:nth-child(1){left:5.95%;  top:54%}
-  .hb-rules i:nth-child(2){left:42.1%;  top:54%}
-  .hb-rules i:nth-child(3){left:95%;    top:54%}
-  .hb-rules i:nth-child(4){left:73.8%;  top:62%}
-  .hb-rules i:nth-child(5){left:24%;    top:71%}
+  /* evenly divided here too, so the lattice reads the same on both tiers */
+  .hb-rules i:nth-child(1){left:20%; top:54%}
+  .hb-rules i:nth-child(2){left:40%; top:58%}
+  .hb-rules i:nth-child(3){left:60%; top:64%}
+  .hb-rules i:nth-child(4){left:80%; top:71%}
 
   .hb-brand{left:var(--pad-x);top:34px}
   .hb-brand .logo-img{width:128px;height:34px}
@@ -431,14 +430,14 @@ a:focus-visible,article:focus-visible{outline:2px solid var(--blue-500);outline-
   </div>
 
   <div class="hb-field">
-  <div class="hb-rules" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="hb-rules" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
   <div class="hb-cards">
     <article class="hb-pc hb-pc-1" tabindex="0">
       <div class="hb-pc-photo" aria-hidden="true"></div>
       <div class="hb-pc-veil" aria-hidden="true"></div>
       <div class="hb-pc-veil2" aria-hidden="true"></div>
       <div class="hb-pc-body">
-        <h3>Accountability<br>beyond <span class="hl">adoption</span></h3>
+        <h3>Accountability<br>beyond adoption</h3>
         <div class="hb-pc-detail"><p>Technology alone rarely delivers value. Lasting success comes from AI that&rsquo;s secure, trusted, and accountable &mdash; from strategy through scale.</p></div>
       </div>
     </article>
