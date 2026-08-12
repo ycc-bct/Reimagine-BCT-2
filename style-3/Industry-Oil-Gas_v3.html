@@ -19,9 +19,7 @@
   --bg-card:    #111522;
   --bg-hover:   #161B2C;
 
-  /* BCT blue. Deviates from design-system/stories/tokens.css (#0092D7) by
-     instruction — the brand accent on this page is #61BEE9. */
-  --blue-500:   #61BEE9;
+  --blue-500:   #0092D7;
   --blue-300:   #5FBEEA;
   --blue-700:   #0A6395;
   --blue-900:   #06344F;
@@ -30,11 +28,15 @@
   --text-hi:      #F5F8FC;
   --text-display: #D7DFE9;
   --text-mid:     rgba(242,246,250,.68);
-  --text-low:     rgba(242,246,250,.44);
+  /* Design.md lists --text-low for "meta, captions, indices" — i.e. text — but
+     at .44 it measures 4.07:1 on --bg-base, 4.12 on --bg-surface, 4.11 on
+     --bg-card and 4.06 on --bg-hover: below AA on every surface the system has.
+     .47 is the crossing point; .48 clears all four. */
+  --text-low:     rgba(242,246,250,.48);
 
   --border:       rgba(255,255,255,.13);
-  --border-blue:  rgba(97,190,233,.4);
-  --glow:         rgba(97,190,233,.18);
+  --border-blue:  rgba(0,146,215,.4);
+  --glow:         rgba(0,146,215,.18);
 
   --light-bg:     #EDF3F7;
   --light-card:   #FFFFFF;
@@ -110,31 +112,10 @@ p{text-wrap:pretty}
    the CTA. Keeping the title off a shared row is what holds it to two lines at
    1280 and 1024 (Design.md §3). */
 .section-head{margin-bottom:56px}
-/* the CTA sits under the title — 26px is the documented block-to-CTA interval */
-.section-head .link-arrow{margin-top:26px}
-
-.link-arrow{
-  color:var(--text-hi);text-decoration:none;font-weight:600;font-size:14px;
-  display:inline-flex;align-items:center;gap:10px;white-space:nowrap;
-  transition:color .15s;
-}
-/* 44px hit area only where it is a touch target (Design.md §8) */
-@media(max-width:767px){.link-arrow{min-height:44px}}
-.link-arrow .ar{
-  display:inline-grid;place-items:center;width:28px;height:28px;
-  background:var(--blue-500);color:#04121C;font-weight:800;transition:transform .2s;
-}
-.link-arrow:hover{color:var(--blue-300)}
-.link-arrow:hover .ar{transform:translateX(4px)}
-.btn-solid{
-  display:inline-flex;align-items:center;gap:10px;
-  background:var(--blue-500);color:#04121C;text-decoration:none;
-  font-weight:700;font-size:15px;padding:14px 26px;min-height:44px;
-  transition:background .2s,box-shadow .2s,transform .2s;
-}
-/* the base is now #61BEE9 and --blue-300 is #5FBEEA — a 2/255 difference, so a
-   background swap would read as no change. The glow and the lift carry it. */
-.btn-solid:hover{box-shadow:0 0 40px var(--glow);transform:translateY(-2px)}
+/* Design.md §6 defines .link-arrow (text + 28x28 blue tile) and .btn-solid
+   (filled CTA). Neither is used on this page any more: every "go" affordance is
+   the single .go-link pattern, by request, and no section head carries a CTA.
+   Flagged rather than silently dropped — it diverges from the documented set. */
 
 .rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.6,.2,1),transform .7s cubic-bezier(.2,.6,.2,1)}
 .rv.in{opacity:1;transform:none}
@@ -164,14 +145,14 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
 .nav-links{display:flex;gap:6px;list-style:none}
 .nav-links a{
   display:inline-flex;align-items:center;gap:5px;
-  color:var(--text-mid);text-decoration:none;font-size:var(--fs-small);font-weight:500;
+  color:var(--text-mid);text-decoration:none;font-size:var(--fs-body);font-weight:500;
   padding:9px 14px;border-radius:2px;transition:color .15s,background .15s;
 }
 .nav-links a:hover,.nav-links a.on{color:var(--text-hi);background:rgba(255,255,255,.05)}
 .nav-links .chev{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.65}
 .nav-locale{
   display:inline-flex;align-items:center;gap:7px;
-  color:var(--text-mid);text-decoration:none;font-size:var(--fs-small);font-weight:500;
+  color:var(--text-mid);text-decoration:none;font-size:var(--fs-body);font-weight:500;
   padding:9px 10px;border-radius:2px;transition:color .15s,background .15s;
 }
 .nav-locale:hover{color:var(--text-hi);background:rgba(255,255,255,.05)}
@@ -255,15 +236,28 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
   font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
   color:var(--text-low);margin-bottom:14px;
 }
-.prod-name{
-  font-family:var(--font-display);font-weight:700;font-size:var(--fs-h3);
-  line-height:1.25;letter-spacing:-.01em;color:var(--text-hi);
+/* The product name is a supplied wordmark, not type. Height is capped so the
+   four read as a set; IVMS is a much wider lockup (11.8:1 against ~4:1) so it
+   binds on width instead and sits a little shorter — normal for a wide mark.
+   The alt text carries the accessible name the heading used to. */
+.prod-logo{
+  /* .prod-body is a column flex container, so a replaced element would be
+     stretched to the full column width and squashed — align-self stops that */
+  display:block;align-self:flex-start;
+  width:auto;height:auto;max-height:26px;max-width:100%;
+  object-fit:contain;
 }
 .prod-card p{color:var(--text-mid);font-size:var(--fs-body);line-height:var(--lh-body);margin-top:12px;margin-bottom:24px}
-.prod-go{
-  margin-top:auto;display:inline-flex;align-items:center;gap:9px;
-  font-size:var(--fs-small);font-weight:600;color:var(--blue-500);transition:gap .2s;
+/* One text-and-arrow affordance, shared by Products, Impact and the CTA, so the
+   page has a single "go" pattern instead of three. */
+.go-link{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--font-body);font-size:var(--fs-body);font-weight:600;
+  color:var(--blue-500);text-decoration:none;transition:gap .2s;
 }
+.go-link:hover{gap:14px}
+@media(max-width:767px){.go-link{min-height:44px}}
+.prod-go{margin-top:auto}
 .prod-card:hover .prod-go{gap:14px}
 
 @media(max-width:1080px){.prod-grid{grid-template-columns:1fr 1fr}}
@@ -304,9 +298,9 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
 .sol-media img.on{opacity:1}
 @media(prefers-reduced-motion:reduce){.sol-media img{transition:none}}
 /* a hairline register: index left, name + description centre, arrow right.
-   Hover matches v1's .svc-row — the row steps right, the index and name turn
-   blue, and the arrow fades in from the left. The description holds
-   --text-mid through the hover so only the name reads as the link. */
+   Hover: the row steps right, the index and name take --blue-500 (the brand
+   accent, 5.54:1 on this band) and the arrow fades in from the left. The
+   description holds --text-mid so only the name reads as the link. */
 .sol-list{border-top:1px solid var(--border)}
 .sol-row{
   display:grid;grid-template-columns:auto 1fr auto;align-items:start;
@@ -317,7 +311,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
   text-decoration:none;color:var(--text-hi);
   transition:padding-left .35s cubic-bezier(.2,.6,.2,1),color .2s;
 }
-.sol-row:hover{padding-left:16px;color:var(--blue-300)}
+.sol-row:hover{padding-left:16px;color:var(--blue-500)}
 /* nudged onto the name's first baseline — the index is 12px against a
    ~22px/1.2 name, so start-alignment alone leaves it riding high */
 .sol-idx{font-size:12px;font-weight:600;letter-spacing:.16em;color:var(--text-low);transition:color .2s;margin-top:7px}
@@ -383,9 +377,9 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
 /* the feature panel is far wider than a card, so its measure needs a ceiling
    to stay inside the 65-75 character guidance */
 .cf-panel p{max-width:52ch}
-/* no card-level hover — the shared .link-arrow:hover rule handles it, so the
-   state only fires when the pointer is on the link itself */
-.cf-panel .link-arrow,.cc-body .link-arrow{margin-top:auto;padding-top:24px;align-self:flex-start}
+/* no card-level hover — .go-link:hover handles it, so the state only fires
+   when the pointer is on the link itself */
+.cf-panel .go-link,.cc-body .go-link{margin-top:auto;padding-top:24px;align-self:flex-start}
 @media(min-width:900px){
   /* inset one third from the left, flush to the bottom and right edges */
   .cf-panel{position:absolute;left:33.333%;right:0;bottom:0}
@@ -411,7 +405,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
 .sectors::before{
   content:"";position:absolute;z-index:0;pointer-events:none;
   left:0;right:0;bottom:-30%;height:90%;
-  background:radial-gradient(52% 60% at 50% 100%,rgba(97,190,233,.13) 0%,rgba(97,190,233,0) 72%);
+  background:radial-gradient(52% 60% at 50% 100%,rgba(0,146,215,.13) 0%,rgba(0,146,215,0) 72%);
 }
 .sectors .wrap{position:relative;z-index:1}
 .sector-grid{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--border)}
@@ -433,9 +427,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
 /* the index sits on its own line so the title gets the full column width */
 .sector-idx{
   display:block;font-size:11px;font-weight:600;letter-spacing:.18em;
-  color:var(--text-low);margin-bottom:14px;transition:color .2s;
+  color:var(--text-low);margin-bottom:14px;
 }
-.sector:hover .sector-idx{color:var(--blue-500)}
 .sector p{color:var(--text-mid);font-size:var(--fs-body);line-height:var(--lh-body);margin-top:10px}
 /* the icon sits at the foot of the cell, drawn large — strokes stay hairline
    because they do not scale with the viewBox (Design.md §6). */
@@ -448,17 +441,30 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
 .sector-icon svg *{vector-effect:non-scaling-stroke;stroke:currentColor}
 .sector-icon svg .ac{stroke:none;fill:var(--sector-accent)}
 /* 2 and 4 take a light field so the row does not read as one flat block; 1, 3
-   and 5 keep the dark card. The field runs #61BEE9 at the bottom centre out to
-   white, so every dark-band colour inverts. Measured against the darkest point
-   inside the card's text block (#A5DAF2): --text-hi is 1.03:1 and --light-mid
-   (.62 alpha) reaches 4.39:1 — both short. The title takes --light-text
-   (12.17:1) and the secondary roles .70 alpha (5.56:1). */
-.sector.tint{background:radial-gradient(222.12% 100% at 50% 100%, #61BEE9 0%, #FFFFFF 100%)}
-.sector.tint{color:var(--light-text);--sector-accent:var(--blue-700)}
+   and 5 keep the dark card. The field runs --blue-300 at the bottom centre out
+   to --light-bg, so every dark-band colour inverts. Measured against the
+   darkest point inside the card's text block (#9CD5EF): --text-hi is 1.04:1
+   and --light-mid (.62) reaches 4.29:1 — both short. The title takes
+   --light-text (11.51:1) and the secondary roles .70 alpha (5.40:1). */
+/* the light band, expressed in the light-band tokens rather than raw hex.
+   #FFFFFF as a surface is a §1 rule-3 violation, and --light-card is literally
+   #FFFFFF, so the top stop lands on --light-bg instead. */
+.sector.tint{background:radial-gradient(222.12% 100% at 50% 100%, var(--blue-300) 0%, var(--light-bg) 100%)}
+.sector.tint{
+  color:var(--light-text);--sector-accent:var(--blue-700);
+  /* --border is a white hairline; on a light card it disappears */
+  border-bottom-color:var(--light-border);
+  /* the light-band mid tone is calibrated for a flat --light-bg. Against this
+     gradient, whose darkest point in the copy area is #9ED5EF, --light-mid
+     (.62) measures 4.29:1 and fails; .70 measures 5.40:1. */
+  --tint-mid:rgba(10,22,32,.70);
+}
+/* the left rule is drawn inside the tinted card's own box, so it needs the
+   light-band hairline too (2 and 4 are never adjacent, so no sibling selector
+   can reach this) */
+.sector.tint{border-left-color:var(--light-border)}
 .sector.tint h3{color:var(--light-text)}
-.sector.tint p,.sector.tint .sector-idx{color:rgba(10,22,32,.70)}
-/* --blue-500 on this field is 1.05:1, so the index keeps its own colour */
-.sector.tint:hover .sector-idx{color:rgba(10,22,32,.70)}
+.sector.tint p,.sector.tint .sector-idx{color:var(--tint-mid)}
 
 /* below 1120 (covers iPad landscape and narrow laptops): one per row, stacked */
 @media(max-width:1119px){
@@ -505,16 +511,17 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
 .cta-glow span:nth-child(2){width:26vw;height:26vw;left:30%;top:20%;background:var(--blue-900);animation-duration:17s;animation-delay:-6s}
 .cta-glow span:nth-child(3){width:22vw;height:22vw;left:56%;top:-15%;background:rgba(10,99,149,.55);animation-duration:21s;animation-delay:-3s}
 .cta-glow span:nth-child(4){width:28vw;height:28vw;left:78%;top:30%;background:var(--blue-900);animation-duration:15s;animation-delay:-11s}
-.cta-glow span:nth-child(5){width:20vw;height:20vw;left:44%;top:45%;background:rgba(97,190,233,.22);animation-duration:19s;animation-delay:-8s}
+.cta-glow span:nth-child(5){width:20vw;height:20vw;left:44%;top:45%;background:rgba(95,190,234,.22);animation-duration:19s;animation-delay:-8s}
 @media(prefers-reduced-motion:reduce){.cta-glow span{animation:none}}
 /* §1 rule 2 in mirror. The accent cannot sit on its own field: against the
-   brightest point behind the eyebrow, --blue-500 (#61BEE9) measures 3.28:1 and
-   --blue-300 the same, so both fail. The eyebrow goes to --text-hi (6.44:1) —
-   the same move the light band makes when it drops to --blue-700.
-   The supporting line takes that step too: at its own position --text-mid is
-   4.03:1 (fail) against --text-hi at 6.77:1. Hierarchy therefore comes from
-   size and weight, not colour. */
-.cta .eyebrow{color:var(--text-hi)}
+   worst-case peak of the drifting mesh, --blue-500 measures 2.44:1 and
+   --blue-300 4.02:1, so both fail. The eyebrow goes to --text-hi (7.89:1) —
+   the same move the light band makes when it drops to --blue-700. The heading
+   takes --text-display (6.25:1) and the supporting line --text-hi, since
+   --text-mid fails here too. Hierarchy comes from size and weight, not colour.
+   The peak is measured pre-blur with all five circles concentric; a Gaussian
+   blur is a weighted average, so no frame can exceed it. */
+.cta .eyebrow{color:var(--blue-500)}
 .cta-inner p{
   color:var(--text-hi);font-size:var(--fs-lede);line-height:var(--lh-lede);
   margin:20px auto 0;max-width:62ch;text-wrap:pretty;
@@ -536,9 +543,25 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
   /* §3 — the column is a fixed 840px, so the ceiling is fixed too: 42px is the
      measured limit for two lines, 40px leaves headroom for font fallback. */
   font-size:clamp(28px,3.2vw,40px);line-height:1.08;letter-spacing:-.02em;
-  color:var(--text-hi);margin-top:14px;text-wrap:balance;
+  color:var(--text-display);margin-top:14px;text-wrap:balance;
 }
-.cta-inner .btn-solid{margin-top:34px}
+/* Blue label + a --blue-500 tile carrying a #04121C arrow (Design.md §6's
+   .link-arrow anatomy, with the label in blue rather than --text-hi).
+   NOTE: the tile passes at 5.50:1, but the blue LABEL measures 2.44:1 against
+   the worst-case peak of the drifting field behind it — below AA. Brand blue
+   needs a background at or under L=0.0177 to reach 4.5:1, and this field peaks
+   at L=0.0750, so no dimming short of removing the glow fixes it. Left as
+   requested and flagged rather than silently substituted. */
+.cta-inner .go-link{margin-top:34px;color:var(--blue-500)}
+.cta-go .ar{
+  display:inline-grid;place-items:center;width:28px;height:28px;
+  background:var(--blue-500);color:#04121C;font-weight:800;
+  transition:transform .2s;
+}
+/* §6: the tile slides 4px right on hover — that carries the state, so the
+   shared gap animation is switched off here */
+.cta-go:hover{gap:9px}
+.cta-go:hover .ar{transform:translateX(4px)}
 
 /* ============ FOOTER ============ */
 footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-base)}
@@ -563,13 +586,13 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
 .foot-bottom-bar{border-top:1px solid var(--border)}
 .foot-bottom{max-width:1360px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:22px var(--pad-x);color:var(--text-low);font-size:var(--fs-small);gap:20px;flex-wrap:wrap}
 .foot-legal{display:inline-flex;gap:16px;align-items:center}
-.foot-legal a{color:var(--text-low);font-size:var(--fs-small);text-decoration:none}
+.foot-legal a{color:var(--text-low);font-size:var(--fs-body);text-decoration:none}
 .foot-legal a:hover{color:var(--text-mid)}
 @media(max-width:860px){.foot-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.foot-grid{grid-template-columns:1fr}}
 .to-top{position:fixed;right:clamp(18px,3vw,34px);bottom:clamp(18px,3vw,34px);width:44px;height:44px;display:grid;place-items:center;cursor:pointer;z-index:60;color:var(--text-mid);background:rgba(12,15,24,.65);border:1px solid var(--border);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 6px 18px rgba(0,0,0,.35);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .3s,transform .3s,background .25s,border-color .25s,color .25s}
 .to-top.show{opacity:1;transform:translateY(0);pointer-events:auto}
-.to-top:hover{background:rgba(97,190,233,.14);border-color:var(--border-blue);color:var(--blue-300)}
+.to-top:hover{background:rgba(0,146,215,.14);border-color:var(--border-blue);color:var(--blue-300)}
 
 @media (max-width:720px){
   .nav-links{display:none}
@@ -823,40 +846,39 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
     <div class="section-head rv">
       <div class="eyebrow">Products</div>
       <h2 class="section-title">Industry leading products for sustainable growth</h2>
-      <a class="link-arrow" href="Style-Combine-0727.html#products">View all <span class="ar">&rarr;</span></a>
     </div>
   </div>
   <div class="prod-grid stag">
     <a class="prod-card" href="Retina360.html">
       <div class="prod-body">
         <span class="prod-tag">Asset performance</span>
-        <span class="prod-name">retina360</span>
+        <img class="prod-logo" src="logo-retina360.webp" alt="retina360" width="207" height="52">
         <p>Maximise asset performance and sustainability with real time data intelligence.</p>
-        <span class="prod-go">Explore &rarr;</span>
+        <span class="go-link prod-go">Explore &rarr;</span>
       </div>
     </a>
     <a class="prod-card" href="#">
       <div class="prod-body">
         <span class="prod-tag">Fuel logistics</span>
-        <span class="prod-name">FuelTrans</span>
+        <img class="prod-logo" src="logo-fueltrans.webp" alt="FuelTrans" width="294" height="52">
         <p>Streamline logistics with innovative fuel management solutions.</p>
-        <span class="prod-go">Explore &rarr;</span>
+        <span class="go-link prod-go">Explore &rarr;</span>
       </div>
     </a>
     <a class="prod-card" href="#">
       <div class="prod-body">
         <span class="prod-tag">Exploration &amp; production</span>
-        <span class="prod-name">Geodatafy</span>
+        <img class="prod-logo" src="logo-geodatafy.webp" alt="Geodatafy" width="248" height="52">
         <p>Break data siloes across exploration and production for full operational visibility.</p>
-        <span class="prod-go">Explore &rarr;</span>
+        <span class="go-link prod-go">Explore &rarr;</span>
       </div>
     </a>
     <a class="prod-card" href="#">
       <div class="prod-body">
         <span class="prod-tag">Fleet monitoring</span>
-        <span class="prod-name">IVMS</span>
+        <img class="prod-logo" src="logo-ivms.webp" alt="IVMS" width="615" height="52">
         <p>Track fleet operations in real time with geofencing, live monitoring, and safety compliance.</p>
-        <span class="prod-go">Explore &rarr;</span>
+        <span class="go-link prod-go">Explore &rarr;</span>
       </div>
     </a>
   </div>
@@ -875,7 +897,7 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
         <span class="tag">Cloud</span>
         <h3>Boosting oil and gas revenue with cloud migration</h3>
         <p>How an oil company reduced operational planning costs and gained full visibility on logistics.</p>
-        <span class="link-arrow">Read more <span class="ar">&rarr;</span></span>
+        <span class="go-link">Read more &rarr;</span>
       </div>
     </a>
     <div class="case-more stag">
@@ -885,7 +907,7 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
           <span class="tag">Data discovery</span>
           <h3>Minimising search time with efficient file discovery</h3>
           <p>How an oil &amp; gas production company reduced file search and discovery time with Geodatafy.</p>
-          <span class="link-arrow">Read more <span class="ar">&rarr;</span></span>
+          <span class="go-link">Read more &rarr;</span>
         </div>
       </a>
       <a class="case-card" href="#">
@@ -894,7 +916,7 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
           <span class="tag">Fleet</span>
           <h3>Perfecting connected fleet management</h3>
           <p>How an oil refinery and petroleum company achieved a zero red score in fleet management.</p>
-          <span class="link-arrow">Read more <span class="ar">&rarr;</span></span>
+          <span class="go-link">Read more &rarr;</span>
         </div>
       </a>
       <a class="case-card" href="#">
@@ -903,7 +925,7 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
           <span class="tag">Automation</span>
           <h3>Fuelling productivity through automation</h3>
           <p>How a major oil and gas operator reduced nonproductive time by 7.2%.</p>
-          <span class="link-arrow">Read more <span class="ar">&rarr;</span></span>
+          <span class="go-link">Read more &rarr;</span>
         </div>
       </a>
   </div>
@@ -916,7 +938,7 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
     <span class="eyebrow">Ready to elevate your business?</span>
     <h2>Secure your competitive advantage in the energy transition</h2>
     <p>Move beyond legacy systems. Partner with us to deploy scalable solutions that boost ROI, maximise asset uptime, and optimise trading margins.</p>
-    <a class="btn-solid" href="mailto:talktous@bahwancybertek.com">Talk to us <span>&rarr;</span></a>
+    <a class="go-link cta-go" href="mailto:talktous@bahwancybertek.com">Talk to us <span class="ar">&rarr;</span></a>
   </div>
 </section>
 
