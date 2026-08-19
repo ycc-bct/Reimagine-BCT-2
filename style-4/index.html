@@ -1017,12 +1017,12 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
 .wwd-item.is-open .wwd-desc{opacity:1;transition-delay:.12s}
 
 .wwd-media{position:relative;min-width:0;aspect-ratio:622/679;overflow:hidden}
-.wwd-media img{
-  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  opacity:0;transform:scale(1.04);
-  transition:opacity .6s ease,transform .9s cubic-bezier(.16,1,.3,1);
+.wwd-video{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+  opacity:0;transform:scale(1.06);
+  transition:opacity .9s ease,transform 1.3s cubic-bezier(.16,1,.3,1);
 }
-.wwd-media img.is-on{opacity:1;transform:none}
+.wwd.in .wwd-video{opacity:1;transform:none;transition-delay:.1s}
 
 @media(max-width:900px){
   .wwd{padding-bottom:clamp(40px,6vw,56px)}
@@ -1038,6 +1038,38 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
   .wwd-fold{grid-template-rows:1fr;margin-top:12px}
   .wwd-desc{opacity:1;max-width:46ch}
 }
+
+/* ---- scroll-in: the list unfolds ---------------------------------------
+   The rows unroll downward from their own top edge, one after the next, so
+   the section arrives the way the accordion itself opens rather than just
+   fading up. clip-path is what makes it read as unfolding — a height or
+   scaleY animation would squash the type on the way in instead of revealing
+   it. The un-revealed state is the finished row, so if the observer never
+   fires nothing is stranded. */
+@keyframes wwdUnfold{
+  from{clip-path:inset(0 0 100% 0);opacity:.25}
+  to  {clip-path:inset(0 0 0 0);opacity:1}
+}
+@keyframes wwdDropIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes wwdDrawDown{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+
+.wwd.in .wwd-title{animation:wwdDropIn .7s cubic-bezier(.16,1,.3,1) both}
+/* the two verticals draw down before the rows land on them */
+.wwd.in .wwd-rules::before,
+.wwd.in .wwd-rules::after{
+  transform-origin:top;animation:wwdDrawDown .8s cubic-bezier(.16,1,.3,1) both;
+}
+.wwd.in .wwd-rules::after{animation-delay:.08s}
+.wwd.in .wwd-item{
+  animation:wwdUnfold .62s cubic-bezier(.16,1,.3,1) both;
+  animation-delay:var(--rd,0s);
+}
+/* the open row's fold and its bar hold shut until the rows have finished
+   unfolding, so opening reads as the accordion working rather than as part
+   of the entrance */
+.wwd:not(.in) .wwd-item.is-open .wwd-fold{grid-template-rows:0fr;margin-top:0}
+.wwd:not(.in) .wwd-item.is-open .wwd-desc{opacity:0}
+.wwd:not(.in) .wwd-item.is-open::before{transform:scaleY(0)}
 
 /* the pulse the GCC marks borrow once their row has settled */
 @keyframes markBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
@@ -1287,242 +1319,156 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
   padding:4px 9px;
 }
 
-/* ============ GCC CAPABILITY (split: copy left, three pillars right, on a graphite band) ============ */
+/* ============ GCC — light band, from the 1440x874 reference frame ============
+   Coordinates in that frame, re-expressed as ratios of it:
+     grid x = 100 / 513 / 926 / 1339      rules y = 352 and 628
+     title (100,85) 626 wide, gradient    pill (974,85) 366x184 r60
+     icons y=434, labels y=524            note bar (100,668) 826x96
+                                          CTA (1120,684) 220x64
+   This is the one light section on a dark page, so the ink is stated outright
+   rather than inherited — nothing here reads the page's dark tokens. */
 .gcc{
-  position:relative;background:var(--gcc-bg);overflow:hidden;
-  /* The reference frame puts this band at 874px on a 1440 canvas; at the
-     shared 90px section padding it came out 688. The extra air is what lets a
-     light band read as a deliberate pause rather than a gap in the dark page,
-     so it is bought with padding instead of a fixed height — 12.7vw lands on
-     874 at 1440 and still collapses on small screens. */
-  padding-block:clamp(90px,12.7vw,200px);
-  /* The one light band on a dark page. Rather than rewriting the twenty-odd
-     rules below, the ink tokens are re-pointed for this subtree only — every
-     descendant already reads them, so the whole section inverts from here and
-     nothing leaks past the section boundary. */
-  --gcc-bg:#FAFDFF;
-  --text-hi:#0E1521;
-  --text-mid:rgba(16,24,38,.72);
-  --text-low:rgba(16,24,38,.5);
-  --border:rgba(16,24,38,.14);
+  position:relative;overflow:hidden;
+  background:#FAFDFF;color:#000;
+  --g-pad:clamp(24px,6.94vw,100px);
+  --g-line:#D5D5D5;
+  --g-blue:#0D93D5;
+  padding:clamp(48px,5.90vw,85px) var(--g-pad) clamp(56px,7.64vw,110px);
 }
 
-/* The pillar column pulled in from 1.7fr. It is capped as a length rather than
-   an fr: the descriptions top out at 52ch, so an fr track keeps widening past
-   them on big screens and leaves the divider rules running out into nothing —
-   115px of it at 1440. 566px is exactly mark + gap + that 52ch measure, so the
-   rule ends where the copy ends at every width above the stacking point. */
-.gcc-inner{
-  position:relative;z-index:1;display:grid;
-  grid-template-columns:1fr minmax(0,clamp(380px,40vw,566px));
-  gap:clamp(40px,6vw,84px);align-items:stretch;
+/* ---- head: gradient title left, figure pill right ---- */
+.gcc-head{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:clamp(24px,4vw,60px);margin-bottom:clamp(36px,5.07vw,73px);
 }
-
-/* --- left: eyebrow, title, CTA, then copy pinned to the bottom --- */
-.gcc-left{display:flex;flex-direction:column}
 .gcc-title{
+  margin:0;max-width:626px;
   font-family:var(--font-display);font-weight:600;
-  font-size:var(--fs-h2);line-height:1.05;letter-spacing:-.02em;
-  color:var(--text-hi);margin-top:14px;
+  font-size:clamp(32px,5.64vw,81.21px);line-height:1.1945;letter-spacing:-.01em;
+  /* the frame fills the type with a left-to-right gradient that returns to the
+     lighter blue at both ends, so the line reads lit from its edges inward */
+  background:linear-gradient(90deg,#5ECAFF 0%,#0D93D5 33.17%,#0D93D5 68.27%,#5ECAFF 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  background-size:200% 100%;
 }
-.gcc-rule{height:1px;background:var(--border);margin-top:clamp(28px,3.2vw,42px)}
-/* the proof point, pulled out of the sentence and given its own moment */
-.gcc-metric{
+.gcc-pill{
+  flex:none;width:min(366px,34vw);aspect-ratio:366/184;border-radius:60px;
+  background:var(--g-blue);color:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:clamp(4px,.7vw,10px);
+}
+.gcc-figure{
+  margin:0;display:flex;align-items:center;gap:clamp(6px,1vw,14px);
   font-family:var(--font-display);font-weight:600;
-  font-size:clamp(46px,5.6vw,80px);line-height:1;letter-spacing:-.03em;
-  color:var(--blue-500);margin-top:clamp(32px,3.8vw,50px);
+  font-size:clamp(40px,6.67vw,96px);line-height:1.084;letter-spacing:-.03em;
 }
-.gcc-metric-label{
-  font-family:var(--font-body);font-weight:500;font-size:11px;
-  letter-spacing:.18em;text-transform:uppercase;color:var(--text-mid);margin-top:16px;
-}
-.gcc-body{margin-top:clamp(28px,3.2vw,40px)}
-
-/* --- proposal A only: the proof point heads the right column, so it reads as
-   the outcome of the three operating domains rather than a stat hanging off
-   the copy. Proposal B keeps the original left-column placement. --- */
-/* pushed down to align with the h2 title's line instead of the eyebrow above
-   it (eyebrow line-height + the title's own margin-top) — and the metric
-   drops one size step so the extra top offset doesn't crowd the pillars below */
-.gcc-body p{color:var(--text-mid);font-size:var(--fs-body);line-height:var(--lh-body);max-width:44ch}
-.gcc-body b{color:var(--text-hi);font-weight:600}
-.gcc-cta{margin-top:clamp(28px,3.2vw,40px)}
-/* primary conversion CTA — solid plate, dark ink (5.54:1) */
-.gcc-btn{
-  display:inline-flex;align-items:center;
-  background:var(--blue-500);color:#04121C;
-  text-decoration:none;font-weight:700;font-size:15px;white-space:nowrap;
-  padding:19px 30px;
-  transition:background .18s;
-}
-.gcc-btn:hover{background:var(--blue-300)}
-
-/* ---- proposal C — verbatim from the Style-Combine-0728 branch's #gcc
-   section (alternating editorial rows + illustration). Scoped under
-   /* ---- proposal switcher (REVIEW TOOL — remove before production) ----
-   deliberately not in the page's square-cornered language, so nobody
-   mistakes it for content. */
-/* line streaming: blue connector lines switch to a flowing dash on hover */
-@keyframes gccFlow{ to{ stroke-dashoffset:-20; } }
-@media(max-width:900px){
-  }
-@media (prefers-reduced-motion:reduce){
-  }
-.gcc-todo{
-  position:relative;z-index:1;
-  display:flex;flex-direction:column;justify-content:center;
-  min-height:clamp(260px,24vw,360px);
-  border:1px dashed rgba(255,255,255,.14);
-  padding:clamp(30px,4vw,54px);
-}
-.gcc-todo h2{
-  font-family:var(--font-display);font-weight:600;letter-spacing:-.02em;
-  font-size:clamp(24px,2.6vw,34px);color:var(--text-hi);
-}
-.gcc-todo p{margin-top:14px;font-size:14.5px;line-height:1.7;color:var(--text-mid);max-width:52ch}
-
-/* ---- What we do (pillars) proposal switcher (REVIEW TOOL — remove before
-   production) — same pattern as .prod-switch / /* --- right: three pillars, no rules; each anchored by its own mark --- */
-/* the left column holds still while the pillars pass it */
-.gcc-sticky{position:sticky;top:96px}
-.gcc-metric{margin-top:clamp(22px,2.6vw,34px)}
-.gcc-metric-label{margin-top:8px}
-.gcc-pillars{display:flex;flex-direction:column}
-.gcc-pillar{
-  position:relative;
-  display:flex;align-items:flex-start;gap:clamp(18px,2.4vw,34px);
-  padding:clamp(26px,3.2vw,42px) 0;
-}
-/* the divider is a pseudo-element rather than a border, so it can be drawn
-   across as its row arrives instead of just appearing */
-.gcc-pillar::before{
-  content:"";position:absolute;left:0;right:0;top:0;height:1px;
-  background:var(--border);transform-origin:left center;
-}
-.gcc-pillar:first-child{padding-top:0}
-.gcc-pillar:first-child::before{display:none}
-
-/* ---- the list is drawn on, top to bottom ----------------------------------
-   Each row waits its turn: the rule draws across, the icon's outline follows
-   it, and the copy rises last. Everything is gated on .gcc-pillars.in, and the
-   ungated state is the finished row — a reveal that never fires leaves the
-   list complete rather than blank. */
-@keyframes gccRule{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@keyframes gccRowIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-@keyframes gccMarkIn{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:none}}
-@keyframes gccDraw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
-
-.gcc-pillars.in .gcc-pillar::before{
-  animation:gccRule .7s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--d,0s);
-}
-.gcc-pillars.in .gcc-mark{
-  animation:gccMarkIn .6s cubic-bezier(.16,1,.3,1) both;
-  animation-delay:calc(var(--d,0s) + .1s);
-}
-/* pathLength="1" is stamped on every stroked element in these icons, so a
-   single dash length draws all of them regardless of their real geometry */
-.gcc-pillars.in .gcc-mark svg :not(.fill){
-  stroke-dasharray:1;
-  animation:gccDraw .95s cubic-bezier(.16,1,.3,1) both;
-  animation-delay:calc(var(--d,0s) + .18s);
-}
-/* the blue element keeps breathing once its row has settled — the same job
-   .i-b does in version A of the section above */
-.gcc-pillars.in .gcc-mark .fill{
-  animation:markBreathe 3.6s cubic-bezier(.4,0,.6,1) infinite;
-  animation-delay:calc(var(--d,0s) + 1s);
-}
-.gcc-pillars.in .gcc-ptext{
-  animation:gccRowIn .7s cubic-bezier(.16,1,.3,1) both;
-  animation-delay:calc(var(--d,0s) + .22s);
-}
-.gcc-mark{flex:none;width:56px;height:56px;pointer-events:none}
-/* Line art: nothing is filled by default
-   and the stroke carries the whole drawing. Without this base rule the shapes
-   fell back to SVG's own defaults — fill black, stroke none — which on this
-   ground painted three black blobs, i.e. nothing at all. */
-.gcc-mark svg{
-  width:100%;height:100%;display:block;
-  fill:none;stroke:var(--text-hi);stroke-width:2;
-  stroke-linecap:round;stroke-linejoin:round;
-}
-.gcc-mark svg *{transform-box:fill-box;transform-origin:center}
-/* .occ keeps its stroke and fills with the page ground, so a shape in front
-   knocks a clean hole in whatever it overlaps */
-.gcc-mark .occ{fill:var(--gcc-bg)}
-.gcc-mark .fill{fill:var(--blue-500);stroke:none}
-.gcc-ptext{min-width:0}
-.gcc-pname{
+.gcc-arrow{flex:none;width:auto;height:clamp(26px,4.24vw,61px);display:block}
+.gcc-figure-label{
+  margin:0;text-align:center;
   font-family:var(--font-display);font-weight:500;
-  font-size:clamp(18px,1.5vw,22px);line-height:1.3;letter-spacing:-.01em;color:var(--text-hi);
+  font-size:clamp(13px,1.39vw,20px);line-height:1.1;
 }
-.gcc-pdesc{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--text-mid);margin-top:10px;max-width:52ch}
+
+/* ---- three cells on a drawn grid ---- */
+.gcc-cells{position:relative;display:grid;grid-template-columns:repeat(3,1fr)}
+/* The six rules are elements, not borders: they are drawn on as the band
+   arrives, and a border cannot be animated. Positions come from the grid the
+   cells already establish, so the two can never disagree. */
+.gcc-lines{position:absolute;inset:0;pointer-events:none}
+.gcc-lines i{position:absolute;background:var(--g-line);display:block}
+.gcc-lines .h{left:0;right:0;height:1px;transform-origin:left center}
+.gcc-lines .h1{top:0}
+.gcc-lines .h2{bottom:0}
+.gcc-lines .v{top:0;bottom:0;width:1px;transform-origin:center top}
+.gcc-lines .v1{left:0}
+.gcc-lines .v2{left:33.333%}
+.gcc-lines .v3{left:66.666%}
+.gcc-lines .v4{right:0}
+.gcc-cell{
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:clamp(38px,5.69vw,82px) clamp(14px,1.95vw,28px) clamp(28px,2.78vw,40px);
+}
+.gcc-icon{display:block;width:clamp(38px,3.75vw,54px);height:auto}
+.gcc-icon svg{display:block;width:100%;height:auto}
+.gcc-cname{
+  margin:clamp(20px,2.55vw,37px) 0 0;max-width:119px;
+  font-family:var(--font-display);font-weight:400;
+  font-size:clamp(17px,1.67vw,24px);line-height:1.334;color:#000;
+}
+
+/* ---- foot: note bar and the call to action ---- */
+.gcc-foot{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:clamp(18px,3vw,44px);margin-top:clamp(20px,2.78vw,40px);
+}
+.gcc-note{
+  flex:1 1 auto;max-width:826px;min-height:clamp(72px,6.67vw,96px);
+  background:#EDEDED;display:flex;align-items:center;
+  padding:clamp(16px,1.67vw,24px) clamp(20px,2.78vw,40px);
+}
+.gcc-note p{
+  margin:0;font-family:var(--font-display);font-weight:500;
+  font-size:clamp(14px,1.25vw,18px);line-height:1.334;color:#000;
+}
+.gcc-try{
+  flex:none;display:inline-flex;align-items:center;justify-content:center;
+  gap:10px;width:clamp(168px,15.28vw,220px);min-height:clamp(52px,4.44vw,64px);
+  background:var(--g-blue);color:#fff;text-decoration:none;
+  font-family:var(--font-display);font-weight:600;
+  font-size:clamp(17px,1.67vw,24px);line-height:1.084;
+  transition:background .22s ease,transform .22s ease;
+}
+.gcc-try:hover{background:#0A7DB6;transform:translateY(-1px)}
+.gcc-try:focus-visible{outline:2px solid #0A7DB6;outline-offset:3px}
+.gcc-try svg{flex:none;width:auto;height:clamp(15px,1.32vw,19px)}
+
+/* ---- scroll-in ----------------------------------------------------------
+   The grid draws itself first, then the cells fill it: rules across and down,
+   the two halves of each icon sliding together, then the labels. Everything
+   is gated on .gcc.in and the ungated state is the finished band. */
+@keyframes gccRise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes gccPillIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
+@keyframes gccDrawX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes gccDrawY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+/* the gradient travels once across the type as it lands */
+@keyframes gccSweep{from{background-position:100% 0}to{background-position:0 0}}
+@keyframes gccCardBack{from{opacity:0;transform:translate(-7px,7px)}to{opacity:1;transform:none}}
+@keyframes gccCardFront{from{opacity:0;transform:translate(7px,-7px)}to{opacity:1;transform:none}}
+
+.gcc:not(.in) .gcc-title,.gcc:not(.in) .gcc-pill,
+.gcc:not(.in) .gcc-cname,.gcc:not(.in) .gcc-foot{opacity:0}
+.gcc.in .gcc-title{animation:gccRise .75s cubic-bezier(.16,1,.3,1) both,
+                             gccSweep 1.15s cubic-bezier(.16,1,.3,1) both}
+.gcc.in .gcc-pill{animation:gccPillIn .7s cubic-bezier(.16,1,.3,1) both;animation-delay:.14s}
+.gcc.in .gcc-lines .h{animation:gccDrawX .85s cubic-bezier(.16,1,.3,1) both;animation-delay:.2s}
+.gcc.in .gcc-lines .h2{animation-delay:.3s}
+.gcc.in .gcc-lines .v{animation:gccDrawY .7s cubic-bezier(.16,1,.3,1) both}
+.gcc.in .gcc-lines .v1{animation-delay:.42s}
+.gcc.in .gcc-lines .v2{animation-delay:.5s}
+.gcc.in .gcc-lines .v3{animation-delay:.58s}
+.gcc.in .gcc-lines .v4{animation-delay:.66s}
+.gcc.in .gcc-icon .c-back {animation:gccCardBack  .6s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--cd,0s)}
+.gcc.in .gcc-icon .c-front{animation:gccCardFront .6s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--cd,0s)}
+.gcc.in .gcc-icon .c-mark {animation:gccRise .5s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--cd,0s) + .16s)}
+.gcc.in .gcc-cname{animation:gccRise .6s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--cd,0s) + .22s)}
+.gcc.in .gcc-foot{animation:gccRise .7s cubic-bezier(.16,1,.3,1) both;animation-delay:.9s}
+
 @media(max-width:900px){
-  .gcc-sticky{position:static}
-  .gcc-mark{width:46px;height:46px}
-}
-
-/* ---- proposal B — single-column head, three bordered cards, matching the
-   live Style-Combine-Updated branch's GCC section. Colors and spacing below
-   are pixel-sampled from that live page (2x screenshot), not our site tokens —
-   the eyebrow/metric/icon-swatch/CTA all sample to the same rgb(67,146,209),
-   a distinct blue from our --blue-500, kept local via --b-blue so it doesn't
-   leak into variant A. ---- */
-.gcc-simple{max-width:1180px;margin:0 auto}
-.gcc-simple-head{max-width:760px}
-.gcc-simple-head .eyebrow{color:var(--b-blue)}
-.gcc-simple-head .gcc-title{margin-top:14px}
-.gcc-simple-body{
-  font-family:var(--font-body);color:var(--text-mid);
-  font-size:var(--fs-lede);line-height:var(--lh-lede);
-  margin-top:22px;max-width:72ch;
-}
-.gcc-simple-body b{color:var(--text-hi);font-weight:600}
-.gcc-simple-body .gcc-simple-metric{color:var(--b-blue);font-weight:600}
-
-.gcc-scards{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  border:1px solid var(--border);margin-top:clamp(36px,4.2vw,52px);
-}
-.gcc-scard{padding:clamp(20px,2.2vw,28px);border-left:1px solid var(--border)}
-.gcc-scard:first-child{border-left:none}
-.gcc-sicon{
-  width:52px;height:52px;border-radius:0;background:var(--b-blue);
-  display:grid;place-items:center;
-}
-.gcc-sicon svg{width:24px;height:24px}
-.gcc-sicon svg *{
-  fill:none;stroke:#080B14;stroke-width:2;
-  stroke-linecap:round;stroke-linejoin:round;
-}
-.gcc-sname{
-  font-family:var(--font-display);font-weight:600;font-size:var(--fs-h3);
-  color:var(--text-hi);margin-top:24px;
-}
-.gcc-sdesc{
-  font-family:var(--font-body);color:var(--text-mid);
-  font-size:var(--fs-body);line-height:var(--lh-body);margin-top:12px;max-width:30ch;
-}
-.gcc-simple-cta{display:flex;justify-content:center;margin-top:clamp(36px,4.2vw,52px)}
-.gcc-simple-cta .gcc-btn{background:var(--b-blue)}
-.gcc-simple-cta .gcc-btn:hover{background:var(--blue-300)}
-
-@media(max-width:1080px){
-  .gcc-inner{grid-template-columns:1fr;gap:46px}
-  .gcc-body p{max-width:64ch}
-  .gcc-pillar{padding-top:44px}
-  .gcc-scards{grid-template-columns:1fr}
-  .gcc-scard{border-left:none;border-top:1px solid var(--border);padding:26px 4px}
-  .gcc-scard:first-child{border-top:none}
-}
-@media(max-width:680px){
-  .gcc-pillars{grid-template-columns:1fr}
-  .gcc-pillar{padding:38px 0 0}
-  .gcc-pillar:first-child{padding-top:8px}
-  .gcc-pname{min-height:0;margin-top:16px;font-size:20px}
-  .gcc-pdesc{max-width:46ch;margin-top:11px}
-  .gcc-mark{width:46px;height:46px}
+  .gcc-head{flex-direction:column;gap:26px}
+  .gcc-pill{width:100%;aspect-ratio:auto;padding:26px 20px;border-radius:36px}
+  .gcc-cells{grid-template-columns:1fr}
+  /* stacked, the four verticals have nothing to divide */
+  .gcc-lines .v2,.gcc-lines .v3,.gcc-lines .v4{display:none}
+  .gcc-cell{
+    flex-direction:row;align-items:center;text-align:left;gap:20px;
+    padding:24px 0 24px 22px;border-bottom:1px solid var(--g-line);
   }
+  .gcc-cell:last-child{border-bottom:0}
+  .gcc-cname{margin:0;max-width:none}
+  .gcc-foot{flex-direction:column;align-items:stretch;gap:14px}
+  .gcc-try{width:100%}
+}
 
 /* ============ WHY BCT (bordered grid) ============ */
 .why{background:var(--bg-surface)}
@@ -1686,18 +1632,22 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
   .rv{opacity:1;transform:none}
   .careers-inner.rv>*{opacity:1;transform:none}
-  .gcc-pillar{opacity:1;transform:none}
-  /* the list arrives finished rather than being drawn on */
-  .gcc-pillars.in .gcc-pillar::before,
-  .gcc-pillars.in .gcc-mark,
-  .gcc-pillars.in .gcc-ptext{animation:none!important;opacity:1;transform:none}
-  .gcc-pillars.in .gcc-mark svg :not(.fill){animation:none!important;stroke-dasharray:none}
-  .gcc-pillars.in .gcc-mark .fill{animation:none!important}
+  /* the band arrives drawn rather than drawing itself */
+  .gcc:not(.in) .gcc-title,.gcc:not(.in) .gcc-pill,
+  .gcc:not(.in) .gcc-cname,.gcc:not(.in) .gcc-foot{opacity:1}
+  .gcc.in .gcc-title,.gcc.in .gcc-pill,.gcc.in .gcc-foot,
+  .gcc.in .gcc-cname,.gcc.in .gcc-lines i,
+  .gcc.in .gcc-icon .c-back,.gcc.in .gcc-icon .c-front,.gcc.in .gcc-icon .c-mark{
+    animation:none!important;opacity:1;transform:none}
   /* the sheen is decoration only; with the duration clamped above it would
      snap across as a flash rather than sweep, so drop it altogether */
   .btn-ghost::after{display:none}
   /* the capability icons hold their finished frame instead of looping */
   /* the accordion arrives open rather than unfolding */
+  .wwd.in .wwd-item,.wwd.in .wwd-title,
+  .wwd.in .wwd-rules::before,.wwd.in .wwd-rules::after{
+    animation:none!important;opacity:1;clip-path:none;transform:none}
+  .wwd-video{opacity:1;transform:none}
   .wwd-fold{grid-template-rows:1fr;margin-top:12px}
   .wwd-desc{opacity:1}
   .wwd-item::before{transform:scaleY(1)}
@@ -1875,7 +1825,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
   <h2 class="wwd-title">Enterprise digital capability</h2>
   <div class="wwd-body">
     <div class="wwd-list">
-      <button class="wwd-item is-open" type="button"
+      <button class="wwd-item is-open" style="--rd:0s" type="button"
               aria-expanded="true" aria-controls="wwdD0">
         <span class="wwd-num">01</span>
         <span>
@@ -1883,7 +1833,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
           <span class="wwd-fold"><span class="wwd-desc" id="wwdD0">Strategy, engineering, and operations across cloud, data, AI, and managed services.</span></span>
         </span>
       </button>
-      <button class="wwd-item" type="button"
+      <button class="wwd-item" style="--rd:.12s" type="button"
               aria-expanded="false" aria-controls="wwdD1">
         <span class="wwd-num">02</span>
         <span>
@@ -1891,7 +1841,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
           <span class="wwd-fold"><span class="wwd-desc" id="wwdD1">AI-powered, scalable transformation across regulated, mission-critical industries.</span></span>
         </span>
       </button>
-      <button class="wwd-item" type="button"
+      <button class="wwd-item" style="--rd:.24s" type="button"
               aria-expanded="false" aria-controls="wwdD2">
         <span class="wwd-num">03</span>
         <span>
@@ -1901,13 +1851,57 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
       </button>
     </div>
     <div class="wwd-media">
-      <img src="wwd-01.jpg" alt="An engineer at work after hours, a city behind the glass" class="is-on"
-           width="900" height="982" loading="lazy" decoding="async">
-      <img src="wwd-02.jpg" alt="A specialist reading live data off a floor-to-ceiling display"
-           width="900" height="982" loading="lazy" decoding="async">
-      <img src="wwd-03.jpg" alt="Two colleagues working through a problem at one screen"
-           width="900" height="982" loading="lazy" decoding="async">
+      <video class="wwd-video" src="wwd-panel.mp4" poster="wwd-panel-poster.jpg"
+             muted loop playsinline autoplay preload="metadata" aria-hidden="true"></video>
     </div>
+  </div>
+</section>
+
+<!-- ================= GCC (light band) ================= -->
+<section class="gcc" id="gcc">
+  <div class="gcc-head">
+    <h2 class="gcc-title">BCT AI-powered<br>GCC capability</h2>
+    <div class="gcc-pill">
+      <p class="gcc-figure">
+        <span class="gcc-num" data-count="20" data-suffix="%">20%</span>
+        <svg class="gcc-arrow" viewBox="0 0 33 61" fill="none" stroke="#FFFFFF"
+             stroke-width="7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16.5 4.5V56.5"/><path d="M4.5 44.5 16.5 56.5 28.5 44.5"/>
+        </svg>
+      </p>
+      <p class="gcc-figure-label">Reduction in manual effort</p>
+    </div>
+  </div>
+
+  <div class="gcc-cells">
+    <div class="gcc-lines" aria-hidden="true">
+      <i class="h h1"></i><i class="h h2"></i>
+      <i class="v v1"></i><i class="v v2"></i><i class="v v3"></i><i class="v v4"></i>
+    </div>
+      <div class="gcc-cell" style="--cd:0s">
+        <span class="gcc-icon" aria-hidden="true"><svg viewBox="0 0 54 53.32"><rect class="c-back" x="17" y="0" width="37" height="42" rx="2" fill="#0D93D5"/><rect class="c-front" x="0" y="7.74" width="40.35" height="45.58" rx="2" fill="#F0F0F0"/><g class="c-mark"><circle cx="20.17" cy="23.43" r="7.47" fill="#0D93D5"/><rect x="6.81" y="32.68" width="26.66" height="12.04" rx="3" fill="#0D93D5"/></g></svg></span>
+        <h3 class="gcc-cname">HR Operations</h3>
+      </div>
+      <div class="gcc-cell" style="--cd:.1s">
+        <span class="gcc-icon" aria-hidden="true"><svg viewBox="0 0 54 53.32"><rect class="c-back" x="17" y="0" width="37" height="42" rx="2" fill="#0D93D5"/><rect class="c-front" x="0" y="7.74" width="40.35" height="45.58" rx="2" fill="#F0F0F0"/><g class="c-mark"><rect x="7" y="32" width="6.4" height="13" rx="1.6" fill="#0D93D5"/><rect x="16.9" y="24.5" width="6.4" height="20.5" rx="1.6" fill="#0D93D5"/><rect x="26.8" y="17.5" width="6.4" height="27.5" rx="1.6" fill="#0D93D5"/></g></svg></span>
+        <h3 class="gcc-cname">Finance Operations</h3>
+      </div>
+      <div class="gcc-cell" style="--cd:.2s">
+        <span class="gcc-icon" aria-hidden="true"><svg viewBox="0 0 54 53.32"><rect class="c-back" x="17" y="0" width="37" height="42" rx="2" fill="#0D93D5"/><rect class="c-front" x="0" y="7.74" width="40.35" height="45.58" rx="2" fill="#F0F0F0"/><g class="c-mark"><circle cx="20.17" cy="30.5" r="6.6" fill="#0D93D5"/><circle cx="8.6" cy="19.6" r="3.5" fill="#0D93D5"/><circle cx="31.8" cy="19.6" r="3.5" fill="#0D93D5"/><circle cx="8.6" cy="41.4" r="3.5" fill="#0D93D5"/><circle cx="31.8" cy="41.4" r="3.5" fill="#0D93D5"/></g></svg></span>
+        <h3 class="gcc-cname">Knowledge Operations</h3>
+      </div>
+  </div>
+
+  <div class="gcc-foot">
+    <div class="gcc-note">
+      <p>BCT embeds AI into your Global Capability Center from day one, powered by <b>AigeniX&trade;</b>, our agentic AI platform &mdash; accelerating operations and time-to-market.</p>
+    </div>
+    <a class="gcc-try" href="#">Try GCC Now
+      <svg viewBox="0 0 22 19" fill="none" stroke="#FFFFFF" stroke-width="3"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M1.5 9.5h19"/><path d="M12 1.5 20.5 9.5 12 17.5"/>
+      </svg>
+    </a>
   </div>
 </section>
 
@@ -2266,7 +2260,9 @@ addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 24),
 const io = new IntersectionObserver(es => es.forEach(e => {
   e.target.classList.toggle('in', e.isIntersecting);
 }), {threshold:.15, rootMargin:'0px 0px -8% 0px'});
-document.querySelectorAll('.rv').forEach(el => io.observe(el));
+/* .wwd and .gcc opt in without .rv, whose base state would fade the whole
+   band; they only need the .in flag their own keyframes are gated on. */
+document.querySelectorAll('.rv, .wwd, .gcc').forEach(el => io.observe(el));
 
 /* ---------- stat count-up ---------- */
 const fmt = n => n.toLocaleString('en-US');
@@ -2285,7 +2281,7 @@ const statIO = new IntersectionObserver(es => es.forEach(e => {
     if (p < 1) requestAnimationFrame(tick);
   })(t0);
 }), {threshold:.5});
-document.querySelectorAll('.stat-num[data-count]').forEach(el => statIO.observe(el));
+document.querySelectorAll('.stat-num[data-count], .gcc-num[data-count]').forEach(el => statIO.observe(el));
 
 /* ---------- Operationalize AI: rotating cube-molecule visual ---------- */
 (function(){
