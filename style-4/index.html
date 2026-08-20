@@ -937,9 +937,11 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
    mid-state, so it is built as one, with the panel following the open row. */
 .wwd{
   position:relative;background:#0B0D15;overflow:hidden;
-  padding:clamp(48px,5.56vw,80px) 0 0;
-  --wwd-pad:clamp(24px,6.94vw,100px);   /* the left vertical, x=100 */
-  --wwd-gut:clamp(16px,4.17vw,60px);    /* rule to number, 100 -> 160 */
+  /* the media stops short of the frame's foot now, so the band no longer ends
+     where the panel does and buys the remaining 124px back as padding */
+  padding:clamp(48px,5.56vw,80px) 0 clamp(44px,8.54vw,123px);
+  --wwd-v1:clamp(20px,5.56vw,80px);     /* the left vertical, x=80 */
+  --wwd-gut:clamp(16px,4.17vw,60px);    /* rule to number, 80 -> 140 */
   --wwd-line:#494949;
 }
 /* Both verticals run the full height of the band, title included, so they are
@@ -949,20 +951,23 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
 .wwd-rules::before,.wwd-rules::after{
   content:"";position:absolute;top:0;bottom:0;width:1px;background:var(--wwd-line);
 }
-.wwd-rules::before{left:var(--wwd-pad)}
-.wwd-rules::after{left:calc(var(--wwd-pad) + (100% - var(--wwd-pad)) * .5358)}
+.wwd-rules::before{left:var(--wwd-v1)}
+/* 56.81% is 818/1440 — the same split the grid below uses */
+.wwd-rules::after{left:56.81%}
 
 .wwd-title{
-  position:relative;z-index:1;margin:0 0 clamp(28px,4.38vw,63px);
-  padding-left:calc(var(--wwd-pad) + var(--wwd-gut));
+  position:relative;z-index:1;margin:0 0 clamp(34px,4.17vw,60px);
+  padding-left:calc(var(--wwd-v1) + var(--wwd-gut));
   font-family:var(--font-display);font-weight:600;
-  font-size:clamp(30px,3.34vw,48px);line-height:1.084;letter-spacing:-.02em;
+  font-size:clamp(18px,1.67vw,24px);line-height:1.084;letter-spacing:-.01em;
   color:#FFFFFF;
 }
 
 .wwd-body{
-  position:relative;z-index:1;margin-left:var(--wwd-pad);
-  display:grid;grid-template-columns:53.58% 1fr;
+  /* full-bleed left now: the row dividers run to the section edge, not to the
+     vertical rule, and the top rule crosses the whole band */
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:56.81% 1fr;
   border-top:1px solid var(--wwd-line);
 }
 .wwd-list{min-width:0;align-self:start}
@@ -977,15 +982,16 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
      padding gives back the 1px the border adds outside the padding box —
      without it each row runs 1px long and the three drift 3px by the last */
   padding:clamp(26px,3.34vw,48px) clamp(20px,2.8vw,40px)
-          calc(clamp(26px,3.34vw,48px) - 1px) var(--wwd-gut);
-  transition:background .3s ease;
+          calc(clamp(30px,3.89vw,56px) - 1px)
+          calc(var(--wwd-v1) + var(--wwd-gut));
+  transition:background .3s ease,padding-bottom .45s cubic-bezier(.16,1,.3,1);
 }
 .wwd-item:hover{background:rgba(255,255,255,.028)}
 .wwd-item:focus-visible{outline:2px solid var(--blue-500);outline-offset:-2px}
 /* the 4x172 white bar in the frame is exactly the open row's height, so it is
    drawn as a full-height edge that grows downward as the row opens */
 .wwd-item::before{
-  content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#FFFFFF;
+  content:"";position:absolute;left:var(--wwd-v1);top:0;bottom:0;width:4px;background:#FFFFFF;
   transform:scaleY(0);transform-origin:top;
   transition:transform .45s cubic-bezier(.16,1,.3,1);
 }
@@ -997,7 +1003,7 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
 }
 .wwd-name{
   display:block;font-family:var(--font-display);font-weight:600;
-  font-size:clamp(20px,1.945vw,28px);line-height:1.072;letter-spacing:-.01em;
+  font-size:clamp(17px,1.39vw,20px);line-height:1.1;letter-spacing:-.01em;
   color:#FFFFFF;
 }
 /* 0fr -> 1fr is what lets the description animate to its natural height; a
@@ -1007,7 +1013,10 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
   transition:grid-template-rows .45s cubic-bezier(.16,1,.3,1),
              margin-top .45s cubic-bezier(.16,1,.3,1);
 }
-.wwd-item.is-open .wwd-fold{grid-template-rows:1fr;margin-top:12px}
+.wwd-item.is-open .wwd-fold{grid-template-rows:1fr;margin-top:clamp(12px,1.39vw,20px)}
+/* the frame's open row closes 8px tighter than the collapsed ones; without
+   this the row would run 180 instead of the 172 the white bar is cut to */
+.wwd-item.is-open{padding-bottom:calc(clamp(26px,3.34vw,48px) - 1px)}
 .wwd-desc{
   min-height:0;overflow:hidden;
   font-family:var(--font-body);font-weight:400;
@@ -1016,7 +1025,10 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
 }
 .wwd-item.is-open .wwd-desc{opacity:1;transition-delay:.12s}
 
-.wwd-media{position:relative;min-width:0;aspect-ratio:622/679;overflow:hidden}
+/* 535 of the 622 column, so the panel stops short of the right edge exactly
+   as the frame has it. The aspect is unchanged at 0.916, so the encoded clip
+   still fills it without a re-crop. */
+.wwd-media{position:relative;min-width:0;width:85.9%;aspect-ratio:535/584;overflow:hidden}
 .wwd-video{
   position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
   opacity:0;transform:scale(1.06);
@@ -1028,14 +1040,17 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
   .wwd{padding-bottom:clamp(40px,6vw,56px)}
   .wwd-rules{display:none}
   .wwd-title{padding-left:var(--pad-x)}
-  .wwd-body{margin-left:0;grid-template-columns:1fr;border-top:0}
-  .wwd-media{aspect-ratio:16/10;margin-bottom:clamp(22px,4vw,32px)}
+  .wwd-body{grid-template-columns:1fr;border-top:0}
+  .wwd-media{width:100%;aspect-ratio:16/10;margin-bottom:clamp(22px,4vw,32px)}
   .wwd-list{border-top:1px solid var(--wwd-line)}
   /* Touch has no hover, and tapping to reveal puts real copy behind an
      interaction. Every row is simply open, and the rows stop being buttons. */
   .wwd-item{padding-inline:var(--pad-x);cursor:default}
   .wwd-item::before{display:none}
   .wwd-fold{grid-template-rows:1fr;margin-top:12px}
+  /* the frame's 8px tighter foot on the open row exists to hold the 172px row
+     height; stacked there are no fixed row heights, so all three match */
+  .wwd-item.is-open{padding-bottom:calc(clamp(30px,3.89vw,56px) - 1px)}
   .wwd-desc{opacity:1;max-width:46ch}
 }
 
@@ -1064,12 +1079,16 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
   animation:wwdUnfold .62s cubic-bezier(.16,1,.3,1) both;
   animation-delay:var(--rd,0s);
 }
-/* the open row's fold and its bar hold shut until the rows have finished
-   unfolding, so opening reads as the accordion working rather than as part
-   of the entrance */
-.wwd:not(.in) .wwd-item.is-open .wwd-fold{grid-template-rows:0fr;margin-top:0}
-.wwd:not(.in) .wwd-item.is-open .wwd-desc{opacity:0}
-.wwd:not(.in) .wwd-item.is-open::before{transform:scaleY(0)}
+/* The open row's fold and its bar hold shut until the rows have finished
+   unfolding, so opening reads as the accordion working rather than as part of
+   the entrance. Scoped above the stacking point: below it every row is open
+   by design, and these sit later in the sheet than the mobile block at equal
+   specificity, so unscoped they would collapse the open row there too. */
+@media(min-width:901px){
+  .wwd:not(.in) .wwd-item.is-open .wwd-fold{grid-template-rows:0fr;margin-top:0}
+  .wwd:not(.in) .wwd-item.is-open .wwd-desc{opacity:0}
+  .wwd:not(.in) .wwd-item.is-open::before{transform:scaleY(0)}
+}
 
 /* the pulse the GCC marks borrow once their row has settled */
 @keyframes markBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
