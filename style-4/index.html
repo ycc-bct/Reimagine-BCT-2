@@ -940,8 +940,10 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
   /* the media stops short of the frame's foot now, so the band no longer ends
      where the panel does and buys the remaining 124px back as padding */
   padding:clamp(48px,5.56vw,80px) 0 clamp(44px,8.54vw,123px);
-  --wwd-v1:clamp(20px,5.56vw,80px);     /* the left vertical, x=80 */
-  --wwd-gut:clamp(16px,4.17vw,60px);    /* rule to number, 80 -> 140 */
+  /* the left vertical sits on the same inset every other section uses, so the
+     band lines up with the page instead of standing 8px proud of it */
+  --wwd-v1:var(--pad-x);
+  --wwd-gut:clamp(16px,4.17vw,60px);    /* rule to number */
   --wwd-line:#494949;
 }
 /* Both verticals run the full height of the band, title included, so they are
@@ -968,7 +970,13 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
      vertical rule, and the top rule crosses the whole band */
   position:relative;z-index:1;
   display:grid;grid-template-columns:56.81% 1fr;
-  border-top:1px solid var(--wwd-line);
+  /* the rule is a pseudo-element so it can be drawn on; the padding stands in
+     for the border it replaces, so the rows sit exactly where they did */
+  padding-top:1px;
+}
+.wwd-body::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:var(--wwd-line);transform-origin:left center;
 }
 .wwd-list{min-width:0;align-self:start}
 
@@ -976,7 +984,7 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
   position:relative;display:grid;
   grid-template-columns:auto 1fr;column-gap:clamp(18px,2.15vw,31px);
   align-items:baseline;width:100%;text-align:left;
-  background:none;border:0;border-bottom:1px solid var(--wwd-line);
+  background:none;border:0;
   color:inherit;font:inherit;cursor:pointer;
   /* the frame's 172/126/126 row heights include their divider, so the bottom
      padding gives back the 1px the border adds outside the padding box —
@@ -987,6 +995,10 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
   transition:background .3s ease,padding-bottom .45s cubic-bezier(.16,1,.3,1);
 }
 .wwd-item:hover{background:rgba(255,255,255,.028)}
+.wwd-item::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:var(--wwd-line);transform-origin:left center;
+}
 .wwd-item:focus-visible{outline:2px solid var(--blue-500);outline-offset:-2px}
 /* the 4x172 white bar in the frame is exactly the open row's height, so it is
    drawn as a full-height edge that grows downward as the row opens */
@@ -1025,10 +1037,9 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
 }
 .wwd-item.is-open .wwd-desc{opacity:1;transition-delay:.12s}
 
-/* 535 of the 622 column, so the panel stops short of the right edge exactly
-   as the frame has it. The aspect is unchanged at 0.916, so the encoded clip
-   still fills it without a re-crop. */
-.wwd-media{position:relative;min-width:0;width:85.9%;aspect-ratio:535/584;overflow:hidden}
+/* the panel stops short of the right edge on the same inset as everything
+   else, rather than the frame's arbitrary 87px */
+.wwd-media{position:relative;min-width:0;width:calc(100% - var(--pad-x));aspect-ratio:535/584;overflow:hidden}
 .wwd-video{
   position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
   opacity:0;transform:scale(1.06);
@@ -1054,36 +1065,41 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
   .wwd-desc{opacity:1;max-width:46ch}
 }
 
-/* ---- scroll-in: the list unfolds ---------------------------------------
-   The rows unroll downward from their own top edge, one after the next, so
-   the section arrives the way the accordion itself opens rather than just
-   fading up. clip-path is what makes it read as unfolding — a height or
-   scaleY animation would squash the type on the way in instead of revealing
-   it. The un-revealed state is the finished row, so if the observer never
-   fires nothing is stranded. */
-@keyframes wwdUnfold{
-  from{clip-path:inset(0 0 100% 0);opacity:.25}
-  to  {clip-path:inset(0 0 0 0);opacity:1}
-}
-@keyframes wwdDropIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@keyframes wwdDrawDown{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+/* ---- scroll-in: the grid draws, then the copy arrives -------------------
+   Every rule is drawn end to end before a single character appears, so the
+   band builds its structure first and fills it second: the two verticals run
+   down, the rule under the title runs across, then each row divider in turn.
+   Only then does type land.
 
-.wwd.in .wwd-title{animation:wwdDropIn .7s cubic-bezier(.16,1,.3,1) both}
-/* the two verticals draw down before the rows land on them */
+   The rules are pseudo-elements rather than borders because a border cannot
+   be animated. Each animation is declared `both`, so the un-revealed state is
+   the finished band and the from-state only exists once .in has fired — if
+   the observer never runs, everything is simply drawn. */
+@keyframes wwdDrawDown{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes wwdDrawX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes wwdDropIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
 .wwd.in .wwd-rules::before,
 .wwd.in .wwd-rules::after{
-  transform-origin:top;animation:wwdDrawDown .8s cubic-bezier(.16,1,.3,1) both;
+  transform-origin:top;animation:wwdDrawDown .62s cubic-bezier(.16,1,.3,1) both;
 }
 .wwd.in .wwd-rules::after{animation-delay:.08s}
-.wwd.in .wwd-item{
-  animation:wwdUnfold .62s cubic-bezier(.16,1,.3,1) both;
-  animation-delay:var(--rd,0s);
-}
-/* The open row's fold and its bar hold shut until the rows have finished
-   unfolding, so opening reads as the accordion working rather than as part of
-   the entrance. Scoped above the stacking point: below it every row is open
-   by design, and these sit later in the sheet than the mobile block at equal
-   specificity, so unscoped they would collapse the open row there too. */
+.wwd.in .wwd-body::before{animation:wwdDrawX .72s cubic-bezier(.16,1,.3,1) both;animation-delay:.24s}
+.wwd.in .wwd-item::after{animation:wwdDrawX .58s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--ld,.44s)}
+
+/* The last divider starts at .64s and runs .58s, so the grid is complete at
+   1.22s. Nothing typographic is allowed before that — 1.24s is the first
+   frame on which any character appears. */
+.wwd.in .wwd-title{animation:wwdDropIn .6s cubic-bezier(.16,1,.3,1) both;animation-delay:1.24s}
+.wwd.in .wwd-item>*{animation:wwdDropIn .55s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--rd,1.24s)}
+.wwd.in .wwd-video{transition-delay:1.38s}
+.wwd.in .wwd-item.is-open::before{transition-delay:1.9s}
+
+/* The open row's fold and bar hold shut until the copy has landed, so opening
+   reads as the accordion working rather than as part of the entrance. Scoped
+   above the stacking point: below it every row is open by design, and these
+   sit later in the sheet than the mobile block at equal specificity, so
+   unscoped they would collapse the open row there too. */
 @media(min-width:901px){
   .wwd:not(.in) .wwd-item.is-open .wwd-fold{grid-template-rows:0fr;margin-top:0}
   .wwd:not(.in) .wwd-item.is-open .wwd-desc{opacity:0}
@@ -1350,7 +1366,7 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
   position:relative;
   /* the page's own ground shows around the panel while it is still narrow */
   background:var(--bg-base);color:#000;
-  --g-pad:clamp(24px,6.94vw,100px);
+  --g-pad:var(--pad-x);   /* was 100; now the site's own inset */
   --g-line:#D5D5D5;
   --g-blue:#0D93D5;
   --gi:0px;   /* the panel's side inset, driven by scroll; 0 = full width */
@@ -1381,7 +1397,7 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
 .gcc-title{
   margin:0;max-width:626px;
   font-family:var(--font-display);font-weight:600;
-  font-size:clamp(32px,5.64vw,81.21px);line-height:1.1945;letter-spacing:-.01em;
+  font-size:var(--fs-h2);line-height:1.1945;letter-spacing:-.01em;
   /* the frame fills the type with a left-to-right gradient that returns to the
      lighter blue at both ends, so the line reads lit from its edges inward */
   background:linear-gradient(90deg,#5ECAFF 0%,#0D93D5 33.17%,#0D93D5 68.27%,#5ECAFF 100%);
@@ -1698,9 +1714,10 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
   .btn-ghost::after{display:none}
   /* the capability icons hold their finished frame instead of looping */
   /* the accordion arrives open rather than unfolding */
-  .wwd.in .wwd-item,.wwd.in .wwd-title,
-  .wwd.in .wwd-rules::before,.wwd.in .wwd-rules::after{
-    animation:none!important;opacity:1;clip-path:none;transform:none}
+  .wwd.in .wwd-title,.wwd.in .wwd-item>*,
+  .wwd.in .wwd-rules::before,.wwd.in .wwd-rules::after,
+  .wwd.in .wwd-body::before,.wwd.in .wwd-item::after{
+    animation:none!important;opacity:1;transform:none}
   .wwd-video{opacity:1;transform:none}
   .wwd-fold{grid-template-rows:1fr;margin-top:12px}
   .wwd-desc{opacity:1}
@@ -1879,7 +1896,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
   <h2 class="wwd-title">Enterprise digital capability</h2>
   <div class="wwd-body">
     <div class="wwd-list">
-      <button class="wwd-item is-open" style="--rd:0s" type="button"
+      <button class="wwd-item is-open" style="--ld:.44s;--rd:1.24s" type="button"
               aria-expanded="true" aria-controls="wwdD0">
         <span class="wwd-num">01</span>
         <span>
@@ -1887,7 +1904,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
           <span class="wwd-fold"><span class="wwd-desc" id="wwdD0">Strategy, engineering, and operations across cloud, data, AI, and managed services.</span></span>
         </span>
       </button>
-      <button class="wwd-item" style="--rd:.12s" type="button"
+      <button class="wwd-item" style="--ld:.54s;--rd:1.34s" type="button"
               aria-expanded="false" aria-controls="wwdD1">
         <span class="wwd-num">02</span>
         <span>
@@ -1895,7 +1912,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
           <span class="wwd-fold"><span class="wwd-desc" id="wwdD1">AI-powered, scalable transformation across regulated, mission-critical industries.</span></span>
         </span>
       </button>
-      <button class="wwd-item" style="--rd:.24s" type="button"
+      <button class="wwd-item" style="--ld:.64s;--rd:1.44s" type="button"
               aria-expanded="false" aria-controls="wwdD2">
         <span class="wwd-num">03</span>
         <span>
