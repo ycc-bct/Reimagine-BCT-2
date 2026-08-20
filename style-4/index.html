@@ -1039,13 +1039,20 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
 
 /* the panel stops short of the right edge on the same inset as everything
    else, rather than the frame's arbitrary 87px */
-.wwd-media{position:relative;min-width:0;width:calc(100% - var(--pad-x));aspect-ratio:535/584;overflow:hidden}
-.wwd-video{
-  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+.wwd-media{
+  position:relative;min-width:0;width:calc(100% - var(--pad-x));
+  aspect-ratio:535/584;overflow:hidden;
+  /* the entrance lives on the frame and the crossfade on the clips inside it,
+     so switching rows never inherits the section's arrival delay */
   opacity:0;transform:scale(1.06);
   transition:opacity .9s ease,transform 1.3s cubic-bezier(.16,1,.3,1);
 }
-.wwd.in .wwd-video{opacity:1;transform:none;transition-delay:.1s}
+.wwd.in .wwd-media{opacity:1;transform:none}
+.wwd-video{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+  opacity:0;transition:opacity .55s ease;
+}
+.wwd-video.is-on{opacity:1}
 
 @media(max-width:900px){
   .wwd{padding-bottom:clamp(40px,6vw,56px)}
@@ -1092,7 +1099,7 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
    frame on which any character appears. */
 .wwd.in .wwd-title{animation:wwdDropIn .6s cubic-bezier(.16,1,.3,1) both;animation-delay:1.24s}
 .wwd.in .wwd-item>*{animation:wwdDropIn .55s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--rd,1.24s)}
-.wwd.in .wwd-video{transition-delay:1.38s}
+.wwd.in .wwd-media{transition-delay:1.38s}
 .wwd.in .wwd-item.is-open::before{transition-delay:1.9s}
 
 /* The open row's fold and bar hold shut until the copy has landed, so opening
@@ -1718,7 +1725,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
   .wwd.in .wwd-rules::before,.wwd.in .wwd-rules::after,
   .wwd.in .wwd-body::before,.wwd.in .wwd-item::after{
     animation:none!important;opacity:1;transform:none}
-  .wwd-video{opacity:1;transform:none}
+  .wwd-media{opacity:1;transform:none}
   .wwd-fold{grid-template-rows:1fr;margin-top:12px}
   .wwd-desc{opacity:1}
   .wwd-item::before{transform:scaleY(1)}
@@ -1922,8 +1929,12 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
       </button>
     </div>
     <div class="wwd-media">
-      <video class="wwd-video" src="wwd-panel.mp4" poster="wwd-panel-poster.jpg"
-             muted loop playsinline autoplay preload="metadata" aria-hidden="true"></video>
+      <video class="wwd-video is-on" data-i="0" src="wwd-panel.mp4" poster="wwd-panel-poster.jpg"
+             muted loop playsinline preload="auto" aria-hidden="true"></video>
+      <video class="wwd-video" data-i="1" src="wwd-industry.mp4" poster="wwd-industry-poster.jpg"
+             muted loop playsinline preload="metadata" aria-hidden="true"></video>
+      <video class="wwd-video" data-i="2" src="wwd-partnership.mp4" poster="wwd-partnership-poster.jpg"
+             muted loop playsinline preload="metadata" aria-hidden="true"></video>
     </div>
   </div>
 </section>
@@ -2754,22 +2765,34 @@ document.querySelectorAll('.stat-num[data-count]').forEach(el => statIO.observe(
 (function(){
   var list=document.querySelector('.wwd-list'); if(!list) return;
   var items=[].slice.call(list.querySelectorAll('.wwd-item'));
-  var pics=[].slice.call(document.querySelectorAll('.wwd-media img'));
+  var vids=[].slice.call(document.querySelectorAll('.wwd-video'));
   if(!items.length) return;
   /* Below the stacking point every row is already open and the rows are not
      buttons, so binding click there would collapse copy that should stay put. */
   var mq=window.matchMedia('(max-width:900px)');
+  function play(v){ var q=v.play(); if(q&&q.catch) q.catch(function(){}); }
   function open(i){
     items.forEach(function(it,n){
       var on=(n===i);
       it.classList.toggle('is-open',on);
       it.setAttribute('aria-expanded',on?'true':'false');
     });
-    pics.forEach(function(im,n){ im.classList.toggle('is-on',n===i); });
+    /* Only the visible clip runs. Three decoding at once is wasted work, and
+       the hidden ones are rewound so a row always opens on its first frame
+       rather than wherever it was left. */
+    vids.forEach(function(v,n){
+      var on=(n===i);
+      v.classList.toggle('is-on',on);
+      if(on){ play(v); }
+      else { v.pause(); try{ v.currentTime=0; }catch(e){} }
+    });
   }
   items.forEach(function(it,i){
     it.addEventListener('click',function(){ if(!mq.matches) open(i); });
   });
+  /* autoplay is not declared on the markup: the first clip is started here so
+     the same play/pause bookkeeping owns every clip from the outset */
+  if(vids[0]) play(vids[0]);
 })();
 </script>
 <!-- GCC — the white ground opens to full width as the band is scrolled to -->
