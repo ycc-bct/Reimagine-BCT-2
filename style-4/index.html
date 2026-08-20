@@ -1347,13 +1347,31 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
    This is the one light section on a dark page, so the ink is stated outright
    rather than inherited — nothing here reads the page's dark tokens. */
 .gcc{
-  position:relative;overflow:hidden;
-  background:#FAFDFF;color:#000;
+  position:relative;
+  /* the page's own ground shows around the panel while it is still narrow */
+  background:var(--bg-base);color:#000;
   --g-pad:clamp(24px,6.94vw,100px);
   --g-line:#D5D5D5;
   --g-blue:#0D93D5;
+  --gi:0px;   /* the panel's side inset, driven by scroll; 0 = full width */
+}
+/* The white ground opens out to full width as the band is scrolled to. The
+   inset is animated on the panel and cancelled again on the layer inside it,
+   so the content keeps the section's own width throughout and never reflows —
+   it is revealed by the panel widening, not pushed around by it. */
+.gcc-panel{
+  position:relative;overflow:hidden;background:#FAFDFF;
+  margin-inline:var(--gi);
+  border-radius:calc(var(--gi) * .42);
+  will-change:margin,border-radius;
+}
+.gcc-panel-inner{
+  width:calc(100% + var(--gi) * 2);
+  margin-left:calc(var(--gi) * -1);
   padding:clamp(48px,5.90vw,85px) var(--g-pad) clamp(56px,7.64vw,110px);
 }
+/* no script, no scroll: the panel simply starts full width */
+@media(prefers-reduced-motion:reduce){.gcc{--gi:0px!important}}
 
 /* ---- head: gradient title left, figure pill right ---- */
 .gcc-head{
@@ -1378,9 +1396,25 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
   gap:clamp(4px,.7vw,10px);
 }
 .gcc-figure{
-  margin:0;display:flex;align-items:center;gap:clamp(6px,1vw,14px);
+  margin:0;width:100%;
   font-family:var(--font-display);font-weight:600;
   font-size:clamp(40px,6.67vw,96px);line-height:1.084;letter-spacing:-.03em;
+}
+/* The figure runs as a marquee. Four copies of the unit sit on the track and
+   it travels exactly -50%, so the second pair lands where the first started
+   and the loop has no seam. The mask is what keeps the ends from popping in
+   and out at the pill's edges. */
+.gcc-marquee{
+  display:block;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 11%,#000 89%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 11%,#000 89%,transparent);
+}
+.gcc-track{display:flex;width:max-content;will-change:transform}
+.gcc.in .gcc-track{animation:gccMarquee 14s linear infinite}
+@keyframes gccMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.gcc-unit{
+  display:inline-flex;align-items:center;flex:none;
+  gap:clamp(6px,1vw,14px);padding-right:clamp(20px,2.8vw,40px);white-space:nowrap;
 }
 .gcc-arrow{flex:none;width:auto;height:clamp(26px,4.24vw,61px);display:block}
 .gcc-figure-label{
@@ -1654,6 +1688,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
   /* the band arrives drawn rather than drawing itself */
   .gcc:not(.in) .gcc-title,.gcc:not(.in) .gcc-pill,
   .gcc:not(.in) .gcc-cname,.gcc:not(.in) .gcc-foot{opacity:1}
+  .gcc.in .gcc-track{animation:none!important}
   .gcc.in .gcc-title,.gcc.in .gcc-pill,.gcc.in .gcc-foot,
   .gcc.in .gcc-cname,.gcc.in .gcc-lines i,
   .gcc.in .gcc-icon .c-back,.gcc.in .gcc-icon .c-front,.gcc.in .gcc-icon .c-mark{
@@ -1878,15 +1913,16 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
 
 <!-- ================= GCC (light band) ================= -->
 <section class="gcc" id="gcc">
+ <div class="gcc-panel">
+  <div class="gcc-panel-inner">
   <div class="gcc-head">
     <h2 class="gcc-title">BCT AI-powered<br>GCC capability</h2>
     <div class="gcc-pill">
       <p class="gcc-figure">
-        <span class="gcc-num" data-count="20" data-suffix="%">20%</span>
-        <svg class="gcc-arrow" viewBox="0 0 33 61" fill="none" stroke="#FFFFFF"
-             stroke-width="7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M16.5 4.5V56.5"/><path d="M4.5 44.5 16.5 56.5 28.5 44.5"/>
-        </svg>
+        <span class="sr-only">20 to 25% reduction</span>
+        <span class="gcc-marquee" aria-hidden="true">
+          <span class="gcc-track"><span class="gcc-unit">20&ndash;25%<svg class="gcc-arrow" viewBox="0 0 33 61" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 4.5V56.5"/><path d="M4.5 44.5 16.5 56.5 28.5 44.5"/></svg></span><span class="gcc-unit">20&ndash;25%<svg class="gcc-arrow" viewBox="0 0 33 61" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 4.5V56.5"/><path d="M4.5 44.5 16.5 56.5 28.5 44.5"/></svg></span><span class="gcc-unit">20&ndash;25%<svg class="gcc-arrow" viewBox="0 0 33 61" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 4.5V56.5"/><path d="M4.5 44.5 16.5 56.5 28.5 44.5"/></svg></span><span class="gcc-unit">20&ndash;25%<svg class="gcc-arrow" viewBox="0 0 33 61" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 4.5V56.5"/><path d="M4.5 44.5 16.5 56.5 28.5 44.5"/></svg></span></span>
+        </span>
       </p>
       <p class="gcc-figure-label">Reduction in manual effort</p>
     </div>
@@ -1922,6 +1958,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
       </svg>
     </a>
   </div>
+  </div>
+ </div>
 </section>
 
 <!-- ================= PRODUCTS (categorized) ================= -->
@@ -2300,7 +2338,7 @@ const statIO = new IntersectionObserver(es => es.forEach(e => {
     if (p < 1) requestAnimationFrame(tick);
   })(t0);
 }), {threshold:.5});
-document.querySelectorAll('.stat-num[data-count], .gcc-num[data-count]').forEach(el => statIO.observe(el));
+document.querySelectorAll('.stat-num[data-count]').forEach(el => statIO.observe(el));
 
 /* ---------- Operationalize AI: rotating cube-molecule visual ---------- */
 (function(){
@@ -2715,6 +2753,32 @@ document.querySelectorAll('.stat-num[data-count], .gcc-num[data-count]').forEach
   items.forEach(function(it,i){
     it.addEventListener('click',function(){ if(!mq.matches) open(i); });
   });
+})();
+</script>
+<!-- GCC — the white ground opens to full width as the band is scrolled to -->
+<script>
+(function(){
+  var gcc=document.querySelector('.gcc'); if(!gcc) return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var raf=null;
+  function frame(){
+    raf=null;
+    var r=gcc.getBoundingClientRect(), vh=innerHeight||1;
+    /* Progress is read from the section's own top edge rather than from a
+       scroll offset: the rect is correct on load, after a resize, and on a
+       restored scroll position, none of which a scrollY threshold survives. */
+    var p=(vh-r.top)/(vh*0.62);
+    p=p<0?0:p>1?1:p;
+    /* the widest the panel is ever inset, capped so it does not become a
+       ribbon on very wide screens */
+    var max=Math.min(r.width*0.14,180);
+    gcc.style.setProperty('--gi',((1-p)*max).toFixed(1)+'px');
+  }
+  function tick(){ if(!raf) raf=requestAnimationFrame(frame); }
+  addEventListener('scroll',tick,{passive:true});
+  addEventListener('resize',tick);
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden) tick(); });
+  frame();
 })();
 </script>
 </body>
