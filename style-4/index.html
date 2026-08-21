@@ -1372,10 +1372,19 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
 .gcc{
   position:relative;
   /* the page's own ground shows around the panel while it is still narrow */
-  background:var(--bg-base);color:#000;
-  --g-pad:var(--pad-x);   /* was 100; now the site's own inset */
-  --g-line:#D5D5D5;
-  --g-blue:#0D93D5;
+  background:var(--bg-base);color:var(--g-ink);
+  --g-pad:var(--pad-x);
+  /* This is the one light band, so it needs its own ink — but derived from the
+     site's palette rather than invented. The frame's #0D93D5 was three steps
+     off the brand blue and its copy was pure #000, which nothing else here
+     uses; both are re-pointed at the real tokens. */
+  --g-blue:var(--blue-500);
+  --g-blue-300:var(--blue-300);
+  --g-blue-700:var(--blue-700);
+  --g-ink:#0E1521;                    /* the dark end of --bg-base, not black */
+  --g-ink-mid:rgba(14,21,33,.72);
+  --g-line:rgba(14,21,33,.14);
+  --g-surface:#F0F0F0;
   --gi:0px;   /* the panel's side inset, driven by scroll; 0 = full width */
 }
 /* The white ground opens out to full width as the band is scrolled to. The
@@ -1404,17 +1413,21 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
 .gcc-title{
   margin:0;max-width:626px;
   font-family:var(--font-display);font-weight:600;
-  font-size:var(--fs-h2);line-height:1.1945;letter-spacing:-.01em;
+  font-size:var(--fs-h2);line-height:1.05;letter-spacing:-.02em;
   /* the frame fills the type with a left-to-right gradient that returns to the
      lighter blue at both ends, so the line reads lit from its edges inward */
-  background:linear-gradient(90deg,#5ECAFF 0%,#0D93D5 33.17%,#0D93D5 68.27%,#5ECAFF 100%);
+  background:linear-gradient(90deg,var(--g-blue-300) 0%,var(--g-blue) 33.17%,var(--g-blue) 68.27%,var(--g-blue-300) 100%);
   -webkit-background-clip:text;background-clip:text;
   -webkit-text-fill-color:transparent;color:transparent;
   background-size:200% 100%;
 }
+/* --blue-700, not --blue-500. White on the brand blue is 3.45:1 — enough for
+   the 96px figure, which counts as large text, but short of the 4.5:1 the
+   caption beneath it needs at any size the type scale offers. The deeper token
+   carries white at 6.5:1, so the whole pill passes without bending the type. */
 .gcc-pill{
   flex:none;width:min(366px,34vw);aspect-ratio:366/184;border-radius:60px;
-  background:var(--g-blue);color:#fff;
+  background:var(--g-blue-700);color:#fff;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:clamp(4px,.7vw,10px);
 }
@@ -1439,11 +1452,10 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
   display:inline-flex;align-items:center;flex:none;
   gap:clamp(6px,1vw,14px);padding-right:clamp(20px,2.8vw,40px);white-space:nowrap;
 }
-.gcc-arrow{flex:none;width:auto;height:clamp(26px,4.24vw,61px);display:block}
 .gcc-figure-label{
   margin:0;text-align:center;
   font-family:var(--font-display);font-weight:500;
-  font-size:clamp(13px,1.39vw,20px);line-height:1.1;
+  font-size:var(--fs-small);line-height:var(--lh-small);letter-spacing:.02em;
 }
 
 /* ---- three cells on a drawn grid ---- */
@@ -1466,11 +1478,16 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
   padding:clamp(38px,5.69vw,82px) clamp(14px,1.95vw,28px) clamp(28px,2.78vw,40px);
 }
 .gcc-icon{display:block;width:clamp(38px,3.75vw,54px);height:auto}
+.gcc-icon .c-back{fill:var(--g-blue)}
+.gcc-icon .c-front{fill:var(--g-surface)}
+.gcc-icon .c-mark *{fill:var(--g-blue)}
 .gcc-icon svg{display:block;width:100%;height:auto}
 .gcc-cname{
-  margin:clamp(20px,2.55vw,37px) 0 0;max-width:119px;
-  font-family:var(--font-display);font-weight:400;
-  font-size:clamp(17px,1.67vw,24px);line-height:1.334;color:#000;
+  /* 11ch lands on the frame's 119px box at this size and moves with the type,
+     so all three labels stack two lines instead of HR sitting alone on one */
+  margin:clamp(20px,2.55vw,37px) 0 0;max-width:11ch;
+  font-family:var(--font-display);font-weight:600;
+  font-size:var(--fs-h3);line-height:1.25;letter-spacing:-.01em;color:var(--g-ink);
 }
 
 /* ---- foot: note bar and the call to action ---- */
@@ -1478,26 +1495,37 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
   display:flex;align-items:center;justify-content:space-between;
   gap:clamp(18px,3vw,44px);margin-top:clamp(20px,2.78vw,40px);
 }
-.gcc-note{
-  flex:1 1 auto;max-width:826px;min-height:clamp(72px,6.67vw,96px);
-  background:#EDEDED;display:flex;align-items:center;
-  padding:clamp(16px,1.67vw,24px) clamp(20px,2.78vw,40px);
-}
+/* copy on the ground, no filled panel — the same treatment the dark sections
+   give their body copy, only inverted for this band */
+.gcc-note{flex:1 1 auto;max-width:72ch}
 .gcc-note p{
-  margin:0;font-family:var(--font-display);font-weight:500;
-  font-size:clamp(14px,1.25vw,18px);line-height:1.334;color:#000;
+  margin:0;font-family:var(--font-body);font-weight:400;
+  font-size:var(--fs-lede);line-height:var(--lh-lede);color:var(--g-ink-mid);
 }
+.gcc-note b{color:var(--g-ink);font-weight:600}
+
+/* the site's own LinkArrow: label plus a blue tile that slides 4px on hover.
+   The tile is 40px rather than the component's 28px — at 28 the whole control
+   sits under the 44px touch minimum, and the link's padding carries the rest. */
 .gcc-try{
-  flex:none;display:inline-flex;align-items:center;justify-content:center;
-  gap:10px;width:clamp(168px,15.28vw,220px);min-height:clamp(52px,4.44vw,64px);
-  background:var(--g-blue);color:#fff;text-decoration:none;
-  font-family:var(--font-display);font-weight:600;
-  font-size:clamp(17px,1.67vw,24px);line-height:1.084;
-  transition:background .22s ease,transform .22s ease;
+  flex:none;display:inline-flex;align-items:center;gap:14px;
+  padding-block:6px;text-decoration:none;
+  font-family:var(--font-display);font-weight:600;font-size:var(--fs-lede);
+  line-height:1;color:var(--g-ink);
+  transition:color .18s ease;
 }
-.gcc-try:hover{background:#0A7DB6;transform:translateY(-1px)}
-.gcc-try:focus-visible{outline:2px solid #0A7DB6;outline-offset:3px}
-.gcc-try svg{flex:none;width:auto;height:clamp(15px,1.32vw,19px)}
+.gcc-try .tile{
+  display:grid;place-items:center;flex:none;
+  width:clamp(34px,2.78vw,40px);height:clamp(34px,2.78vw,40px);
+  background:var(--g-blue);
+  transition:transform .24s cubic-bezier(.22,1,.36,1),background .18s ease;
+}
+.gcc-try .tile svg{width:45%;height:auto;display:block}
+.gcc-try:hover{color:var(--g-blue-700)}
+.gcc-try:hover .tile{transform:translateX(4px);background:var(--g-blue-700)}
+.gcc-try:focus-visible{outline:2px solid var(--g-blue);outline-offset:4px}
+@media(prefers-reduced-motion:reduce){.gcc-try .tile{transition:background .18s ease}
+  .gcc-try:hover .tile{transform:none}}
 
 /* ---- scroll-in ----------------------------------------------------------
    The grid draws itself first, then the cells fill it: rules across and down,
@@ -1533,6 +1561,12 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
 @media(max-width:900px){
   .gcc-head{flex-direction:column;gap:26px}
   .gcc-pill{width:100%;aspect-ratio:auto;padding:26px 20px;border-radius:36px}
+  /* Stacked, the pill is wide enough to show the loop twice over, which reads
+     as a repeat rather than as a figure. At this width it simply sits still. */
+  .gcc-track{animation:none!important;width:100%;justify-content:center}
+  .gcc-unit{padding-right:0}
+  .gcc-unit:not(:first-child){display:none}
+  .gcc-marquee{-webkit-mask-image:none;mask-image:none}
   .gcc-cells{grid-template-columns:1fr}
   /* stacked, the four verticals have nothing to divide */
   .gcc-lines .v2,.gcc-lines .v3,.gcc-lines .v4{display:none}
@@ -1542,8 +1576,9 @@ footer{border-top:1px solid var(--border);padding:80px 0 0;background:var(--bg-b
   }
   .gcc-cell:last-child{border-bottom:0}
   .gcc-cname{margin:0;max-width:none}
-  .gcc-foot{flex-direction:column;align-items:stretch;gap:14px}
-  .gcc-try{width:100%}
+  /* the foot is copy followed by a link now, not a bar and a button, so the
+     link sits to its own width instead of stretching the full column */
+  .gcc-foot{flex-direction:column;align-items:flex-start;gap:20px}
 }
 
 /* ============ WHY BCT (bordered grid) ============ */
@@ -1949,7 +1984,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
       <p class="gcc-figure">
         <span class="sr-only">20 to 25% reduction</span>
         <span class="gcc-marquee" aria-hidden="true">
-          <span class="gcc-track"><span class="gcc-unit">20&ndash;25%<svg class="gcc-arrow" viewBox="0 0 33 61" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 4.5V56.5"/><path d="M4.5 44.5 16.5 56.5 28.5 44.5"/></svg></span><span class="gcc-unit">20&ndash;25%<svg class="gcc-arrow" viewBox="0 0 33 61" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 4.5V56.5"/><path d="M4.5 44.5 16.5 56.5 28.5 44.5"/></svg></span><span class="gcc-unit">20&ndash;25%<svg class="gcc-arrow" viewBox="0 0 33 61" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 4.5V56.5"/><path d="M4.5 44.5 16.5 56.5 28.5 44.5"/></svg></span><span class="gcc-unit">20&ndash;25%<svg class="gcc-arrow" viewBox="0 0 33 61" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 4.5V56.5"/><path d="M4.5 44.5 16.5 56.5 28.5 44.5"/></svg></span></span>
+          <span class="gcc-track"><span class="gcc-unit">20&ndash;25%</span><span class="gcc-unit">20&ndash;25%</span><span class="gcc-unit">20&ndash;25%</span><span class="gcc-unit">20&ndash;25%</span></span>
         </span>
       </p>
       <p class="gcc-figure-label">Reduction in manual effort</p>
@@ -1962,15 +1997,15 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
       <i class="v v1"></i><i class="v v2"></i><i class="v v3"></i><i class="v v4"></i>
     </div>
       <div class="gcc-cell" style="--cd:0s">
-        <span class="gcc-icon" aria-hidden="true"><svg viewBox="0 0 54 53.32"><rect class="c-back" x="17" y="0" width="37" height="42" rx="2" fill="#0D93D5"/><rect class="c-front" x="0" y="7.74" width="40.35" height="45.58" rx="2" fill="#F0F0F0"/><g class="c-mark"><circle cx="20.17" cy="23.43" r="7.47" fill="#0D93D5"/><rect x="6.81" y="32.68" width="26.66" height="12.04" rx="3" fill="#0D93D5"/></g></svg></span>
+        <span class="gcc-icon" aria-hidden="true"><svg viewBox="0 0 54 53.32"><rect class="c-back" x="17" y="0" width="37" height="42" rx="2"/><rect class="c-front" x="0" y="7.74" width="40.35" height="45.58" rx="2"/><g class="c-mark"><circle cx="20.17" cy="23.43" r="7.47"/><rect x="6.81" y="32.68" width="26.66" height="12.04" rx="3"/></g></svg></span>
         <h3 class="gcc-cname">HR Operations</h3>
       </div>
       <div class="gcc-cell" style="--cd:.1s">
-        <span class="gcc-icon" aria-hidden="true"><svg viewBox="0 0 54 53.32"><rect class="c-back" x="17" y="0" width="37" height="42" rx="2" fill="#0D93D5"/><rect class="c-front" x="0" y="7.74" width="40.35" height="45.58" rx="2" fill="#F0F0F0"/><g class="c-mark"><rect x="7" y="32" width="6.4" height="13" rx="1.6" fill="#0D93D5"/><rect x="16.9" y="24.5" width="6.4" height="20.5" rx="1.6" fill="#0D93D5"/><rect x="26.8" y="17.5" width="6.4" height="27.5" rx="1.6" fill="#0D93D5"/></g></svg></span>
+        <span class="gcc-icon" aria-hidden="true"><svg viewBox="0 0 54 53.32"><rect class="c-back" x="17" y="0" width="37" height="42" rx="2"/><rect class="c-front" x="0" y="7.74" width="40.35" height="45.58" rx="2"/><g class="c-mark"><rect x="7" y="32" width="6.4" height="13" rx="1.6"/><rect x="16.9" y="24.5" width="6.4" height="20.5" rx="1.6"/><rect x="26.8" y="17.5" width="6.4" height="27.5" rx="1.6"/></g></svg></span>
         <h3 class="gcc-cname">Finance Operations</h3>
       </div>
       <div class="gcc-cell" style="--cd:.2s">
-        <span class="gcc-icon" aria-hidden="true"><svg viewBox="0 0 54 53.32"><rect class="c-back" x="17" y="0" width="37" height="42" rx="2" fill="#0D93D5"/><rect class="c-front" x="0" y="7.74" width="40.35" height="45.58" rx="2" fill="#F0F0F0"/><g class="c-mark"><circle cx="20.17" cy="30.5" r="6.6" fill="#0D93D5"/><circle cx="8.6" cy="19.6" r="3.5" fill="#0D93D5"/><circle cx="31.8" cy="19.6" r="3.5" fill="#0D93D5"/><circle cx="8.6" cy="41.4" r="3.5" fill="#0D93D5"/><circle cx="31.8" cy="41.4" r="3.5" fill="#0D93D5"/></g></svg></span>
+        <span class="gcc-icon" aria-hidden="true"><svg viewBox="0 0 54 53.32"><rect class="c-back" x="17" y="0" width="37" height="42" rx="2"/><rect class="c-front" x="0" y="7.74" width="40.35" height="45.58" rx="2"/><g class="c-mark"><circle cx="20.17" cy="30.5" r="6.6"/><circle cx="8.6" cy="19.6" r="3.5"/><circle cx="31.8" cy="19.6" r="3.5"/><circle cx="8.6" cy="41.4" r="3.5"/><circle cx="31.8" cy="41.4" r="3.5"/></g></svg></span>
         <h3 class="gcc-cname">Knowledge Operations</h3>
       </div>
   </div>
@@ -1979,12 +2014,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--blue-500);outline-o
     <div class="gcc-note">
       <p>BCT embeds AI into your Global Capability Center from day one, powered by <b>AigeniX&trade;</b>, our agentic AI platform &mdash; accelerating operations and time-to-market.</p>
     </div>
-    <a class="gcc-try" href="#">Try GCC Now
-      <svg viewBox="0 0 22 19" fill="none" stroke="#FFFFFF" stroke-width="3"
-           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M1.5 9.5h19"/><path d="M12 1.5 20.5 9.5 12 17.5"/>
-      </svg>
-    </a>
+    <a class="gcc-try" href="#">Try GCC Now<span class="tile" aria-hidden="true"><svg viewBox="0 0 22 19" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1.6 9.5h18.8"/><path d="M12.2 1.6 20.4 9.5 12.2 17.4"/></svg></span></a>
   </div>
   </div>
  </div>
